@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/fe92d18f9e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
+          rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .sign_form {
+            width: 450px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Do Hyeon', sans-serif;
+            color: lightgray;
+        }
+
+        .sign_form > .mb-3 {
+            margin-top: 40px;
+        }
+
+        .input-group-text {
+            background-color: #FFAFAF;
+            border: white;
+            color: white;
+        }
+
+        .form-control {
+            border-top-color: white;
+            border-left-color: white;
+            border-right-color: white;
+            border-bottom-color: #FFAFAF;
+        }
+
+
+        .filebox .upload-name {
+            display: inline-block;
+            height: 40px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid #dddddd;
+            width: 325px;
+            color: #999999;
+        }
+
+        .filebox label {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            vertical-align: middle;
+            background-color: #FFAFAF;
+            cursor: pointer;
+            height: 40px;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .filebox input[type="file"] {
+            position: absolute;
+            width: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+        }
+
+        .button_form {
+            margin-top: 20px;
+        }
+
+        button {
+            width: 200px;
+            background-color: #FFAFAF;
+            color: white;
+        }
+
+        .welcome {
+            font-size: 30px;
+        }
+    </style>
+
+    <title>Event Cafe Cloude | EC2</title>
+</head>
+
+
+<body>
+<div class="sign_form">
+    <div class="welcome">
+        <img src="../static/smilee.png" width="150px">
+        <p>Welcome to Join EC2</p>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="아이디" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="비밀번호" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="이메일" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa-solid fa-face-grin-stars"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="닉네임" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    프로필 사진을 업로드해주세요
+    <div class="filebox">
+        <input class="upload-name" value="첨부파일" placeholder="첨부파일"><label for="file">파일찾기&nbsp<i
+            class="fa-solid fa-image"></i></label>
+        <input type="file" id="file">
+    </div>
+    <div class="button_form">
+        <button type="button" class="btn btn-lg">회원가입</button>
+        <button type="button" class="btn btn-lg">로그인</button>
+    </div>
+</div>
+</body>
+</html>
