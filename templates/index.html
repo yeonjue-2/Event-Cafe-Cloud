@@ -25,16 +25,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <meta charset="UTF-8">
+    <!-- CSS 링크 -->
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
+    <!-- JS 링크 -->
+    <script src="../static/js/login_out.js"></script>
+
     <title>Event Cafe Cloude | EC2</title>
+
 </head>
 <body>
 <section class="ec2-banner">
-    <div class="welcome-message">
-        guest님 환영합니다&nbsp;&nbsp;
-        <button class="banner-button" onclick="location.href='/login'">로그인</button>
-    </div>
+    {% if msg %}
+        <div class="welcome-message">
+            guest님 환영합니다 &nbsp;&nbsp;&nbsp;
+            <button class="banner-button" onclick="location.href='/login'">로그인</button>
+        </div>
+    {% else %}
+        <div class="welcome-message">
+            {{ user["user_nickname"] }}님 환영합니다 &nbsp;&nbsp;
+            <button class="banner-button" onclick=logout()>로그아웃</button>
+        </div>
+    {% endif %}
     <div class="banner-logo">
         <img src="../static/ec2_logo.png" onclick="location.href='/'">
     </div>
