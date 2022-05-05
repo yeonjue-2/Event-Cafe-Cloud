@@ -42,9 +42,9 @@ def join():
     today = datetime.now()
     ptime = today.strftime('%Y-%m-%d-%H-%M-$S')
 
-    profile_img = f'user_profile-{ptime}'
+    profile_img = f'{user_id}-{ptime}'
 
-    save_to = f'static/profile_pics/{profile_img}.{extension}'
+    save_to = f'static/profile_pics/{user_id}.{extension}'
     user_profile.save(save_to)
 
     doc = {
@@ -52,7 +52,7 @@ def join():
         "user_pw": user_pw,
         "user_email": user_email,
         "user_nickname": user_nickname,
-        "user_profile": f"{profile_img}/{extension}",
+        "user_profile": f"{user_id}/{extension}",
     }
     db.users.insert_one(doc)
     return jsonify({'result':'success'})
