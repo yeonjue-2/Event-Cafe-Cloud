@@ -1,0 +1,105 @@
+textarea:focus {
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+.sign_form {
+    width: 450px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Do Hyeon', sans-serif;
+    color: lightgray;
+}
+
+.sign_form > .mb-3 {
+    margin-top: 40px;
+}
+
+.input-group-text {
+    background-color: #FFAFAF;
+    border: white;
+    color: white;
+}
+
+.form-control {
+    border-top-color: white;
+    border-left-color: white;
+    border-right-color: white;
+    border-bottom-color: #FFAFAF;
+    width: 400px;
+}
+
+
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 325px;
+    color: #999999;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #FFAFAF;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+.button_form {
+    margin-top: 20px;
+}
+
+p {
+    width: 500px;
+}
+
+.login_button {
+    width: 200px;
+    border: white;
+    background-color: #FFAFAF;
+    color: white;
+    outline: none;
+}
+
+.join_button {
+    width: 200px;
+    border: 1px solid #FFAFAF;
+    background-color: white;
+    color: #FFAFAF;
+}
+
+.welcome {
+    font-size: 30px;
+}
+
+.check-button {
+    border: #FFAFAF;
+    width: 70px;
+    border-radius: 10px;
+    color: white;
+    background-color: lightpink;
+}

@@ -72,7 +72,7 @@
             let user_pw2 = $('#input-userPw2').val()
             let user_email = $('#input-userMail').val()
             let user_nickname = $('#input-nickname').val()
-            let user_img = $('#input-profileImg').val()
+            let user_img = $('#file')[0].files[0]
 
             if ($('#help-id').hasClass("is-danger")) {
                 alert("아이디를 확인해주세요!")
@@ -98,18 +98,25 @@
                 $('#input-userPw2').focus()
                 return;
             }
+
+            let form_data = new FormData()
+
+            form_data.append("user_id_give", user_id)
+            form_data.append("user_pw_give", user_pw)
+            form_data.append("user_email_give", user_email)
+            form_data.append("user_nickname_give", user_nickname)
+            form_data.append("user_profile_give", user_img)
+
             $.ajax({
                 type: "POST",
                 url: "/api/join",
-                data: {
-                    user_id_give: user_id,
-                    user_pw_give: user_pw,
-                    user_email_give: user_email,
-                    user_nickname_give: user_nickname
-                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     alert("가입되었습니다!")
-                    window.location.replace("/login")
+                    window.location.replace("/")
                 }
             });
         }
@@ -140,7 +147,9 @@
         <input type="text" id="input-userId" class="form-control" placeholder="아이디" aria-label="Username"
                aria-describedby="basic-addon1">
         <div id="btn-check-dup" class="control is-hidden">
+            <button class="check-button" onclick="check_dup()">중복확인</button>
         </div>
+        <p id="help-id" class="is-danger">아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다</p>
     </div>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -150,14 +159,39 @@
             <input type="password" id="input-userPw" class="form-control" placeholder="비밀번호" aria-label="Username"
                    aria-describedby="basic-addon1">
         </div>
+        <p id="help-password" class="help is-hidden">영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요.</p>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+        </div>
+        <input type="password" id="input-userPw2" class="form-control is-safe" placeholder="비밀번호확인"
+               aria-label="Username"
+               aria-describedby="basic-addon1">
+        <p id="help-password2" class="help is-hidden"></p>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+        </div>
+        <input type="email" id="input-userMail" class="form-control" placeholder="이메일" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa-solid fa-face-grin-stars"></i></span>
+        </div>
+        <input type="text" id="input-nickname" class="form-control" placeholder="닉네임" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    프로필 사진을 업로드해주세요
+    <div class="filebox">
+        <input id="input-profileImg" class="upload-name" value="첨부파일" placeholder="첨부파일"><label for="file">파일찾기&nbsp<i
+            class="fa-solid fa-image"></i></label>
+        <input type="file" id="file">
     </div>
     <div class="button_form">
-        <button type="button" class="btn btn-lg login_button" onclick="location.href='/'">로그인</button>
-    </div>
-    <hr>
-    아직 EC2 회원이 아니신가요?
-    <div class="button_form">
-        <button type="button" class="btn btn-lg join_button" onclick="location.href='/join'">회원가입</button>
+        <button type="button" class="btn btn-lg join_button" onclick="join()">회원가입</button>
     </div>
 </div>
 </body>
