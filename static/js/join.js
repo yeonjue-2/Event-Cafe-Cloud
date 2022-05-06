@@ -18,7 +18,7 @@ function check_dup() {
     $('#help-id').addClass("is-loading")
     $.ajax({
         type: "POST",
-        url: "/api/join/double_check",
+        url: "/auth/api/join/double_check",
         data: {user_id_give: userId},
         success: function (response) {
             if (response["checkResult"]) {
@@ -79,14 +79,14 @@ function join() {
 
     $.ajax({
         type: "POST",
-        url: "/api/join",
+        url: "/auth/api/join",
         data: form_data,
         cache: false,
         contentType: false,
         processData: false,
         success: function (response) {
             alert("가입되었습니다!")
-            window.location.replace("/")
+            window.location.replace("/auth/")
         }
     });
 }

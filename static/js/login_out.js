@@ -20,7 +20,7 @@ function login() {
 
     $.ajax({
         type: "POST",
-        url: "/token_login",
+        url: "/auth/token_login",
         data: {
             user_id_give: $('#input-userId').val(),
             user_pw_give: $('#input-userPw').val()
@@ -28,9 +28,9 @@ function login() {
         success: function (response) {
             print(response)
             if (response['result'] == 'success') {
-                $.cookie('usertoken', response['token'], {path: '/'});
+                $.cookie('usertoken', response['token'], {path: '/auth/'});
                 alert('로그인 되었습니다!')
-                window.location.replace("/")
+                window.location.replace("/auth/")
             } else {
                 alert(response['msg'])
             }
