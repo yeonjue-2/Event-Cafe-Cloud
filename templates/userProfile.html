@@ -122,16 +122,18 @@
             let user_info = $('#input-userinfo').val()
             let user_img = $('#file')[0].files[0]
 
+            console.log(user_nickname, user_info, user_img)
+
             let form_data = new FormData()
 
-            console.log(form_data)
-            
             form_data.append("user_nickname_give", user_nickname)
             form_data.append("user_userinfo_give", user_info)
             form_data.append("user_profile_give", user_img)
 
+            console.log(form_data)
+
             $.ajax({
-                type: "PUT",
+                type: "POST",
                 url: "/user/api/update",
                 data: form_data,
                 cache: false,
@@ -198,13 +200,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-face-grin-stars"></i></span>
                         </div>
-                        <input type="text" id="input-nickname" class="form-control" placeholder="닉네임">
+                        <input type="text" id="input-nickname" class="form-control" placeholder="{{user.user_nickname}}">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-volume-off"></i></span>
                         </div>
-                        <textarea type="text" id="input-userinfo" class="form-control" placeholder="한 줄 소개를 작성해보세요!"></textarea>
+                        <textarea type="text" id="input-userinfo" class="form-control"
+                                  placeholder="{{user.user_info}}"></textarea>
                     </div>
                     프로필 사진을 업로드해주세요
                     <div class="filebox">

@@ -26,7 +26,6 @@ function login() {
             user_pw_give: $('#input-userPw').val()
         },
         success: function (response) {
-            print(response)
             if (response['result'] == 'success') {
                 $.cookie('usertoken', response['token'], {path: '/'});
                 alert('로그인 되었습니다!')
