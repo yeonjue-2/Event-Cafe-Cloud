@@ -1,9 +1,7 @@
-from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
-from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 from database import DB
 
@@ -58,7 +56,7 @@ def join():
         "user_pw": user_pw,
         "user_email": user_email,
         "user_nickname": user_nickname,
-        "user_profile": f"{user_id}/{extension}",
+        "user_profile": f"{user_id}.{extension}",
     }
     DB.insert(collection="users", data=doc)
     return jsonify({'result': 'success'})

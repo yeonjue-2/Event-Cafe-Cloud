@@ -2,7 +2,7 @@ import jwt
 from flask import request, render_template, Blueprint
 
 from database import DB
-from views.auth_views import SECRET_KEY
+from controller.auth_controller import SECRET_KEY
 
 bp = Blueprint('main', __name__)
 
