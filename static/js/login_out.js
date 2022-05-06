@@ -28,9 +28,9 @@ function login() {
         success: function (response) {
             print(response)
             if (response['result'] == 'success') {
-                $.cookie('usertoken', response['token'], {path: '/auth/'});
+                $.cookie('usertoken', response['token'], {path: '/'});
                 alert('로그인 되었습니다!')
-                window.location.replace("/auth/")
+                window.location.replace("/")
             } else {
                 alert(response['msg'])
             }

@@ -86,7 +86,7 @@ function join() {
         processData: false,
         success: function (response) {
             alert("가입되었습니다!")
-            window.location.replace("/auth/")
+            window.location.replace("/")
         }
     });
 }
