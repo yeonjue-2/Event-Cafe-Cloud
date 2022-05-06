@@ -1,5 +1,5 @@
 import jwt
-from flask import request, render_template, Blueprint
+from flask import request, render_template, Blueprint, jsonify
 
 from database import DB
 from controller.auth_controller import SECRET_KEY
@@ -19,3 +19,8 @@ def home():
         return render_template('index.html', msg="로그인 시간이 만료되었습니다.")
     except jwt.exceptions.DecodeError:
         return render_template('index.html', msg="로그인 정보가 없습니다!")
+
+@bp.route('/main', methods=['GET'])
+def show_cafes():
+    cafes = list(DB.cafes.find({}, {'_id': False}))
+    return jsonify({'cafes': cafes})
