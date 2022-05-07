@@ -1,6 +1,5 @@
 from flask import Flask
 import jwt
-# import config
 from database import DB
 
 app = Flask(__name__)

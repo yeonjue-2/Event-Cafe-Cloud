@@ -22,5 +22,9 @@ class DB(object):
     def update_one(collection, query, update):
         return DB.DATABASE[collection].update_one(query, update)
 
+    @staticmethod
+    def list(collection, query1, query2):
+        return list(DB.DATABASE[collection].find(query1, query2))
+
 
 

@@ -22,5 +22,6 @@ def home():
 
 @bp.route('/main', methods=['GET'])
 def show_cafes():
-    cafes = list(DB.cafes.find({}, {'_id': False}))
-    return jsonify({'cafes': cafes})
+
+    cafes = DB.list('cafes', {}, {'_id': False})
+    return jsonify({'result': 'success', 'cafes': cafes})

@@ -64,7 +64,7 @@
         margin: auto auto auto auto;
     }
 
-    .card-columns > card > btn-style {
+    .card > btn-style {
         background-color: #EAD0F2;
         float: right;
     }
@@ -85,10 +85,20 @@
                 success: function (response) {
                     let cafes = response['cafes']
                     for (let i = 0; i < cafes.length; i++) {
+                        let cafe_image = cafes[i]['cafe_image']
                         let cafe_name = cafes[i]['cafe_name']
                         let address = cafes[i]['address']
 
-                        let temp_html = ``
+                        let temp_html = `<div class="card" style="width: 18rem; border-radius: 10px;">
+                                            <img class="card-img-top" src="../static/profile_pics/ec2_logo.png" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h3 class="card-title">${cafe_name}</h3>
+                                                <p class="card-text">${address}</p>
+                                                <div class="btn-style">
+                                                    <button type="button" class="btn btn-outline-secondary" style="float: right;">
+                                                    <a href="#" style="color: dimgrey">둘러보기</a></button>
+                                                </div>
+                                          </div>`
                         $('#cards-box').append(temp_html)
                     }
                 }
@@ -105,7 +115,7 @@
     {% if msg %}
         <div class="welcome-message">
             guest님 환영합니다 &nbsp;&nbsp;&nbsp;
-            <button class="banner-button" onclick="location.href='/login'">로그인</button>
+            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>
         </div>
     {% else %}
         <div class="welcome-message">
@@ -140,7 +150,7 @@
 </div>
 
 <div class="wrap">
-    <div class="card-columns">
+    <div class="card-columns" id="cards-box">
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="..." alt="Card image cap">
             <div class="card-body">
@@ -152,6 +162,17 @@
                 </div>
 
           </div>
+        </div>
+    </div>
+    <div class="card-columns">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">카페이름</h5>
+                <p class="card-text">카페 동네</p>
+                <button type="button" class="btn btn-outline-secondary">
+                    <a href="#">둘러보기</a></button>
+            </div>
         </div>
     </div>
     <div class="card-columns">
