@@ -1,9 +1,7 @@
-from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
-from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 from database import DB
 
@@ -14,19 +12,6 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
-
-# @bp.route('/')
-# def home():
-#     token = request.cookies.get("usertoken")
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-#         user = DB.find_one("users", {"user_id": payload["user_id"]})
-#         print(user)
-#         return render_template('index.html', user=user)
-#     except jwt.ExpiredSignatureError:
-#         return render_template('index.html', msg="로그인 시간이 만료되었습니다.")
-#     except jwt.exceptions.DecodeError:
-#         return render_template('index.html', msg="로그인 정보가 없습니다!")
 
 @bp.route('/join')
 def join_form():
@@ -58,7 +43,7 @@ def join():
         "user_pw": user_pw,
         "user_email": user_email,
         "user_nickname": user_nickname,
-        "user_profile": f"{user_id}/{extension}",
+        "user_profile": f"{user_id}.{extension}",
     }
     DB.insert(collection="users", data=doc)
     return jsonify({'result': 'success'})
