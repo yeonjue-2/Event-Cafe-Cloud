@@ -42,6 +42,8 @@
 > flask
 > 
 > pymongo
+>
+> AWS
 
 ##### 주요기능
 
