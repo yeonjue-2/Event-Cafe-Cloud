@@ -27,7 +27,7 @@ function login() {
         },
         success: function (response) {
             if (response['result'] == 'success') {
-                $.cookie('usertoken', response['token'], {path: '/'});
+                $.cookie('jwt_token', response['token'], {path: '/'});
                 alert('로그인 되었습니다!')
                 window.location.replace("/")
             } else {
@@ -38,7 +38,7 @@ function login() {
 }
 
 function logout() {
-    $.removeCookie('usertoken', {path: '/'})
+    $.removeCookie('jwt_token', {path: '/'})
     alert('로그아웃!')
     window.location.href = "/"
 }

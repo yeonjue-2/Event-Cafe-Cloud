@@ -1,7 +1,7 @@
 import pymongo
 
-class DB(object):
 
+class DB(object):
     URI = "mongodb://localhost:27017"
 
     @staticmethod
@@ -16,7 +16,6 @@ class DB(object):
     @staticmethod
     def delete(collection, data):
         return DB.DATABASE[collection].delete_one(data)
-
 
     @staticmethod
     def find_one(collection, query):
@@ -34,5 +33,10 @@ class DB(object):
     def count_documents(collection, query1, query2):
         return DB.DATABASE[collection].find(query1, query2)
 
+    @staticmethod
+    def count(collection):
+        return DB.DATABASE[collection].estimated_document_count({})
 
-
+    @staticmethod
+    def idx_plus(collection):
+        return DB.DATABASE[collection].find_one(sort=[("idx", -1)])['idx'] + 1

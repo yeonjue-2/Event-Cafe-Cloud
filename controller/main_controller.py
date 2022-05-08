@@ -3,21 +3,19 @@ from flask import request, render_template, Blueprint, jsonify, url_for, redirec
 
 from database import DB
 from controller.auth_controller import SECRET_KEY
+from ectoekn import ECTOKEN
 
 bp = Blueprint('main', __name__)
 
 
 @bp.route('/')
 def home():
-    token = request.cookies.get("usertoken")
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        user = DB.find_one("users", {"user_id": payload["user_id"]})
+    user = ECTOKEN.get_token(object)
+    if user is not None:
         return render_template('index.html', user=user)
-    except jwt.ExpiredSignatureError:
-        return render_template('index.html', msg="로그인 시간이 만료되었습니다.")
-    except jwt.exceptions.DecodeError:
-        return render_template('index.html', msg="로그인 정보가 없습니다!")
+    else:
+        return render_template('index.html', msg="로그인 정보가 없습니다")
+
 
 
 @bp.route('/main', methods=['GET'])
@@ -72,3 +70,6 @@ def update_heart():
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
+
+
