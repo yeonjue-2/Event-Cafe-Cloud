@@ -1,6 +1,6 @@
-function toggle_heart(cafe_id, type) {
-            console.log(cafe_id, type)
-            let $a_heart = $(`#${cafe_id} a[aria-label='${type}']`)
+function toggle_heart(cafe_idx, type) {
+            console.log(cafe_idx, type)
+            let $a_heart = $(`#${cafe_idx} a[aria-label='${type}']`)
             let $i_heart = $a_heart.find("i")
             let full_icons = {"heart": "fa-heart", "bookmark": "fa-bookmark"};
             let empty_icons = {"heart": "fa-heart-o", "bookmark": "fa-bookmark-o"};
@@ -9,7 +9,7 @@ function toggle_heart(cafe_id, type) {
                     type: "POST",
                     url: "/update_heart",
                     data: {
-                        cafe_id_give: cafe_id,
+                        cafe_idx_give: cafe_idx,
                         type_give: type,
                         action_give: "unheart"
                     },
@@ -24,7 +24,7 @@ function toggle_heart(cafe_id, type) {
                     type: "POST",
                     url: "/update_heart",
                     data: {
-                        cafe_id_give: cafe_id,
+                        cafe_idx_give: cafe_idx,
                         type_give: type,
                         action_give: "heart"
                     },
@@ -56,7 +56,7 @@ function toggle_heart(cafe_id, type) {
             $("#cards-box").empty()
             $.ajax({
                 type: "GET",
-                url: "/main",
+                url: "/api/main",
                 data: {},
                 success: function (response) {
                     let cafes = response['cafes']
@@ -70,14 +70,14 @@ function toggle_heart(cafe_id, type) {
                         let class_bookmark = cafes['bookmark_by_me'] ? "fa-bookmark": "fa-bookmark-o"
 
 
-                        let temp_html = `<div class="card" id="${cafe["_id"]}" style="width: 18rem; border-radius: 10px;">
+                        let temp_html = `<div class="card" id="${cafe["idx"]}" style="width: 18rem; border-radius: 10px;">
                                             <img class="card-img-top" src="..." alt="Card image cap">
                                             <div class="card-body">
                                                 <h3 class="card-title">${cafe_name}</h3>
                                                 <p class="card-text">${address}</p>
                                                 <nav class="level is-mobile">
                                                     <div class="level-left">
-                                                        <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe["_id"]}', 'heart')">
+                                                        <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe["idx"]}', 'heart')">
                                                             <span class="icon is-small"><i class="fa ${class_heart}"
                                                                                            aria-hidden="true"></i></span>&nbsp;<span
                                                                 class="heart-num">${num2str(count_heart)}</span>
