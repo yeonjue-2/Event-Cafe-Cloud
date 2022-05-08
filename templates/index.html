@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
           rel="stylesheet">
 
+     <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -28,13 +30,16 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <meta charset="UTF-8">
+
     <!-- CSS 링크 -->
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
           rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet" type="text/css"/>
+
     <!-- JS 링크 -->
     <script src="../static/js/login_out.js"></script>
-    <link href="../static/css/index.css" rel="stylesheet" type="text/css"/>
+    <script src="../static/js/index.js"></script>
 
     <title>Event Cafe Cloude | EC2</title>
 
@@ -53,21 +58,11 @@
     .card-columns {
         display: flex;
         float : left;
-        margin: 0px;
-        padding: 10px;
+        width: 1000px;
+        margin: 0;
+        padding: 0;
     }
 
-    .card-columns > card {
-        border: 2px solid grey;
-        border-radius: 5px;
-        width: 21%;
-        margin: auto auto auto auto;
-    }
-
-    .card > btn-style {
-        background-color: #EAD0F2;
-        float: right;
-    }
 
 
 </style>
@@ -77,40 +72,12 @@
             listing()
         })
 
-        function listing() {
-            $.ajax({
-                type: "GET",
-                url: "/main",
-                data: {},
-                success: function (response) {
-                    let cafes = response['cafes']
-                    for (let i = 0; i < cafes.length; i++) {
-                        let cafe_image = cafes[i]['cafe_image']
-                        let cafe_name = cafes[i]['cafe_name']
-                        let address = cafes[i]['address']
-
-                        let temp_html = `<div class="card" style="width: 18rem; border-radius: 10px;">
-                                            <img class="card-img-top" src="../static/profile_pics/ec2_logo.png" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">${cafe_name}</h3>
-                                                <p class="card-text">${address}</p>
-                                                <div class="btn-style">
-                                                    <button type="button" class="btn btn-outline-secondary" style="float: right;">
-                                                    <a href="#" style="color: dimgrey">둘러보기</a></button>
-                                                </div>
-                                          </div>`
-                        $('#cards-box').append(temp_html)
-                    }
-                }
-            })
-        }
+        
 </script>
 
 </head>
 
 <body>
-
-<html>
 <section class="ec2-banner">
     {% if msg %}
         <div class="welcome-message">
@@ -150,85 +117,36 @@
 </div>
 
 <div class="wrap">
-    <div class="card-columns" id="cards-box">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">카페이름</h5>
-                <p class="card-text">카페 동네</p>
-                <div class="btn-style">
+{#     <div class="btn-group" role="group">#}
+{#        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#          지역#}
+{#        </button>#}
+{#        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">#}
+{#          <a class="dropdown-item" href="#">서울</a>#}
+{#          <a class="dropdown-item" href="#">대구</a>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+    <div class="container">
+        <div class="card-columns" id="cards-box">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">카페이름</h5>
+                    <p class="card-text">카페 동네</p>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <a class="level-item is-sparta" aria-label="heart" onclick="toggle_heart('', 'heart')">
+                                <span class="icon is-small"><i class="fa ${class_heart}"
+                                aria-hidden="true"></i></span>&nbsp;<span class="like-num"></span>
+                           </a>
+                        </div>
+                    </nav>
                     <button type="button" class="btn btn-outline-secondary">
                     <a href="#" style="color: dimgrey">둘러보기</a></button>
                 </div>
-
-          </div>
-        </div>
-    </div>
-    <div class="card-columns">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">카페이름</h5>
-                <p class="card-text">카페 동네</p>
-                <button type="button" class="btn btn-outline-secondary">
-                    <a href="#">둘러보기</a></button>
+              </div>
             </div>
-        </div>
-    </div>
-    <div class="card-columns">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">카페이름</h5>
-                <p class="card-text">카페 동네</p>
-                <button type="button" class="btn btn-outline-secondary">
-                    <a href="#">둘러보기</a></button>
-            </div>
-        </div>
-    </div>
-    <div class="card-columns">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">카페이름</h5>
-                <p class="card-text">카페 동네</p>
-                <button type="button" class="btn btn-outline-secondary">
-                    <a href="#">둘러보기</a></button>
-            </div>
-        </div>
-    </div>
-    <div class="card-columns">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">카페이름</h5>
-                <p class="card-text">카페 동네</p>
-                <button type="button" class="btn btn-outline-secondary">
-                    <a href="#">둘러보기</a></button>
-            </div>
-        </div>
-    </div>
-    <div class="card-columns">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">카페이름</h5>
-                <p class="card-text">카페 동네</p>
-                <button type="button" class="btn btn-outline-secondary">
-                    <a href="#">둘러보기</a></button>
-            </div>
-        </div>
-    </div>
-    <div class="card-columns">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">카페이름</h5>
-                <p class="card-text">카페 동네</p>
-                <button type="button" class="btn btn-outline-secondary">
-                    <a href="#">둘러보기</a></button>
-            </div>
-        </div>
     </div>
 </div>
 </body>
