@@ -14,10 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
           rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Kanit:ital,wght@1,500&family=Poor+Story&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
 
     <!-- Optional JavaScript -->
@@ -35,87 +34,13 @@
     <!-- CSS 링크 -->
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/profilestyle.css" rel="stylesheet" type="text/css"/>
+
     <!-- JS 링크 -->
     <script src="../static/js/login_out.js"></script>
 
     <title>Event Cafe Cloude | EC2</title>
 
-    <style>
-        .profileBox {
-            margin-top: 20px;
-            margin: auto;
-            text-align: center;
-            border: 2px solid lavender;
-            border-radius: 2%;
-            width: 800px;
-            padding-bottom: 20px;
-            background-color: lavender;
-            font-family: 'Poor Story', cursive;
-        }
-
-        .profile-user-img {
-            margin-top: 20px;
-            margin-right: auto;
-            margin-left: auto;
-            text-align: center;
-            width: 200px;
-            height: 200px;
-            border-radius: 70%;
-            overflow: hidden;
-        }
-
-        .profile-user-img-img {
-            width: 230px;
-            height: 230px;
-            object-fit: cover;
-            display: block;
-            margin: 0px auto;
-        }
-
-        .profile-nickname {
-            padding-top: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            color: black;
-        }
-
-        .profile-text {
-            margin-left: 10%;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            padding-left: 20px;
-            font-size: 30px;
-            color: #FFAFAF;
-            font-family: 'Kanit', sans-serif;
-            width: 250px;
-            border-bottom: 1px solid #FFAFAF;
-        }
-
-        .profile-info {
-            color: #999999;
-            margin-bottom: 20px
-        }
-
-        .cafeBtn {
-            background-color: mediumpurple;
-            color: white;
-            font-weight: bold;
-            font-family: 'Kanit', sans-serif;
-            border: lavender;
-            font-family: 'Poor Story', cursive;
-        }
-
-        .updBtn {
-            background-color: white;
-            color: mediumpurple;
-            font-weight: bold;
-            font-family: 'Kanit', sans-serif;
-            border: lavender;
-            font-family: 'Poor Story', cursive;
-        }
-
-
-    </style>
     <script>
         function updProfile() {
             let user_nickname = $('#input-nickname').val()
@@ -178,8 +103,13 @@
     {% endif %}
     <button type="button" class="btn btn-primary cafeBtn" data-toggle="modal" data-target="#exampleModal">
         프로필 수정
-    </button>&nbsp;&nbsp;
-    <button type="button" class="btn btn-outline-primary updBtn">내 카페 등록</button>
+    </button>
+    &nbsp;&nbsp;
+    {% if user["user_cafe"] %}
+    <button type="button" class="btn btn-outline-primary updBtn" onclick="location.href='/user/cafe/manage'">내 카페 관리</button>
+    {% else %}
+    <button type="button" class="btn btn-outline-primary updBtn" onclick="location.href='/user/cafe/register'">내 카페 등록</button>
+    {% endif %}
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -200,14 +130,15 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-face-grin-stars"></i></span>
                         </div>
-                        <input type="text" id="input-nickname" class="form-control" placeholder="{{user.user_nickname}}">
+                        <input type="text" id="input-nickname" class="form-control"
+                               placeholder="{{ user.user_nickname }}">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-volume-off"></i></span>
                         </div>
                         <textarea type="text" id="input-userinfo" class="form-control"
-                                  placeholder="{{user.user_info}}"></textarea>
+                                  placeholder="{{ user.user_info }}"></textarea>
                     </div>
                     프로필 사진을 업로드해주세요
                     <div class="filebox">

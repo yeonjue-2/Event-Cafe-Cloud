@@ -2,47 +2,90 @@ import jwt
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
 from controller.auth_controller import SECRET_KEY
 from database import DB
+from ectoekn import ECTOKEN
 
 bp = Blueprint('user', __name__, url_prefix='/user')
 
 
 @bp.route('/profile')
 def home():
-    token = request.cookies.get("usertoken")
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        user = DB.find_one("users", {"user_id": payload["user_id"]})
-        print(user)
+    user = ECTOKEN.get_token(object)
+    if user is not None:
         return render_template('userProfile.html', user=user)
-    except jwt.ExpiredSignatureError:
-        return render_template('userProfile.html', msg="로그인 시간이 만료되었습니다.")
-    except jwt.exceptions.DecodeError:
-        return render_template('userProfile.html', msg="로그인 정보가 없습니다!")
+    else:
+        return render_template('userProfile.html', msg="로그인 정보가 없습니다")
+
+
+@bp.route('/cafe/manage')
+def cafe_manage():
+    return render_template('cafeManagemetn.html')
+
+
+@bp.route('/cafe/register')
+def cafe_register_form():
+    user = ECTOKEN.get_token(object)
+    if user is None:
+        return render_template('cafeRegister.html')
+    else:
+        return render_template('cafeRegister.html', user=user)
+
+
+@bp.route('/api/cafe/register', methods=["POST"])
+def cafe_register():
+    user_id = ECTOKEN.get_user_id(object)
+    cafe_name = request.form['cafe_name_give']
+    cafe_short_info = request.form['cafe_short_info_give']
+    cafe_detail_info = request.form['cafe_info_give']
+    cafe_notice = request.form['cafe_notice_give']
+    cafe_image = request.files['cafe_image_give']
+    cafe_zipcode = request.form['cafe_zipcode_give']
+    cafe_address = request.form['cafe_address_give']
+    cafe_count = DB.count("cafes")
+    extension = cafe_image.filename.split('.')[-1]
+
+    save_to = f'static/cafe_pics/{user_id}_{cafe_name}.{extension}'
+    cafe_image.save(save_to)
+
+    if cafe_count == 0:
+        max_value = 1
+    else:
+        max_value = DB.idx_plus("cafes")
+
+    doc = {
+        "idx": max_value,
+        "user_id": user_id,
+        "cafe_name": cafe_name,
+        "cafe_short_info": cafe_short_info,
+        "cafe_detail_info": cafe_detail_info,
+        "cafe_notice": cafe_notice,
+        "cafe_image": f"{user_id}_{cafe_name}.{extension}",
+        "cafe_zipcode": cafe_zipcode,
+        "cafe_address": cafe_address
+    }
+
+    DB.update_one("users", {'user_id': user_id}, {'$set': {'cafe': 1}})
+    DB.insert(collection="cafes", data=doc)
+    return jsonify({'result': 'success'})
 
 
 @bp.route('/api/update', methods=["POST"])
 def update():
-    token = request.cookies.get("usertoken")
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        user_id = payload["user_id"]
-        user_nickname = request.form['user_nickname_give']
-        user_info = request.form['user_userinfo_give']
-        user_profile = request.files['user_profile_give']
+    user_id = ECTOKEN.get_user_id(object)
+    user_nickname = request.form['user_nickname_give']
+    user_info = request.form['user_userinfo_give']
+    user_profile = request.files['user_profile_give']
 
-        extension = user_profile.filename.split('.')[-1]
+    extension = user_profile.filename.split('.')[-1]
 
-        save_to = f'static/profile_pics/{user_id}.{extension}'
-        user_profile.save(save_to)
+    save_to = f'static/profile_pics/{user_id}.{extension}'
+    user_profile.save(save_to)
 
-        new_doc = {
-            "user_nickname": user_nickname,
-            "user_profile": f"{user_id}.{extension}",
-            "user_info": user_info,
-        }
+    new_doc = {
+        "user_nickname": user_nickname,
+        "user_profile": f"{user_id}.{extension}",
+        "user_info": user_info,
+    }
 
-        DB.update_one("users", {'user_id': user_id}, {'$set': new_doc})
-        return jsonify({'result': 'success'})
+    DB.update_one("users", {'user_id': user_id}, {'$set': new_doc})
+    return jsonify({'result': 'success'})
 
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
