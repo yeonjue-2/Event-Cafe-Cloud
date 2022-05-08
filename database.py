@@ -14,6 +14,10 @@ class DB(object):
         DB.DATABASE[collection].insert_one(data)
 
     @staticmethod
+    def delete(collection, data):
+        return DB.DATABASE[collection].delete_one(data)
+
+    @staticmethod
     def find_one(collection, query):
         return DB.DATABASE[collection].find_one(query)
 
@@ -24,6 +28,10 @@ class DB(object):
     @staticmethod
     def list(collection, query1, query2):
         return list(DB.DATABASE[collection].find(query1, query2))
+
+    @staticmethod
+    def count_documents(collection, query1, query2):
+        return DB.DATABASE[collection].find(query1, query2)
 
     @staticmethod
     def count(collection):

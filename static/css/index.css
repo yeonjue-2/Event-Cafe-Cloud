@@ -1,0 +1,50 @@
+.menu_bar {
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu_bar ul li {
+        list-style: none;
+    }
+
+    .menu_bar a {
+        text-decoration: none;
+        color: WHITE;
+    }
+
+    .menu_bar {
+        font-weight: bolder;
+        font-size: larger;
+        width: auto;
+        height: 80px;
+        background: #EAD0F2;
+        line-height: 80px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .menu_bar > ul > li {
+        float: left;
+        text-align: center;
+        width: 200px;
+        position: relative;
+    }
+
+    .menu_bar > ul > li > ul{
+        width: 200px;
+        display: none;
+        text-align-all: left;
+        font-size: 20px;
+        background: #EAD0F2;
+    }
+
+    .menu_bar > ul > li:hover > ul {
+        display: block;
+    }
+
+    .menu_bar > ul > li > ul > li:hover {
+        width: 200px;
+        margin-left: -40px;
+        background: #F5C0BE;
+        transition: ease 0.5s;
+    }
