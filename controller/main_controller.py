@@ -15,8 +15,8 @@ def home():
         for cafe in cafes:
             cafe_idx = str(cafe['idx'])
             cafe["count_heart"] = DB.count_documents('hearts', {"cafe_idx": cafe_idx, "type": "heart"})
-            cafe["heart_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]}))
-            cafe["bookmark_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]}))
+            cafe["heart_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
+            cafe["bookmark_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
         return render_template('index.html', user=user)
     else:
         return render_template('index.html', msg="로그인 정보가 없습니다")
