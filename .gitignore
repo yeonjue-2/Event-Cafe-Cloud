@@ -4,7 +4,6 @@
 .idea/inspectionProfiles/*
 .idea/vcs.xml
 .idea/.gitignore
-static/
 __pycache__/
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm
