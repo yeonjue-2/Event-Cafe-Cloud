@@ -30,8 +30,8 @@ class DB(object):
         return list(DB.DATABASE[collection].find(query1, query2))
 
     @staticmethod
-    def count_documents(collection, query1, query2):
-        return DB.DATABASE[collection].find(query1, query2)
+    def count_documents(collection, query):
+        return DB.DATABASE[collection].count_documents(query)
 
     @staticmethod
     def count(collection):
