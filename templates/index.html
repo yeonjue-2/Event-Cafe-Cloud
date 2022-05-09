@@ -63,8 +63,6 @@
         padding: 0;
     }
 
-
-
 </style>
 <script>
         $(document).ready(function () {
@@ -128,25 +126,27 @@
 {#      </div>#}
 {#    </div>#}
     <div class="container">
-        <div class="card-columns" id="cards-box">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="..." alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">카페이름</h5>
-                    <p class="card-text">카페 동네</p>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <a class="level-item is-sparta" aria-label="heart" onclick="toggle_heart('', 'heart')">
-                                <span class="icon is-small"><i class="fa ${class_heart}"
-                                aria-hidden="true"></i></span>&nbsp;<span class="like-num"></span>
-                           </a>
-                        </div>
-                    </nav>
-                    <button type="button" class="btn btn-outline-secondary">
-                    <a href="#" style="color: dimgrey">둘러보기</a></button>
+        <div class="row">
+            <div class="card-columns" id="cards-box">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">카페이름</h5>
+                        <p class="card-text">카페 동네</p>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+                                <a class="level-item is-sparta" aria-label="heart" onclick="toggle_heart('', 'heart')">
+                                    <span class="icon is-small"><i class="fa ${class_heart}"
+                                    aria-hidden="true"></i></span>&nbsp;<span class="like-num"></span>
+                               </a>
+                            </div>
+                        </nav>
+                        <button type="button" class="btn btn-outline-secondary">
+                        <a href="#" style="color: dimgrey">둘러보기</a></button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+        </div>
     </div>
 </div>
 </body>
