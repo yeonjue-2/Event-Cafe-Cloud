@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/fe92d18f9e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <meta charset="UTF-8">
+
+    <!-- 카카오 api-->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <!-- CSS 링크 -->
+    <link href="../../static/css/bannerstyle.css?ver=1" rel="stylesheet" type="text/css"/>
+    <link href="../../static/css/regcafestyle.css?ver=1" rel="stylesheet" type="text/css"/>
+
+    <!-- JS 링크 -->
+    <script type="text/javascript" src="../../static/js/login_out.js?ver=1"></script>
+
+    <script>
+        function findAddr() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var roadAddr = data.roadAddress; // 도로명 주소 변수
+                    var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('input_address_zipcode').value = data.zonecode;
+                    if (roadAddr !== '') {
+                        document.getElementById("input_address").value = roadAddr;
+                    } else if (jibunAddr !== '') {
+                        document.getElementById("input_address").value = jibunAddr;
+                    }
+                }
+            }).open();
+        }
+
+        function regCafe() {
+            let cafe_name = $('#input_cafeName').val()
+            let cafe_short_info = $('#input_cafe_short_info').val()
+            let cafe_info = $('#input_cafe_detail_info').val()
+            let cafe_notice = $('#input_cafe_notice').val()
+            let cafe_image = $('#file')[0].files[0]
+            let zipcode = $('#input_address_zipcode').val()
+            let cafe_address = $('#input_address').val()
+            let cafe_address_detail = $('#input_address_detail').val()
+            let form_data = new FormData()
+
+            form_data.append("cafe_name_give", cafe_name)
+            form_data.append("cafe_short_info_give", cafe_short_info)
+            form_data.append("cafe_info_give", cafe_info)
+            form_data.append("cafe_notice_give", cafe_notice)
+            form_data.append("cafe_image_give", cafe_image)
+            form_data.append("cafe_zipcode_give", zipcode)
+            form_data.append("cafe_address_give", cafe_address)
+            form_data.append("cafe_address_detail", cafe_address_detail)
+
+            $.ajax({
+                type: "POST",
+                url: "/user/api/cafe/register",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    alert("카페를 등록했습니다.")
+                    window.location.replace("/user/profile")
+                }
+            });
+        }
+
+    </script>
+
+    <title>Event Cafe Cloude | EC2</title>
+</head>
+
+<body>
+<section class="ec2-banner">
+    {% if msg %}
+        <div class="welcome-message">
+            guest님 환영합니다 &nbsp;&nbsp;&nbsp;
+            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>
+        </div>
+    {% else %}
+        <div class="welcome-message">
+            <a href="/user/profile">{{ user["user_nickname"] }}님</a> 환영합니다 &nbsp;&nbsp;
+            <button class="banner-button" onclick=logout()>로그아웃</button>
+        </div>
+    {% endif %}
+    <div class="banner-logo">
+        <img src="../../static/ec2_logo.png" onclick="location.href='/'">
+    </div>
+</section>
+<div class="register-form">
+    <fieldset>
+        <div class="cafe-register-title"><i class="fa-solid fa-cloud"></i>카페등록</div>
+        <div class="form-group">
+            <hr>
+            <div class="form-group">
+                <fieldset>
+                    <label class="form-label mt-4" for="readOnlyInput">아이디</label>
+                    <input class="form-control" id="readOnlyInput" type="text" placeholder="{{ user.user_id }}"
+                           readonly="">
+                </fieldset>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label mt-4" for="inputDefault">카페 이름</label>
+            <input type="text" class="form-control" id="input_cafeName">
+        </div>
+        <div class="form-group">
+            <label class="col-form-label mt-4" for="inputDefault">카페 한 줄 소개</label>
+            <input type="text" class="form-control" id="input_cafe_short_info">
+        </div>
+        <div class="form-group">
+            <label for="exampleTextarea" class="form-label mt-4">카페 소개</label>
+            <textarea class="form-control" id="input_cafe_detail_info" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleTextarea" class="form-label mt-4">예약 시 주의사항</label>
+            <textarea class="form-control" id="input_cafe_notice" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="formFile" class="form-label mt-4">카페 대표 이미지</label>
+            <input class="form-control" type="file" id="file">
+        </div>
+        <label class="col-form-label mt-4" for="inputDefault">카페 주소</label>
+        <div class="address_form">
+            <input id="input_address_zipcode" type="text" placeholder="Zip Code" readonly
+                   onclick="findAddr()">
+            <hr>
+            <input id="input_address" type="text" class="address" placeholder="Address" readonly>
+            <input id="input_address_detail" type="text" class="address_detail" placeholder="Detailed Address">
+        </div>
+        <button type="button" class="btn regBtn" onclick="regCafe()">저장하기</button>
+    </fieldset>
+</div>
+</body>
+</html>
