@@ -1,4 +1,5 @@
 import jwt
+import requests as requests
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
 from controller.auth_controller import SECRET_KEY
 from database import DB
@@ -40,6 +41,7 @@ def cafe_register():
     cafe_image = request.files['cafe_image_give']
     cafe_zipcode = request.form['cafe_zipcode_give']
     cafe_address = request.form['cafe_address_give']
+    cafe_address_detail = request.form['cafe_address_detail']
     cafe_count = DB.count("cafes")
     extension = cafe_image.filename.split('.')[-1]
 
@@ -51,6 +53,18 @@ def cafe_register():
     else:
         max_value = DB.idx_plus("cafes")
 
+    headers = {
+        "X-NCP-APIGW-API-KEY-ID": "rq6sgwt7kz",
+        "X-NCP-APIGW-API-KEY": "TsaTRhEbL4iTC5ne25dprSThp28vxAiHeOOnUEeA"
+    }
+    r = requests.get(f"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query={cafe_address}",
+                     headers=headers)
+    response = r.json()
+
+    if response["status"] == "OK":
+        x = float(response["addresses"][0]["x"])
+        y = float(response["addresses"][0]["y"])
+
     doc = {
         "idx": max_value,
         "user_id": user_id,
@@ -60,7 +74,10 @@ def cafe_register():
         "cafe_notice": cafe_notice,
         "cafe_image": f"{user_id}_{cafe_name}.{extension}",
         "cafe_zipcode": cafe_zipcode,
-        "cafe_address": cafe_address
+        "cafe_address": cafe_address,
+        "cafe_address_detail": cafe_address_detail,
+        "cafe_x": x,
+        "cafe_y": y
     }
 
     DB.update_one("users", {'user_id': user_id}, {'$set': {'cafe': 1}})
@@ -88,4 +105,3 @@ def update():
 
     DB.update_one("users", {'user_id': user_id}, {'$set': new_doc})
     return jsonify({'result': 'success'})
-
