@@ -105,7 +105,7 @@
         프로필 수정
     </button>
     &nbsp;&nbsp;
-    {% if user["user_cafe"] %}
+    {% if user["cafe"] %}
     <button type="button" class="btn btn-outline-primary updBtn" onclick="location.href='/user/cafe/manage'">내 카페 관리</button>
     {% else %}
     <button type="button" class="btn btn-outline-primary updBtn" onclick="location.href='/user/cafe/register'">내 카페 등록</button>

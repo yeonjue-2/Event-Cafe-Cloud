@@ -2,7 +2,6 @@ import jwt
 from flask import request, render_template, Blueprint, jsonify, url_for, redirect
 
 from database import DB
-from controller.auth_controller import SECRET_KEY
 from ectoekn import ECTOKEN
 
 bp = Blueprint('main', __name__)
@@ -26,7 +25,6 @@ def home():
 @bp.route('/event_cafe')
 def event_cafe():
     user = ECTOKEN.get_token(object)
-
     if user is None:
         return render_template('event_cafe.html')
     else:
@@ -51,7 +49,6 @@ def listing():
     return jsonify({"result": "success", 'cafes': cafes, 'events': events})
 
 
-
 @bp.route('/update_heart', methods=['POST'])
 def update_heart():
     user_id = ECTOKEN.get_user_id(object)
@@ -59,20 +56,17 @@ def update_heart():
     type_receive = request.form["type_give"]
     action_receive = request.form["action_give"]
 
+
     doc = {
         "user_id": user_id,
         "cafe_idx": cafe_idx_receive,
         "type": type_receive
     }
-
     if action_receive == "heart":
         DB.insert('hearts', doc)
     else:
         DB.delete('hearts', doc)
 
-    count = DB.count_documents('hearts', {"cafe_idx": cafe_idx_receive, "type": type_receive})
+    count = DB.count_documents("hearts", {"cafe_idx": cafe_idx_receive, "type": type_receive})
     return jsonify({"result": "success", "count": count})
-
-
-
 

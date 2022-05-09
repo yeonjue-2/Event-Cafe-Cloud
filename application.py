@@ -3,16 +3,16 @@ import jwt
 from database import DB
 
 app = Flask(__name__)
-DB.init()
+DB()
 
-# 블루프린트
-from controller import auth_controller, main_controller, user_controller
+from controller import auth_controller, main_controller, cafe_controller, user_controller
 
 app.register_blueprint(auth_controller.bp)
 app.register_blueprint(main_controller.bp)
+app.register_blueprint(cafe_controller.bp)
 app.register_blueprint(user_controller.bp)
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5007, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
 

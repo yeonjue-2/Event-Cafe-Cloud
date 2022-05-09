@@ -10,7 +10,7 @@ class ECTOKEN:
         token = request.cookies.get("jwt_token")
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-            user = DB.find_one("users", {"user_id": payload["user_id"]})
+            user = DB.find_one("users", {"user_id": payload["user_id"]}, {"_id": False})
             print(user)
             return user
         except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):

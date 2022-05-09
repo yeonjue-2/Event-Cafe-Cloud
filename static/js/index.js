@@ -1,64 +1,49 @@
-        $(document).ready(function () {
-            listing()
+$(document).ready(function () {
+    listing()
+})
+
+
+function toggle_heart(cafe_idx, type) {
+    if ($.cookie("jwt_token") === undefined) {
+        alert("로그인 후 이용해주세요")
+        return
+    }
+    let $a_heart = $(`#${cafe_idx} a[aria-label='${type}']`);
+    let $i_heart = $a_heart.find("i");
+    let full_icons = {"heart": "fa-heart", "bookmark": "fa-bookmark"};
+    let empty_icons = {"heart": "fa-heart-o", "bookmark": "fa-bookmark-o"};
+
+    if ($i_heart.hasClass(full_icons[type])) {
+        $.ajax({
+            type: "POST",
+            url: "/update_heart",
+            data: {
+                cafe_idx_give: cafe_idx,
+                type_give: type,
+                action_give: "unheart"
+            },
+            success: function (response) {
+                $i_heart.addClass(empty_icons[type]).removeClass(full_icons[type])
+                $a_heart.find("span.heart-num").text(num2str(response["count"]))
+            }
+        })
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/update_heart",
+            data: {
+                cafe_idx_give: cafe_idx,
+                type_give: type,
+                action_give: "heart"
+            },
+            success: function (response) {
+                $i_heart.addClass(full_icons[type]).removeClass(empty_icons[type])
+                $a_heart.find("span.heart-num").text(num2str(response["count"]))
+            }
         })
 
-
-
-        function toggle_heart(cafe_idx, type) {
-            if ($.cookie("jwt_token") === undefined) {
-                alert("로그인 후 이용해주세요")
-                return
-            }
-            let $a_heart = $(`#${cafe_idx} a[aria-label='${type}']`);
-            let $i_heart = $a_heart.find("i");
-            let full_icons = {"heart": "fa-heart", "bookmark": "fa-bookmark"};
-            let empty_icons = {"heart": "fa-heart-o", "bookmark": "fa-bookmark-o"};
-
-            if ($i_heart.hasClass(full_icons[type])) {
-                $.ajax({
-                    type: "POST",
-                    url: "/update_heart",
-                    data: {
-                        cafe_idx_give: cafe_idx,
-                        type_give: type,
-                        action_give: "unheart"
-                    },
-                    success: function (response) {
-                        $i_heart.addClass(empty_icons[type]).removeClass(full_icons[type])
-                        $a_heart.find("span.heart-num").text(num2str(response["count"]))
-                    }
-                })
-            } else {
-                $.ajax({
-                    type: "POST",
-                    url: "/update_heart",
-                    data: {
-                        cafe_idx_give: cafe_idx,
-                        type_give: type,
-                        action_give: "heart"
-                    },
-                    success: function (response) {
-                        $i_heart.addClass(full_icons[type]).removeClass(empty_icons[type])
-                        $a_heart.find("span.heart-num").text(num2str(response["count"]))
-                    }
-                })
-            }
-        }
-
-        function num2str(count) {
-            if (count > 10000) {
-                return parseInt(count / 1000) + "k"
-            }
-            if (count > 500) {
-                return parseInt(count / 100) / 10 + "k"
-            }
-            if (count == 0) {
-                return ""
-            }
-            return count
-        }
-
         function listing(event_category) {
+            // todo
             // if (event_category == undefined) {
             //     event_category = ""
             //}
@@ -74,9 +59,9 @@
                         let cafe_image = cafes[i]['cafe_image']
                         let cafe_name = cafes[i]['cafe_name']
                         let cafe_short_info = cafes[i]['cafe_short_info']
-                        let class_heart = cafes[i]['heart_by_me'] ? "fa-heart": "fa-heart-o"
+                        let class_heart = cafes[i]['heart_by_me'] ? "fa-heart" : "fa-heart-o"
                         let count_heart = cafes[i]['count_heart']
-                        let class_bookmark = cafes['bookmark_by_me'] ? "fa-bookmark": "fa-bookmark-o"
+                        let class_bookmark = cafes['bookmark_by_me'] ? "fa-bookmark" : "fa-bookmark-o"
 
                         let temp_html = `<div class="col-md-4">
                                            <div class="card" id="${cafe_idx}" style="width: 18rem; border-radius: 10px;">
@@ -107,4 +92,5 @@
                 }
             })
         }
-
+    }
+}

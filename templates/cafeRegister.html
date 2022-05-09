@@ -61,8 +61,8 @@
             let cafe_notice = $('#input_cafe_notice').val()
             let cafe_image = $('#file')[0].files[0]
             let zipcode = $('#input_address_zipcode').val()
-            let cafe_address = $('#input_address').val() + '/' + $('#input_address_detail').val()
-
+            let cafe_address = $('#input_address').val()
+            let cafe_address_detail = $('#input_address_detail').val()
             let form_data = new FormData()
 
             form_data.append("cafe_name_give", cafe_name)
@@ -72,6 +72,7 @@
             form_data.append("cafe_image_give", cafe_image)
             form_data.append("cafe_zipcode_give", zipcode)
             form_data.append("cafe_address_give", cafe_address)
+            form_data.append("cafe_address_detail", cafe_address_detail)
 
             $.ajax({
                 type: "POST",
