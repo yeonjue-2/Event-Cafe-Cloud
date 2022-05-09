@@ -58,7 +58,6 @@ def update_heart():
     cafe_idx_receive = request.form["cafe_idx_give"]
     type_receive = request.form["type_give"]
     action_receive = request.form["action_give"]
-    print(cafe_idx_receive, type_receive, action_receive)
 
     doc = {
         "user_id": user_id,

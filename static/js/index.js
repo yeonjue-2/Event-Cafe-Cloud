@@ -5,11 +5,15 @@
 
 
         function toggle_heart(cafe_idx, type) {
-            console.log(cafe_idx, type)
+            if ($.cookie("jwt_token") === undefined) {
+                alert("로그인 후 이용해주세요")
+                return
+            }
             let $a_heart = $(`#${cafe_idx} a[aria-label='${type}']`);
             let $i_heart = $a_heart.find("i");
             let full_icons = {"heart": "fa-heart", "bookmark": "fa-bookmark"};
             let empty_icons = {"heart": "fa-heart-o", "bookmark": "fa-bookmark-o"};
+
             if ($i_heart.hasClass(full_icons[type])) {
                 $.ajax({
                     type: "POST",
@@ -20,7 +24,6 @@
                         action_give: "unheart"
                     },
                     success: function (response) {
-                        console.log(response)
                         $i_heart.addClass(empty_icons[type]).removeClass(full_icons[type])
                         $a_heart.find("span.heart-num").text(num2str(response["count"]))
                     }
@@ -35,12 +38,10 @@
                         action_give: "heart"
                     },
                     success: function (response) {
-                        console.log("heart")
                         $i_heart.addClass(full_icons[type]).removeClass(empty_icons[type])
                         $a_heart.find("span.heart-num").text(num2str(response["count"]))
                     }
                 })
-
             }
         }
 
@@ -83,16 +84,16 @@
                                             <div class="card-body">
                                                 <h3 class="card-title">${cafe_name}&nbsp;&nbsp;<a class="level-item is-sparta" aria-label="bookmark" onclick="toggle_heart('${cafe_idx}', 'bookmark')" style="color: dodgerblue">
                                                             <span class="icon is-small"><i class="fa ${class_bookmark}"
-                                                                                           aria-hidden="true"></i>
+                                                                                           aria-hidden="true"> </i>
                                                         </a></h3>
                                                 <p class="card-text">${cafe_short_info}</p>
                                                 <nav class="level is-mobile">
                                                     <div class="level-left">
-                                                        <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe_idx}', 'heart')">
-                                                            <span class="icon is-small">
-                                                            <i class="fa ${class_heart}" aria-hidden="true"></i>
-                                                            </span>&nbsp;<span class="heart-num">${num2str(count_heart)}</span>
-                                                        </a>                                                                                                               
+                                                            <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe_idx}', 'heart')">
+                                                                <span class="icon is-small">
+                                                                <i class="fa ${class_heart}" aria-hidden="true"></i>
+                                                                </span>&nbsp;<span class="heart-num">${num2str(count_heart)}</span>
+                                                            </a>                                                                                                                                                                                                                                                                  
                                                     </div>
                                                 </nav>
                                                 <div class="btn-style">
