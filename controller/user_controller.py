@@ -19,14 +19,18 @@ def home():
 
 @bp.route('/cafe/manage')
 def cafe_manage():
-    return render_template('cafeManagemetn.html')
+    user = ECTOKEN.get_token(object)
+    if user is None:
+        return render_template('index.html')
+    else:
+        return render_template('cafeManagement.html', user=user)
 
 
 @bp.route('/cafe/register')
 def cafe_register_form():
     user = ECTOKEN.get_token(object)
     if user is None:
-        return render_template('cafeRegister.html')
+        return render_template('index.html')
     else:
         return render_template('cafeRegister.html', user=user)
 
