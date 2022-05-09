@@ -14,7 +14,7 @@ def home():
     if user is not None:
         cafes = DB.list('cafes', {}, {'_id': False})
         for cafe in cafes:
-            cafe_idx = str(cafe["idx"])
+            cafe_idx = str(cafe['idx'])
             cafe["count_heart"] = DB.count_documents('hearts', {"cafe_idx": cafe_idx, "type": "heart"})
             cafe["heart_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]}))
             cafe["bookmark_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]}))
@@ -44,15 +44,15 @@ def listing():
         events = DB.list('events', {'event_category': event_category_receive}, {'_id': False})
 
     for cafe in cafes:
-        cafe_idx = str(cafe["idx"])
+        cafe_idx = str(cafe['idx'])
         cafe["count_heart"] = DB.count_documents('hearts', {"cafe_idx": cafe_idx, "type": "heart"})
         cafe["heart_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "heart", "user_id": user_id}))
         cafe["bookmark_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user_id}))
-    return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", 'cafes': cafes, 'events': events})
+    return jsonify({"result": "success", 'cafes': cafes, 'events': events})
 
 
 
-@bp.route('/update_haert', methods=['POST'])
+@bp.route('/update_heart', methods=['POST'])
 def update_heart():
     user_id = ECTOKEN.get_user_id(object)
     cafe_idx_receive = request.form["cafe_idx_give"]
@@ -67,11 +67,12 @@ def update_heart():
     }
 
     if action_receive == "heart":
-        DB.insert_one('hearts', doc)
+        DB.insert('hearts', doc)
     else:
-        DB.delete_one('hearts', doc)
-        count = DB.count_documents('hearts', {"cafe_idx": cafe_idx_receive, "type": type_receive})
-        return jsonify({"result": "success", 'msg': 'updated', "count": count})
+        DB.delete('hearts', doc)
+
+    count = DB.count_documents('hearts', {"cafe_idx": cafe_idx_receive, "type": type_receive})
+    return jsonify({"result": "success", "count": count})
 
 
 
