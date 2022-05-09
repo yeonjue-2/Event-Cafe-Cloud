@@ -1,5 +1,10 @@
 .idea/Event-Cafe-Cloud.iml
 .idea/misc.xml
+.idea/modules.xml
+.idea/inspectionProfiles/*
+.idea/vcs.xml
+.idea/.gitignore
+__pycache__/
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm
