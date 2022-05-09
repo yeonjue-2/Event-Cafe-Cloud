@@ -21,7 +21,6 @@ def home():
     else:
         return render_template('index.html', msg="로그인 정보가 없습니다")
 
-
 @bp.route('/event_cafe')
 def event_cafe():
     user = ECTOKEN.get_token(object)
@@ -29,7 +28,6 @@ def event_cafe():
         return render_template('event_cafe.html')
     else:
         return render_template('event_cafe.html', user=user)
-
 
 @bp.route('/listing', methods=['GET'])
 def listing():
@@ -48,20 +46,19 @@ def listing():
         cafe["bookmark_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user_id}))
     return jsonify({"result": "success", 'cafes': cafes, 'events': events})
 
-
 @bp.route('/update_heart', methods=['POST'])
 def update_heart():
     user_id = ECTOKEN.get_user_id(object)
     cafe_idx_receive = request.form["cafe_idx_give"]
     type_receive = request.form["type_give"]
     action_receive = request.form["action_give"]
-
-
+    
     doc = {
         "user_id": user_id,
         "cafe_idx": cafe_idx_receive,
         "type": type_receive
     }
+
     if action_receive == "heart":
         DB.insert('hearts', doc)
     else:
@@ -69,4 +66,3 @@ def update_heart():
 
     count = DB.count_documents("hearts", {"cafe_idx": cafe_idx_receive, "type": type_receive})
     return jsonify({"result": "success", "count": count})
-
