@@ -22,5 +22,11 @@ class DB(object):
     def update_one(collection, query, update):
         return DB.DATABASE[collection].update_one(query, update)
 
+    @staticmethod
+    def select_all(collection):
+        return list(DB.DATABASE[collection].find({},{'_id':False}).sort("reg_date", -1));
+
+
+
 
 
