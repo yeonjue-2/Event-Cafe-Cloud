@@ -4,8 +4,7 @@ import pymongo
 class DB(object):
     URI = "mongodb://localhost:27017"
 
-    @staticmethod
-    def init():
+    def __init__(self):
         client = pymongo.MongoClient(DB.URI)
         DB.DATABASE = client['event_cafe_cloud']
 
@@ -18,23 +17,23 @@ class DB(object):
         return DB.DATABASE[collection].delete_one(data)
 
     @staticmethod
-    def find_one(collection, query):
-        return DB.DATABASE[collection].find_one(query)
+    def find_one(collection, included_query, excluded_query):
+        return DB.DATABASE[collection].find_one(included_query, excluded_query)
 
     @staticmethod
-    def update_one(collection, query, update):
-        return DB.DATABASE[collection].update_one(query, update)
+    def update_one(collection, find_query, update_query):
+        return DB.DATABASE[collection].update_one(find_query, update_query)
 
     @staticmethod
-    def list(collection, query1, query2):
-        return list(DB.DATABASE[collection].find(query1, query2))
+    def list(collection, included_query, excluded_query):
+        return list(DB.DATABASE[collection].find(included_query, excluded_query))
 
     @staticmethod
     def count_documents(collection, query):
         return DB.DATABASE[collection].count_documents(query)
 
     @staticmethod
-    def count(collection):
+    def count_collection(collection):
         return DB.DATABASE[collection].estimated_document_count({})
 
     @staticmethod

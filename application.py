@@ -3,7 +3,7 @@ import jwt
 from database import DB
 
 app = Flask(__name__)
-DB.init()
+DB()
 
 from controller import auth_controller, main_controller, cafe_controller, user_controller
 
