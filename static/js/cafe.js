@@ -5,7 +5,6 @@ function showCafeDetail(){
         type:'GET',
         url:'/api/cafe/detail/'+id,
         success:(response)=>{
-            console.log(response);
             let cafe_id = response['cafes']['cafe_id'];
             let cafe_name = response['cafes']['cafe_name'];
             let cafe_info = response['cafes']['cafe_detail_info'];
@@ -23,12 +22,14 @@ function showCafeDetail(){
 
     })
 }
+
 function kakaoMapAPI(x, y) {
     let container = document.getElementById('map');
     let options = { //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(x, y), //지도의 중심좌표.
         level: 3 //지도의 레벨(확대, 축소 정도)
     };
-    new kakao.maps.Map(container, options);
+    console.log(options);
+    let map = new kakao.maps.Map(container, options);
 }
 

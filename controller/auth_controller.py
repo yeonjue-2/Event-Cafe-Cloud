@@ -52,7 +52,7 @@ def join():
 @bp.route("/api/join/double_check", methods=["POST"])
 def double_check():
     user_id = request.form['user_id_give']
-    checkResult = bool(DB.find_one("users", {"user_id": user_id}))
+    checkResult = bool(DB.find_one("users", {"user_id": user_id},{'_id':False}))
     return jsonify({'result': 'success', 'checkResult': checkResult})
 
 
