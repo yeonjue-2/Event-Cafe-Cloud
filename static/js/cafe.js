@@ -36,7 +36,8 @@ function kakaoMapAPI(x, y) {
 function regReview() {
     let cafe_idx = new URLSearchParams(location.search).get('id');
     let cafe_rating = $('input[name=rating]:checked').val();
-    let cafe_review = $('input-cafe-review').val();
+    let cafe_review = $('#input-cafe-review').val();
+    console.log(cafe_idx, cafe_rating, cafe_review)
 
     $.ajax({
         type: "POST",
@@ -48,7 +49,9 @@ function regReview() {
         },
         success: function (response) {
             alert("리뷰를 등록했습니다.")
-            window.location.replace("/cafe/detail?id="+cafe_idx)
+            window.location.replace("/cafe/detail?id=" + cafe_idx)
         }
     });
 }
+
+

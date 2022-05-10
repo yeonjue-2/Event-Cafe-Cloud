@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, jsonify, render_template, request
 from database import DB
-from ectoekn import ECTOKEN
+from ectoken import ECTOKEN
 
 bp = Blueprint('cafe', __name__)
 
@@ -27,7 +27,7 @@ def getCafeDetail(cafeId):
     return jsonify(response)
 
 
-@bp.route('/api/cafe/review', methods=["POST"])
+@bp.route('/api/cafe/regReview', methods=["POST"])
 def regCafeReview():
     user_id = ECTOKEN.get_user_id(object)
     cafe_idx = request.form['cafe_idx_give']
