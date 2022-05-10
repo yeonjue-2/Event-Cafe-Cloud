@@ -46,81 +46,108 @@
 
 </head>
 <body>
-<section class="ec2-banner">
-    {#    {% if msg %}#}
-    {#        <div class="welcome-message">#}
-    {#            guest님 환영합니다 &nbsp;&nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>#}
-    {#        </div>#}
-    {#    {% else %}#}
-    {#        <div class="welcome-message">#}
-    {#            {{ user["user_nickname"] }}님 환영합니다 &nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick=logout()>로그아웃</button>#}
-    {#        </div>#}
-    {#    {% endif %}#}
-    <div class="banner-logo">
-        <img src="../static/ec2_logo.png" onclick="location.href='/'">
-    </div>
-</section>
-<main>
-    <left>
-        <div class="cafe-info">
-            <div class="wrap-rating">
-                <div class='star-rating'>
-                    <span></span>
-                </div>
-                <div class="number-rating">
-                    3.5
+    <section class="ec2-banner">
+        {#    {% if msg %}#}
+        {#        <div class="welcome-message">#}
+        {#            guest님 환영합니다 &nbsp;&nbsp;&nbsp;#}
+        {#            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>#}
+        {#        </div>#}
+        {#    {% else %}#}
+        {#        <div class="welcome-message">#}
+        {#            {{ user["user_nickname"] }}님 환영합니다 &nbsp;&nbsp;#}
+        {#            <button class="banner-button" onclick=logout()>로그아웃</button>#}
+        {#        </div>#}
+        {#    {% endif %}#}
+        <div class="banner-logo">
+            <img src="../static/ec2_logo.png" onclick="location.href='/'">
+        </div>
+    </section>
+    <main>
+        <left>
+            <div class="cafe-info">
+                <div class="wrap-rating">
+                    <div class='star-rating'>
+                        <span></span>
+                    </div>
+                    <div class="number-rating">
+                        3.5
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="cafe-img">
-            <img src="../static/cafe1.png">
-        </div>
-        <table class="scriptCalendar">
-            <thead>
-            <tr class="day-bar">
-                <td onClick="prevCalendar();" style="cursor:pointer;">&#60;&#60;</td>
-                <td colspan="5">
-                    <span id="calYear">YYYY</span>년
-                    <span id="calMonth">MM</span>월
-                </td>
-                <td onClick="nextCalendar();" style="cursor:pointer;">&#62;&#62;</td>
-            </tr>
-            <tr>
-                <td class="day">일</td>
-                <td class="day">월</td>
-                <td class="day">화</td>
-                <td class="day">수</td>
-                <td class="day">목</td>
-                <td class="day">금</td>
-                <td class="day">토</td>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <button class="banner-button" id="reservation-button">예약하기</button>
-    </left>
-    <right>
-        <h1 id="cafe-name"></h1>
-        <article class="cafe-info box">
-            <h3>카페 소개</h3>
-            <p id="info"></p>
-        </article>
-        <article class="cafe-location box">
-            <h3>카페 위치</h3>
-            <div id="map"></div>
-        </article>
-        <article class="cafe-reviews box">
-            <h3>카페 후기</h3>
-            <p id="review">56565656</p>
-        </article>
-        <article class="cafe-notice box">
-            <h3>이용 안내</h3>
-            <p id="notice">787878787</p>
-        </article>
-    </right>
-</main>
+            <div class="cafe-img">
+                <img src="../static/cafe1.png">
+            </div>
+            <table class="scriptCalendar">
+                <thead>
+                <tr class="day-bar">
+                    <td onClick="prevCalendar();" style="cursor:pointer;">&#60;&#60;</td>
+                    <td colspan="5">
+                        <span id="calYear">YYYY</span>년
+                        <span id="calMonth">MM</span>월
+                    </td>
+                    <td onClick="nextCalendar();" style="cursor:pointer;">&#62;&#62;</td>
+                </tr>
+                <tr>
+                    <td class="day">일</td>
+                    <td class="day">월</td>
+                    <td class="day">화</td>
+                    <td class="day">수</td>
+                    <td class="day">목</td>
+                    <td class="day">금</td>
+                    <td class="day">토</td>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="banner-button" id="reservation-button">예약하기</button>
+        </left>
+        <right>
+            <h1 id="cafe-name"></h1>
+            <article class="cafe-info box">
+                <h3>카페 소개</h3>
+                <p id="info"></p>
+            </article>
+            <article class="cafe-location box">
+                <h3>카페 위치</h3>
+                <div id="map"></div>
+            </article>
+            <article class="cafe-reviews box">
+                <h3>카페 후기</h3>
+                <p id="review">56565656</p>
+            </article>
+            <article class="cafe-notice box">
+                <h3>이용 안내</h3>
+                <p id="notice">787878787</p>
+            </article>
+        </right>
+    </main>
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+              <article>예약 내역</article>
+          </div>
+          <div class="modal-body">
+              <div class="wrap-modal">
+                  <div class="kind">카테고리 : </div>
+                  <div id="modal-category">kpop</div>
+              </div>
+              <div class="wrap-modal">
+                  <div class="kind">이벤트명 : </div>
+                  <div id="modal-event-name">카리나love~love~love~~</div>
+              </div>
+              <div class="wrap-modal">
+                  <div class="kind">행사 : </div>
+                  <div id="modal-event-info">컵홀더 이벤트, 포카 무료나눔,카리나 사인회</div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
