@@ -16,10 +16,7 @@ def routeCafeDetail():
 def getCafeDetail(cafeId):
     cafes = DB.find_one('cafes', {'idx': int(cafeId)}, {'_id': False})
     events = DB.list('event', {'cafe_id': cafeId}, {'_id': False})
-    reviews = []
-    for event in events:
-        review = DB.list('reviews', {'event_id': event['event_id']}, {'_id': False})
-        reviews.append(review)
+    reviews = DB.list('reviews', {'cafe_id': cafeId}, {'_id': False})
     response = {
         'cafes': cafes,
         'reviews': reviews
@@ -35,7 +32,7 @@ def regCafeReview():
     cafe_review = request.form['cafe_review_give']
 
     today = datetime.now()
-    create_date = today.strftime('%Y-%m-%d-%H-%M-%S')
+    create_date = today.strftime('%Y-%m-%d')
 
     reviews_count = DB.count_collection("reviews")
     if reviews_count == 0:

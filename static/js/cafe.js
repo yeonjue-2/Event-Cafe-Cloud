@@ -6,12 +6,13 @@ function showCafeDetail() {
         type: 'GET',
         url: '/api/cafe/detail/' + id,
         success: (response) => {
+            console.log(response)
             let cafe_id = response['cafes']['cafe_id'];
             let cafe_name = response['cafes']['cafe_name'];
             let cafe_info = response['cafes']['cafe_detail_info'];
             let address = response['cafes']['address'];
             let cafe_image = response['cafes']['cafe_image'];
-            // let reviews = response['reviews'];
+            let reviews = response['reviews']
             let x = response['cafes']['cafe_x'];
             let y = response['cafes']['cafe_y'];
             let cafe_notice = response['cafes']['cafe_notice'];
@@ -19,6 +20,21 @@ function showCafeDetail() {
             $('#info').text(cafe_info);
             $('#notice').text(cafe_notice);
             kakaoMapAPI(x, y);
+
+            for (let i = 0; i < reviews.length; i++) {
+                let user_id = reviews[i]['user_id']
+                let cafe_rating = reviews[i]['cafe_rating']
+                let cafe_review = reviews[i]['cafe_review']
+                let create_date = reviews[i]['create_date']
+
+                let temp_html = `<div class="card" >
+                                    <div class="card-body">
+                                         <div class="nicknameAndId">${user_id} ${cafe_rating}<div class="create-time">${create_date}</div></div>
+                                         <div class="reviewContent">${cafe_review}</div>
+                                    </div>
+                                 </div>`
+                $('#review').append(temp_html)
+            }
         }
     });
 }

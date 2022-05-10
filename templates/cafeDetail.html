@@ -31,7 +31,6 @@
     <meta charset="UTF-8">
     <!-- CSS 링크 -->
     <link href="../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../static/css/cafeprofilestyle.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/starRivew.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/cafe.css" rel="stylesheet" type="text/css"/>
@@ -107,7 +106,7 @@
         <h1 id="cafe-name"></h1>
         <article class="cafe-info box">
             <h3>카페 소개</h3>
-            <p id="info"></p>
+            <p id="info">좋은 카페에용</p>
         </article>
         <article class="cafe-location box">
             <h3>카페 위치</h3>
@@ -117,17 +116,24 @@
             <h3>이용 안내</h3>
             <p id="notice">787878787</p>
         </article>
-        <article class="cafe-reviews box">
+        <article>
             <div class="register-review">
                 <p>
                 <h3 width="100%">카페 후기</h3>
-                <button type="button" class="btn btn-primary cafeBtn" data-toggle="modal"
+                <button type="button" class="btn btn-primary reviewBtn" data-toggle="modal"
                         data-target="#exampleModal">
-                    리뷰 등록
+                    리뷰 남기기 <i class="fa-solid fa-pen-nib"></i>
                 </button>
                 </p>
             </div>
-            <p id="review">56565656</p>
+            <div class="review" id="review">
+                <div class="card" >
+                    <div class="card-body">
+                        <div class="nicknameAndId">메구 (mediho) <div class="create-time">작성시간</div></div>
+                        <div class="reviewContent">This is some text within a card body.</div>
+                    </div>
+                </div>
+            </div>
         </article>
     </right>
 </main>
@@ -167,7 +173,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary cafeBtn" onclick="regReview()">저장하기</button>
+                    <button type="button" class="btn btn-primary reviewBtn" onclick="regReview()">저장하기</button>
                 </div>
             </div>
         </div>
