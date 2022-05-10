@@ -48,7 +48,7 @@ function regReview() {
         },
         success: function (response) {
             alert("리뷰를 등록했습니다.")
-            window.location.replace("/cafe/detail?id="+idx)
+            window.location.replace("/cafe/detail?id="+cafe_idx)
         }
     });
 }
