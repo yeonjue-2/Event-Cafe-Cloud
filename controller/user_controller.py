@@ -41,6 +41,9 @@ def cafe_register_form():
 
 @bp.route('api/cafe/management', methods=["GET"])
 def show_cafe_manage():
+    ###############################
+    #todo 이벤트 DB 생성후, 추가 예정#
+    ###############################
     return
 
 
