@@ -5,16 +5,19 @@ function showCafeDetail(){
         type:'GET',
         url:'/api/cafe/detail/'+id,
         success:(response)=>{
-            let cafe_id = response['cafe_id'];
-            let cafe_name = response['cafe_name'];
-            let cafe_info = response['cafe_info'];
-            let address = response['address'];
-            let cafe_image = response['cafe_image'];
+            console.log(response);
+            let cafe_id = response['cafes']['cafe_id'];
+            let cafe_name = response['cafes']['cafe_name'];
+            let cafe_info = response['cafes']['cafe_detail_info'];
+            let address = response['cafes']['address'];
+            let cafe_image = response['cafes']['cafe_image'];
             // let reviews = response['reviews'];
-            let x = response['x'];
-            let y = response['y'];
+            let x = response['cafes']['cafe_x'];
+            let y = response['cafes']['cafe_y'];
+            let cafe_notice = response['cafes']['cafe_notice'];
             $('#cafe-name').text(cafe_name);
             $('#info').text(cafe_info);
+            $('#notice').text(cafe_notice);
             kakaoMapAPI(x,y);
         }
 
