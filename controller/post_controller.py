@@ -14,7 +14,7 @@ def board():
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     user = DB.find_one("users", {"user_id": payload["user_id"]})
 
-    return render_template('userboard_prac.html', user=user)
+    return render_template('userBorad.html', user=user)
 
 # 게시글 전체 조회
 @bp.route('/post/list', methods=["POST"])
