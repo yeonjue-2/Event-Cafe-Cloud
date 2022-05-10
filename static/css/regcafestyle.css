@@ -1,0 +1,39 @@
+.register-form {
+    width: 50%;
+    margin: auto;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.cafe-register-title {
+    font-size: 25px;
+    text-align: center;
+    color: white;
+    background-color: #FFAFAF;
+    width: 100%;
+    margin-botton: 20px;
+}
+
+.address_form {
+    margin-bottom: 30px;
+    border: 1px solid #dddddd;
+    padding: 10px;
+}
+
+.regBtn {
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #FFAFAF;
+    border-bottom: #FFAFAF;
+    color: white;
+    font-weight: bold;
+}
+
+.address {
+    width: 60%;
+    border: #999999;
+}
+
+.address_detail {
+    width: 30%;
+    border: #999999;
+}

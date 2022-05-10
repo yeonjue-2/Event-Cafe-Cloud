@@ -12,9 +12,10 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -28,14 +29,45 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <meta charset="UTF-8">
+
     <!-- CSS 링크 -->
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
+          rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet" type="text/css"/>
+
     <!-- JS 링크 -->
     <script src="../static/js/login_out.js"></script>
+    <script src="../static/js/index.js"></script>
 
     <title>Event Cafe Cloude | EC2</title>
 
 </head>
+<style type="text/css">
+    * {
+        font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    .wrap {
+        margin: auto;
+        padding: 80px;
+        width: 1100px;
+    }
+
+    .card-columns {
+        display: flex;
+        float: left;
+        width: 1000px;
+        margin: 0;
+        padding: 0;
+    }
+
+
+</style>
+
+
+</head>
+
 <body>
 <section class="ec2-banner">
     {% if msg %}
@@ -53,5 +85,63 @@
         <img src="../static/ec2_logo.png" onclick="location.href='/'">
     </div>
 </section>
+
+<div id="menu" class="menu_bar">
+    <ul>
+        <li><a href="#">CAFE</a>
+            <ul class="ul-bars">
+                <li><a href="#">K-POP</a></li>
+                <li><a href="#">Influencer</a></li>
+                <li><a href="#">Animation</a></li>
+                <li><a href="#">Webtoon</a></li>
+                <li><a href="#">Novel</a></li>
+            </ul>
+        </li>
+        <li><a href="#">COMMUNITY</a>
+            <ul class="ul-bars">
+                <li><a href="#">SUB_MENU</a></li>
+            </ul>
+        </li>
+        <li><a href="#">공지사항</a>
+        </li>
+    </ul>
+</div>
+
+<div class="wrap">
+    {#     <div class="btn-group" role="group">#}
+    {#        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+    {#          지역#}
+    {#        </button>#}
+    {#        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">#}
+    {#          <a class="dropdown-item" href="#">서울</a>#}
+    {#          <a class="dropdown-item" href="#">대구</a>#}
+    {#        </div>#}
+    {#      </div>#}
+    {#    </div>#}
+    <div class="container">
+        <div class="row">
+            <div class="card-columns" id="cards-box">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">카페이름</h5>
+                        <p class="card-text">카페 동네</p>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+                                <a class="level-item is-sparta" aria-label="heart" onclick="toggle_heart('', 'heart')">
+                                    <span class="icon is-small"><i class="fa ${class_heart}"
+                                    aria-hidden="true"></i></span>&nbsp;<span class="like-num"></span>
+                               </a>
+                            </div>
+                        </nav>
+                        <button type="button" class="btn btn-outline-secondary">
+                        <a href="#" style="color: dimgrey">둘러보기</a></button>
+                    </div>
+                  </div>
+                </div>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>

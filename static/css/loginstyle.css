@@ -1,3 +1,7 @@
+* {
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
 textarea:focus {
     outline: none;
 }
@@ -98,7 +102,7 @@ p {
 
 .check-button {
     border: #FFAFAF;
-    width: 70px;
+    width: 80px;
     border-radius: 10px;
     color: white;
     background-color: lightpink;

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/fe92d18f9e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <!-- CSS 링크 -->
+    <link href="../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/cafe.css" rel="stylesheet" type="text/css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <!-- JS 링크 -->
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d0cb4a077e0e130f2037a9e817207526"></script>
+    <script src="../static/js/cafe.js"></script>
+
+    <script src="../static/js/calendar.js"></script>
+    <title>Event Cafe Cloud | EC2</title>
+
+</head>
+<body>
+<section class="ec2-banner">
+    {#    {% if msg %}#}
+    {#        <div class="welcome-message">#}
+    {#            guest님 환영합니다 &nbsp;&nbsp;&nbsp;#}
+    {#            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>#}
+    {#        </div>#}
+    {#    {% else %}#}
+    {#        <div class="welcome-message">#}
+    {#            {{ user["user_nickname"] }}님 환영합니다 &nbsp;&nbsp;#}
+    {#            <button class="banner-button" onclick=logout()>로그아웃</button>#}
+    {#        </div>#}
+    {#    {% endif %}#}
+    <div class="banner-logo">
+        <img src="../static/ec2_logo.png" onclick="location.href='/'">
+    </div>
+</section>
+<main>
+    <left>
+        <div class="cafe-info">
+            <div class="wrap-rating">
+                <div class='star-rating'>
+                    <span></span>
+                </div>
+                <div class="number-rating">
+                    3.5
+                </div>
+            </div>
+        </div>
+        <div class="cafe-img">
+            <img src="../static/cafe1.png">
+        </div>
+        <table class="scriptCalendar">
+            <thead>
+            <tr class="day-bar">
+                <td onClick="prevCalendar();" style="cursor:pointer;">&#60;&#60;</td>
+                <td colspan="5">
+                    <span id="calYear">YYYY</span>년
+                    <span id="calMonth">MM</span>월
+                </td>
+                <td onClick="nextCalendar();" style="cursor:pointer;">&#62;&#62;</td>
+            </tr>
+            <tr>
+                <td class="day">일</td>
+                <td class="day">월</td>
+                <td class="day">화</td>
+                <td class="day">수</td>
+                <td class="day">목</td>
+                <td class="day">금</td>
+                <td class="day">토</td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button class="banner-button" id="reservation-button">예약하기</button>
+    </left>
+    <right>
+        <h1 id="cafe-name"></h1>
+        <article class="cafe-info box">
+            <h3>카페 소개</h3>
+            <p id="info"></p>
+        </article>
+        <article class="cafe-location box">
+            <h3>카페 위치</h3>
+            <div id="map"></div>
+        </article>
+        <article class="cafe-reviews box">
+            <h3>카페 후기</h3>
+            <p id="review">56565656</p>
+        </article>
+        <article class="cafe-notice box">
+            <h3>이용 안내</h3>
+            <p id="notice">787878787</p>
+        </article>
+    </right>
+</main>
+
+</body>
+</html>
