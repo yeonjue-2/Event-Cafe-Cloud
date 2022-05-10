@@ -3,7 +3,7 @@ import requests as requests
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
 from controller.auth_controller import SECRET_KEY
 from database import DB
-from ectoekn import ECTOKEN
+from ectoken import ECTOKEN
 
 bp = Blueprint('user', __name__, url_prefix='/user')
 

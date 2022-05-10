@@ -102,3 +102,10 @@ right article h3 {
     width:100%;
     margin-top:10px;
 }
+
+tbody tr{
+    text-align: center;
+}
+.kind{
+    float:left;
+}
