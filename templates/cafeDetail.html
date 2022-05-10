@@ -32,6 +32,7 @@
     <!-- CSS 링크 -->
     <link href="../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/starRivew.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/cafe.css" rel="stylesheet" type="text/css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,7 +113,13 @@
             <div id="map"></div>
         </article>
         <article class="cafe-reviews box">
-            <h3>카페 후기</h3>
+            <div class="register-review">
+                <h3 width="100%">카페 후기</h3>
+                <button type="button" class="btn btn-primary cafeBtn" data-toggle="modal"
+                        data-target="#exampleModal">
+                    리뷰 등록
+                </button>
+            </div>
             <p id="review">56565656</p>
         </article>
         <article class="cafe-notice box">
@@ -121,6 +128,46 @@
         </article>
     </right>
 </main>
-
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="sign_form">
+                    <div class="star-review">
+                        <div style="color: #2b2a29">별점을 눌러주세요</div>
+                        <div class="star-rating">
+                            <input type="radio" id="5-stars" name="rating" value="5"/>
+                            <label for="5-stars" class="star">&#9733;</label>
+                            <input type="radio" id="4-stars" name="rating" value="4"/>
+                            <label for="4-stars" class="star">&#9733;</label>
+                            <input type="radio" id="3-stars" name="rating" value="3"/>
+                            <label for="3-stars" class="star">&#9733;</label>
+                            <input type="radio" id="2-stars" name="rating" value="2"/>
+                            <label for="2-stars" class="star">&#9733;</label>
+                            <input type="radio" id="1-star" name="rating" value="1"/>
+                            <label for="1-star" class="star">&#9733;</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa-solid fa-file-pen"></i></span>
+                        </div>
+                        <textarea type="text" id="input-cafe-review" class="form-control"
+                                  placeholder="후기를 작성해주세요!"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary cafeBtn" onclick="regReview()">저장하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

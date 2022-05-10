@@ -1,10 +1,11 @@
 $(document).ready(showCafeDetail);
-function showCafeDetail(){
+
+function showCafeDetail() {
     let id = new URLSearchParams(location.search).get('id');
     $.ajax({
-        type:'GET',
-        url:'/api/cafe/detail/'+id,
-        success:(response)=>{
+        type: 'GET',
+        url: '/api/cafe/detail/' + id,
+        success: (response) => {
             let cafe_id = response['cafes']['cafe_id'];
             let cafe_name = response['cafes']['cafe_name'];
             let cafe_info = response['cafes']['cafe_detail_info'];
@@ -17,10 +18,9 @@ function showCafeDetail(){
             $('#cafe-name').text(cafe_name);
             $('#info').text(cafe_info);
             $('#notice').text(cafe_notice);
-            kakaoMapAPI(x,y);
+            kakaoMapAPI(x, y);
         }
-
-    })
+    });
 }
 
 function kakaoMapAPI(x, y) {
@@ -33,3 +33,22 @@ function kakaoMapAPI(x, y) {
     let map = new kakao.maps.Map(container, options);
 }
 
+function regReview() {
+    let cafe_idx = new URLSearchParams(location.search).get('id');
+    let cafe_rating = $('input[name=rating]:checked').val();
+    let cafe_review = $('input-cafe-review').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/cafe/regReview",
+        data: {
+            "cafe_idx_give": cafe_idx,
+            "cafe_rating_give": cafe_rating,
+            "cafe_review_give": cafe_review,
+        },
+        success: function (response) {
+            alert("리뷰를 등록했습니다.")
+            window.location.replace("/cafe/detail?id="+idx)
+        }
+    });
+}
