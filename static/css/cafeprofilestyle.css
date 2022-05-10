@@ -1,12 +1,9 @@
 .profileBox {
     margin-top: 20px;
     margin: auto;
-    text-align: center;
-    border: 2px solid lavender;
     border-radius: 2%;
-    width: 800px;
+    width: 1000px;
     padding-bottom: 20px;
-    background-color: lavender;
     font-family: 'Gowun Dodum', sans-serif;
 }
 
