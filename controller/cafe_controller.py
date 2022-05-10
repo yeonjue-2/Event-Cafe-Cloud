@@ -44,7 +44,7 @@ def regCafeReview():
         max_value = DB.idx_plus("reviews")
 
     doc = {
-        "review_id": max_value,
+        "idx": max_value,
         "user_id": user_id,
         "cafe_id": cafe_idx,
         "cafe_review": cafe_review,
