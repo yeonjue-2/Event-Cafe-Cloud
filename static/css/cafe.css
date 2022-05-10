@@ -7,7 +7,7 @@
 
 main {
     margin-top: 10px;
-    position:relative;
+    position:absolute;
     left:20%;
     right: 20%;
 }
@@ -101,4 +101,11 @@ right article h3 {
     background-color:mediumpurple;
     width:100%;
     margin-top:10px;
+}
+
+tbody tr{
+    text-align: center;
+}
+.kind{
+    float:left;
 }
