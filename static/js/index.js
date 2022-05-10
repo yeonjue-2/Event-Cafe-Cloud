@@ -76,32 +76,28 @@ function listing() {
                 let cafe_short_info = cafes[i]['cafe_short_info']
                 let class_heart = cafes[i]['heart_by_me'] ? "fa-heart" : "fa-heart-o"
                 let count_heart = cafes[i]['count_heart']
-                let class_bookmark = cafes['bookmark_by_me'] ? "fa-bookmark" : "fa-bookmark-o"
+                let class_bookmark = cafes[i]['bookmark_by_me'] ? "fa-bookmark" : "fa-bookmark-o"
 
-                let temp_html = `<div class="col-md-4">
-                                           <div class="card" id="${cafe_idx}" style="width: 18rem; border-radius: 10px;">
-                                            <img class="card-img-top" src="../static/cafe_pics/${cafe_image}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">${cafe_name}&nbsp;&nbsp;<a class="level-item is-sparta" aria-label="bookmark" onclick="toggle_heart('${cafe_idx}', 'bookmark')" style="color: dodgerblue">
-                                                            <span class="icon is-small"><i class="fa ${class_bookmark}"
-                                                                                           aria-hidden="true"> </i>
-                                                        </a></h3>
-                                                <p class="card-text">${cafe_short_info}</p>
-                                                <nav class="level is-mobile">
-                                                    <div class="level-left">
-                                                            <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe_idx}', 'heart')">
-                                                                <span class="icon is-small">
-                                                                <i class="fa ${class_heart}" aria-hidden="true"></i>
-                                                                </span>&nbsp;<span class="heart-num">${num2str(count_heart)}</span>
-                                                            </a>                                                                                                                                                                                                                                                                  
-                                                    </div>
-                                                </nav>
-                                                <div class="btn-style">
-                                                    <button type="button" class="btn btn-outline-secondary" style="float: right; margin-bottom: 10px;">
-                                                    <a href="#" style="color: dimgrey">둘러보기</a></button>
+                let temp_html = `<div class="card" id="${cafe_idx}" style="width: 18rem; border-radius: 10px;">
+                                        <img class="card-img-top" src="../static/cafe_pics/${cafe_image}" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h3 class="card-title">${cafe_name}&nbsp;&nbsp;<a class="level-item is-sparta" aria-label="bookmark" onclick="toggle_heart('${cafe_idx}', 'bookmark')" style="color: dodgerblue">
+                                                <span class="icon is-small"><i class="fa ${class_bookmark}" aria-hidden="true"></i></span></a>
+                                            </h3>
+                                            <p class="card-text">${cafe_short_info}</p>
+                                            <nav class="level is-mobile">
+                                                <div class="level-left">
+                                                        <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe_idx}', 'heart')">
+                                                            <span class="icon is-small"><i class="fa ${class_heart}" aria-hidden="true"></i>
+                                                            </span>&nbsp;<span class="heart-num">${num2str(count_heart)}</span>
+                                                        </a>                                                                                                                                                                                                                                                                  
                                                 </div>
-                                             </div>
-                                          </div>`
+                                            </nav>
+                                            <div class="btn-style">
+                                                <button type="button" class="btn btn-outline-secondary" style="float: right; margin-bottom: 10px;">
+                                                <a href="#" style="color: dimgrey">둘러보기</a></button>
+                                            </div>
+                                 </div>`
                 $('#cards-box').append(temp_html)
             }
         }

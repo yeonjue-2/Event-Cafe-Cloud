@@ -43,6 +43,7 @@
     <title>Event Cafe Cloude | EC2</title>
 
 </head>
+
 <style type="text/css">
     * {
         font-family: 'Gowun Dodum', sans-serif;
@@ -54,19 +55,13 @@
         width: 1100px;
     }
 
-    .card-columns {
-        display: flex;
-        float: left;
-        width: 1000px;
-        margin: 0;
-        padding: 0;
+    @media (min-width:1440px) {
+      .card-columns {
+        column-count: 3;
+      }
     }
 
-
 </style>
-
-
-</head>
 
 <body>
 <section class="ec2-banner">
@@ -108,18 +103,7 @@
 </div>
 
 <div class="wrap">
-    {#     <div class="btn-group" role="group">#}
-    {#        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-    {#          지역#}
-    {#        </button>#}
-    {#        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">#}
-    {#          <a class="dropdown-item" href="#">서울</a>#}
-    {#          <a class="dropdown-item" href="#">대구</a>#}
-    {#        </div>#}
-    {#      </div>#}
-    {#    </div>#}
     <div class="container">
-        <div class="row">
             <div class="card-columns" id="cards-box">
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top" src="..." alt="Card image cap">
@@ -140,7 +124,6 @@
                   </div>
                 </div>
         </div>
-    </div>
 </div>
 </body>
 
