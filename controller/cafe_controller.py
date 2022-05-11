@@ -12,10 +12,16 @@ bp = Blueprint('cafe', __name__)
 
 @bp.route('/cafe/detail')
 def routeCafeDetail():
-    return render_template('cafeDetail.html')
+    user = ECTOKEN.get_token();
+    if user is None:
+        return render_template('index.html', msg="로그인 정보가 없습니다")
+    return render_template('cafeDetail.html',user=user)
 
 @bp.route('/cafe/reservation/<cafe_id>', methods=['get'])
 def get_event_info(cafe_id):
+    user = ECTOKEN.get_token();
+    if user is None:
+        return render_template('index.html', msg="로그인 정보가 없습니다")
     return render_template('cafeReservation.html')
 
 @bp.route('/api/cafe/detail/<cafeId>')

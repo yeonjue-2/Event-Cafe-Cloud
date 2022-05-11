@@ -16,11 +16,11 @@ function showCafeDetail() {
             let y = response['cafes']['cafe_y'];
             let cafe_notice = response['cafes']['cafe_notice'];
             $('#address').text(address);
-            $('.cafe-img').html(`<img src="../static/${cafe_image}">`);
+            $('.cafe-img').html(`<img src="../static/cafe_pics/${cafe_image}">`);
             $('#cafe-name').text(cafe_name);
             $('#info').text(cafe_info);
             $('#notice').text(cafe_notice);
-            kakaoMapAPI(x, y);
+            kakaoMapAPI(y, x);
             let scoreSum = 0;
             for (let i = 0; i < reviews.length; i++) {
                 let user_id = reviews[i]['user_id']

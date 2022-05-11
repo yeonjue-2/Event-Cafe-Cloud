@@ -15,7 +15,7 @@ def home():
         cafes = DB.list(Collection.CAFES, {}, {'_id': False})
         for cafe in cafes:
 
-            cafe_idx = str(cafe['idx'])
+            cafe_idx = str(cafe[Collection.CAFES_PK])
             cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
             cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
             cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))

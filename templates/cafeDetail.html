@@ -40,25 +40,25 @@
     <!-- JS 링크 -->
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f608fc0e1d5bbe181d014e18b991016"></script>
+    <script src="../static/js/login_out.js"></script>
     <script src="../static/js/cafe.js"></script>
-
     <script src="../static/js/calendar.js"></script>
     <title>Event Cafe Cloud | EC2</title>
 
 </head>
 <body>
 <section class="ec2-banner">
-    {#    {% if msg %}#}
-    {#        <div class="welcome-message">#}
-    {#            guest님 환영합니다 &nbsp;&nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>#}
-    {#        </div>#}
-    {#    {% else %}#}
-    {#        <div class="welcome-message">#}
-    {#            {{ user["user_nickname"] }}님 환영합니다 &nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick=logout()>로그아웃</button>#}
-    {#        </div>#}
-    {#    {% endif %}#}
+        {% if msg %}
+            <div class="welcome-message">
+                guest님 환영합니다 &nbsp;&nbsp;&nbsp;
+                <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>
+            </div>
+        {% else %}
+            <div class="welcome-message">
+                <a href="/user/profile">{{ user["user_nickname"] }}님</a> 환영합니다 &nbsp;&nbsp;
+                <button class="banner-button" onclick=logout()>로그아웃</button>
+            </div>
+        {% endif %}
     <div class="banner-logo">
         <img src="../static/ec2_logo.png" onclick="location.href='/'">
     </div>
