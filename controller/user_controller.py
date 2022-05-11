@@ -42,7 +42,7 @@ def cafe_register_form():
 @bp.route('api/cafe/management', methods=["GET"])
 def show_cafe_manage():
     ###############################
-    #todo 이벤트 DB 생성후, 추가 예정#
+    # todo 이벤트 DB 생성후, 추가 예정#
     ###############################
     return
 
@@ -120,4 +120,35 @@ def update():
     }
 
     DB.update_one("users", {'user_id': user_id}, {'$set': new_doc})
+    return jsonify({'result': 'success'})
+
+
+@bp.route('/api/cafe/regCustomSchedule', methods=["POST"])
+def cafeRegCustomDay():
+    user_id = ECTOKEN.get_user_id(object)
+    cafe_id = request.form['cafe_idx_give']
+    custom_name = request.form['custom_name']
+    custom_start_date = request.form['custom_start_date']
+    custom_end_date = request.form['custom_end_date']
+    custom_sales_flag = request.form['custom_sales_flag']
+    custom_cost = request.form['custom_cost']
+
+    customs_count = DB.count_collection("customs")
+    if customs_count == 0:
+        max_value = 1
+    else:
+        max_value = DB.idx_plus("customs")
+
+    doc = {
+        "idx": max_value,
+        "user_id": user_id,
+        "cafe_id": cafe_id,
+        "custom_name": custom_name,
+        "custom_start_date": custom_start_date,
+        "custom_end_date": custom_end_date,
+        "custom_sales_flag": custom_sales_flag,
+        "custom_cost": custom_cost
+    }
+
+    DB.insert(collection="customs", data=doc)
     return jsonify({'result': 'success'})

@@ -22,6 +22,7 @@ function showCafeDetail() {
             kakaoMapAPI(x, y);
 
             for (let i = 0; i < reviews.length; i++) {
+                console.log(reviews[i])
                 let user_id = reviews[i]['user_id']
                 let cafe_rating = reviews[i]['cafe_rating']
                 let cafe_review = reviews[i]['cafe_review']
@@ -42,7 +43,7 @@ function showCafeDetail() {
 function kakaoMapAPI(x, y) {
     let container = document.getElementById('map');
     let options = { //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(x, y), //지도의 중심좌표.
+        center: new kakao.maps.LatLng(y, x), //지도의 중심좌표.
         level: 3 //지도의 레벨(확대, 축소 정도)
     };
     console.log(options);
