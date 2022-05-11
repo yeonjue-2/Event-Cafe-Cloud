@@ -114,7 +114,7 @@ function listing_event(event_category) {
                 let class_heart = cafes[i]['heart_by_me'] ? "fa-heart" : "fa-heart-o"
                 let count_heart = cafes[i]['count_heart']
                 let class_bookmark = cafes[i]['bookmark_by_me'] ? "fa-bookmark" : "fa-bookmark-o"
-                
+
                 let temp_html = `<div class="card" id="${cafe_idx}" style="width: 18rem; border-radius: 10px;">
                                         <img class="card-img-top" src="../static/cafe_pics/${cafe_image}" alt="Card image cap">
                                         <div class="card-body">
