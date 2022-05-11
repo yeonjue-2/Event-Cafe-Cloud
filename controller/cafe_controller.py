@@ -1,8 +1,11 @@
+import collections
 from datetime import datetime
 
 from flask import Blueprint, jsonify, render_template, request
 from database import DB
 from ectoken import ECTOKEN
+from type.collection import Collection
+
 
 bp = Blueprint('cafe', __name__)
 
@@ -14,9 +17,9 @@ def routeCafeDetail():
 
 @bp.route('/api/cafe/detail/<cafeId>')
 def getCafeDetail(cafeId):
-    cafes = DB.find_one('cafes', {'idx': int(cafeId)}, {'_id': False})
-    events = DB.list('event', {'cafe_id': cafeId}, {'_id': False})
-    reviews = DB.list('reviews', {'cafe_id': cafeId}, {'_id': False})
+    cafes = DB.find_one(Collection.CAFES, {'idx': int(cafeId)}, {'_id': False})
+    events = DB.list(Collection.EVENTS, {'cafe_id': cafeId}, {'_id': False})
+    reviews = DB.list(Collection.REVIEWS, {'cafe_id': cafeId}, {'_id': False})
     response = {
         'cafes': cafes,
         'reviews': reviews
