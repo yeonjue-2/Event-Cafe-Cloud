@@ -2,27 +2,18 @@ $(document).ready(buildCalendar);
 
 var today = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 var date = new Date();  // @param 전역 변수, today의 Date를 세어주는 역할
+var monthEventMap;
 
-/**
- * @brief   이전달 버튼 클릭
- */
 function prevCalendar() {
-    this.today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-    buildCalendar();    // @param 전월 캘린더 출력 요청
+    today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+    buildCalendar();
 }
 
-/**
- * @brief   다음달 버튼 클릭
- */
 function nextCalendar() {
-    this.today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-    buildCalendar();    // @param 명월 캘린더 출력 요청
+    today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    buildCalendar();
 }
 
-/**
- * @brief   캘린더 오픈
- * @details 날짜 값을 받아 캘린더 폼을 생성하고, 날짜값을 채워넣는다.
- */
 function buildCalendar() {
 
     let doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -30,27 +21,21 @@ function buildCalendar() {
 
     let tbCalendar = document.querySelector(".scriptCalendar > tbody");
 
-    document.getElementById("calYear").innerText = today.getFullYear();                                  // @param YYYY월
+    document.getElementById("calYear").innerText = today.getFullYear();                       // @param YYYY월
     document.getElementById("calMonth").innerText = autoLeftPad((today.getMonth() + 1), 2);   // @param MM월
 
+    makeMonthMap();
 
-    // @details 이전 캘린더의 출력결과가 남아있다면, 이전 캘린더를 삭제한다.
     while (tbCalendar.rows.length > 0) {
         tbCalendar.deleteRow(tbCalendar.rows.length - 1);
     }
 
-    // @param 첫번째 개행
     let row = tbCalendar.insertRow();
 
-    // @param 날짜가 표기될 열의 증가값
     let dom = 1;
 
-    // @details 시작일의 요일값( doMonth.getDay() ) + 해당월의 전체일( lastDate.getDate())을  더해준 값에서
-    //               7로 나눈값을 올림( Math.ceil() )하고 다시 시작일의 요일값( doMonth.getDay() )을 빼준다.
     let daysLength = (Math.ceil((doMonth.getDay() + lastDate.getDate()) / 7) * 7) - doMonth.getDay();
 
-    // @param 달력 출력
-    // @details 시작값은 1일을 직접 지정하고 요일값( doMonth.getDay() )를 빼서 마이너스( - )로 for문을 시작한다.
     for (let day = 1 - doMonth.getDay(); daysLength >= day; day++) {
 
         let column = row.insertCell();
@@ -91,12 +76,12 @@ function buildCalendar() {
                 }
                 // @details 현재일인 경우
                 else if (date.getDate() == day) {
-                   setPossibleDay(column);
+                    setPossibleDay(column);
                 }
                 // @details 현재월보다 이전인경우
             } else if (today.getMonth() < date.getMonth()) {
                 if (Math.sign(day) == 1 && day <= lastDate.getDate()) {
-                   setPossibleDay(column);
+                    setPossibleDay(column);
                 }
             }
             // @details 현재월보다 이후인경우
@@ -122,29 +107,36 @@ function buildCalendar() {
     }
 }
 
-/**
- * @brief   날짜 선택
- * @details 사용자가 선택한 날짜에 체크표시를 남긴다.
- */
 function calendarChoiceDay(column) {
-    // @param 선택일 체크 표시
     column.style.backgroundColor = "#FF9999";
+    column.setAttribute('data-toggle', 'modal');
+    column.setAttribute('data-target', '#myModal');
 
-    column.setAttribute('data-toggle','modal');
-    column.setAttribute('data-target','#myModal');
-    let day = column.innerText;
-    let month = parseInt($('#calMonth').text())-1;
-    let year = $('#calYear').text();
-    let date = new Date(year,month,day);
-
+    $('.modal-body').empty()
+    let key = makeMonthMapKey(column);
+    if (!monthEventMap.has(key)) {
+        $('.modal-body').text('등록된 일정이 없습니다.')
+        return;
+    }
+    let event = monthEventMap.get(key);
+    let event_category = event['event_category']
+    let event_name = event['event_name']
+    let event_info = event['event_info']
+    let tempHtml = `<div class="wrap-modal">
+                                <div class="kind">카테고리 :</div>
+                                <div id="modal-category">${event_category}</div>
+                            </div>
+                            <div class="wrap-modal">
+                                <div class="kind">이벤트명 :</div>
+                                <div id="modal-event-name">${event_name}</div>
+                            </div>
+                            <div class="wrap-modal">
+                                <div class="kind">행사 :</div>
+                                <div id="modal-event-info">${event_info}</div>
+                            </div>`;
+    $('.modal-body').append(tempHtml)
 }
 
-/**
- * @brief   숫자 두자릿수( 00 ) 변경
- * @details 자릿수가 한자리인 ( 1, 2, 3등 )의 값을 10, 11, 12등과 같은 두자리수 형식으로 맞추기위해 0을 붙인다.
- * @param   num     앞에 0을 붙일 숫자 값
- * @param   digit   글자의 자릿수를 지정 ( 2자릿수인 경우 00, 3자릿수인 경우 000 … )
- */
 function autoLeftPad(num, digit) {
     if (String(num).length < digit) {
         num = new Array(digit - String(num).length + 1).join("0") + num;
@@ -152,14 +144,63 @@ function autoLeftPad(num, digit) {
     return num;
 }
 
-function setPossibleDay(column){
+function makeMonthMap() {
+    let month = parseInt($('#calMonth').text());
+    let year = $('#calYear').text();
+    let cafe_id = new URLSearchParams(location.search).get('id');
+    $.ajax({
+        type: 'GET',
+        url: '/api/event/' + cafe_id,
+        async: false,
+        data: {
+            'year': year,
+            'month': month,
+        },
+        success: (response) => {
+            monthEventMap = new Map();
+            let events = response['month_event_list'];
+            for (let idx = 0; idx < events.length; idx++) {
+                let date = new Date(events[idx]['date']).toISOString().substring(0, 10)
+                monthEventMap.set(date, events[idx]);
+            }
+        }
+    })
+}
+
+function makeMonthMapKey(column) {
+    let day = column.innerText;
+    let month = $('#calMonth').text();
+    let year = $('#calYear').text();
+    return year + '-' + month + '-' + day;
+}
+
+function isImpossibleDay(column) {
+    return monthEventMap.has(makeMonthMapKey(column));
+}
+
+function setPossibleDay(column) {
+    if (isImpossibleDay(column)) {
+        column.style.backgroundColor = '#FF9999'
+        column.style.cursor = "pointer";
+        column.addEventListener('mouseover', () => {
+            column.style.backgroundColor = "mediumpurple";
+        });
+        column.addEventListener('mouseout', () => {
+            column.style.backgroundColor = "#FF9999";
+        });
+        column.onclick = function () {
+            calendarChoiceDay(this);
+        }
+        return;
+    }
+
     column.style.backgroundColor = "#E6E6FA"; //skyblue
     column.style.cursor = "pointer";
 
-    column.addEventListener('mouseover',()=>{
-        column.style.backgroundColor = "#FF9999";
+    column.addEventListener('mouseover', () => {
+        column.style.backgroundColor = "mediumpurple";
     });
-    column.addEventListener('mouseout',()=>{
+    column.addEventListener('mouseout', () => {
         column.style.backgroundColor = "#E6E6FA";
     });
 

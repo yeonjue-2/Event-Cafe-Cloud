@@ -6,7 +6,8 @@ from controller.auth_controller import SECRET_KEY
 
 
 class ECTOKEN:
-    def get_token(object):
+    @staticmethod
+    def get_token():
         token = request.cookies.get("jwt_token")
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
@@ -15,7 +16,8 @@ class ECTOKEN:
         except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
             return None
 
-    def get_user_id(object):
+    @staticmethod
+    def get_user_id():
         token = request.cookies.get("jwt_token")
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])

@@ -58,3 +58,9 @@ class DB(object):
         return DB.DATABASE[collection].estimated_document_count({})
 
 
+    @staticmethod
+    def allocate_pk(collection, pk):
+        try:
+            return DB.DATABASE[collection].find_one(sort=[(pk, -1)])[pk] + 1
+        except TypeError:
+            return 1

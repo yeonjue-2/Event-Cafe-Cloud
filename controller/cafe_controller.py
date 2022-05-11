@@ -1,8 +1,11 @@
+import collections
 from datetime import datetime
 
 from flask import Blueprint, jsonify, render_template, request
 from database import DB
 from ectoken import ECTOKEN
+from type.collection import Collection
+
 
 bp = Blueprint('cafe', __name__)
 
@@ -11,12 +14,15 @@ bp = Blueprint('cafe', __name__)
 def routeCafeDetail():
     return render_template('cafeDetail.html')
 
+@bp.route('/cafe/reservation/<cafe_id>', methods=['get'])
+def get_event_info(cafe_id):
+    return render_template('cafeReservation.html')
 
 @bp.route('/api/cafe/detail/<cafeId>')
 def getCafeDetail(cafeId):
-    cafes = DB.find_one('cafes', {'idx': int(cafeId)}, {'_id': False})
-    events = DB.list('event', {'cafe_id': cafeId}, {'_id': False})
-    reviews = DB.list('reviews', {'cafe_id': cafeId}, {'_id': False})
+
+    cafes = DB.find_one(Collection.CAFES, {Collection.CAFES_PK: int(cafeId)}, {'_id': False})
+    reviews = DB.list(Collection.REVIEWS, {Collection.CAFES_PK: cafeId}, {'_id': False})
 
     response = {
         'cafes': cafes,
@@ -27,22 +33,17 @@ def getCafeDetail(cafeId):
 
 @bp.route('/api/cafe/regReview', methods=["POST"])
 def regCafeReview():
-    user_id = ECTOKEN.get_user_id(object)
+    user_id = ECTOKEN.get_user_id()
     cafe_idx = request.form['cafe_idx_give']
     cafe_rating = request.form['cafe_rating_give']
     cafe_review = request.form['cafe_review_give']
 
     today = datetime.now()
     create_date = today.strftime('%Y-%m-%d')
-
-    reviews_count = DB.count_collection("reviews")
-    if reviews_count == 0:
-        max_value = 1
-    else:
-        max_value = DB.idx_plus("reviews")
+    review_id = DB.allocate_pk(Collection.REVIEWS, Collection.REVIEWS_PK)
 
     doc = {
-        "idx": max_value,
+        "review_id": review_id,
         "user_id": user_id,
         "cafe_id": cafe_idx,
         "cafe_review": cafe_review,
@@ -50,5 +51,6 @@ def regCafeReview():
         "create_date": create_date
     }
 
-    DB.insert(collection="reviews", data=doc)
+    DB.insert(Collection.REVIEWS, data=doc)
     return jsonify({'result': 'success'})
+
