@@ -40,8 +40,6 @@ def regCafeReview():
     create_date = today.strftime('%Y-%m-%d')
     review_id = DB.allocate_pk(Collection.REVIEWS, Collection.REVIEWS_PK)
 
-
-
     doc = {
         "review_id": review_id,
         "user_id": user_id,
