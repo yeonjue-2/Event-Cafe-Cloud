@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, jsonify, render_template, request
 from database import DB
-from ectoekn import ECTOKEN
+from ectoken import ECTOKEN
 
 bp = Blueprint('cafe', __name__)
 
