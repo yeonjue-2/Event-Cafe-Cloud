@@ -6,6 +6,7 @@ from database import DB
 from ectoken import ECTOKEN
 from type.collection import Collection
 
+
 bp = Blueprint('cafe', __name__)
 
 
@@ -18,10 +19,7 @@ def routeCafeDetail():
 def getCafeDetail(cafeId):
     cafes = DB.find_one(Collection.CAFES, {'idx': int(cafeId)}, {'_id': False})
     events = DB.list(Collection.EVENTS, {'cafe_id': cafeId}, {'_id': False})
-    reviews = []
-    for event in events:
-        review = DB.list(Collection.REVIEWS, {'event_id': event['event_id']}, {'_id': False})
-        reviews.append(review)
+    reviews = DB.list(Collection.REVIEWS, {'cafe_id': cafeId}, {'_id': False})
     response = {
         'cafes': cafes,
         'reviews': reviews
@@ -29,7 +27,7 @@ def getCafeDetail(cafeId):
     return jsonify(response)
 
 
-@bp.route('/api/cafe/review', methods=["POST"])
+@bp.route('/api/cafe/regReview', methods=["POST"])
 def regCafeReview():
     user_id = ECTOKEN.get_user_id(object)
     cafe_idx = request.form['cafe_idx_give']
@@ -37,7 +35,7 @@ def regCafeReview():
     cafe_review = request.form['cafe_review_give']
 
     today = datetime.now()
-    create_date = today.strftime('%Y-%m-%d-%H-%M-%S')
+    create_date = today.strftime('%Y-%m-%d')
 
     reviews_count = DB.count_collection("reviews")
     if reviews_count == 0:
@@ -46,7 +44,7 @@ def regCafeReview():
         max_value = DB.idx_plus("reviews")
 
     doc = {
-        "review_id": max_value,
+        "idx": max_value,
         "user_id": user_id,
         "cafe_id": cafe_idx,
         "cafe_review": cafe_review,

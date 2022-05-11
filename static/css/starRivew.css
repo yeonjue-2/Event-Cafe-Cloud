@@ -38,3 +38,11 @@
 .register-review{
   width: 200px;
 }
+
+.reviewBtn {
+    background-color: white;
+    color: mediumpurple;
+    font-weight: bold;
+    font-family: 'Gowun Dodum', sans-serif;
+    border: pink;
+}
