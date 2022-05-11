@@ -17,10 +17,10 @@ function post_listing() {
                 let user_nickname = response[i]['user_nickname']
                 let post_view = response[i]['post_view']
                 let create_date = response[i]['create_date']
-                let post_num = response[i]['post_num']
+                let post_id = response[i]['post_id']
 
-                let temp_html = `<tr onclick="readPost(${post_num})" id="${post_num}" >
-                                        <th>${post_num}</th>
+                let temp_html = `<tr onclick="readPost(${post_id})" id="${post_id}" >
+                                        <th>${post_id}</th>
                                         <th>${post_title}</th>
                                         <th>${user_nickname}</th>
                                         <th>${post_view}</th>
@@ -65,7 +65,8 @@ function readPost(target_id) {
                 $('#delBtn').css('display', 'none')
             }
 
-            $('#articleModal').attr('post_num', target_id);
+            $('#articleModal').attr('post_id', target_id);
+
             post_listing()
 
         }
@@ -76,6 +77,7 @@ function readPost(target_id) {
 function posting() {
     let post_title = $("#textarea-title").val()
     let post_content = $("#textarea-content").val()
+
     if (post_title == '') {
         (alert("제목을 입력해주세요"))
         return
@@ -103,12 +105,12 @@ function posting() {
 // 글 작성자 수정 이후 저장 기능
 function post_edit_save() {
     let edit_content = $("#modal-content-edit").val();
-    let post_num = $('#articleModal').attr('post_num')
+    let post_id = $('#articleModal').attr('post_id')
 
     $.ajax({
         type: "PUT",
         url: "api/post",
-        data: {"edit_content": edit_content, "post_num": post_num},
+        data: {"edit_content": edit_content, "post_id": post_id},
         success: function (response) {
             if (response["result"] == "success") {
                 alert("게시글이 수정되었습니다");
@@ -132,11 +134,11 @@ function post_edit() {
 
 // 게시글 삭제
 function post_delete() {
-    let post_num = $('#articleModal').attr('post_num')
+    let post_id = $('#articleModal').attr('post_id')
 
     $.ajax({
         type: "DELETE",
-        url: 'api/post' + '?' + $.param({"post_num": post_num}),
+        url: 'api/post' + '?' + $.param({"post_id": post_id}),
         success: function (response) {
             if (response["result"] == "success") {
                 alert("게시글이 삭제되었습니다");

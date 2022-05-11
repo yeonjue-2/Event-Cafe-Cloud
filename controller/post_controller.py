@@ -21,10 +21,9 @@ def board():
 @bp.route('/api/post', methods=["GET"])
 def board_listing():
     posts = DB.find_all_sort(Collection.POSTS)
+
     for a in posts:
-
         a['create_date'] = a['create_date'].strftime('%Y.%m.%d')
-
     return jsonify(posts)
 
 # 게시글 detail 조회
@@ -34,8 +33,8 @@ def board_detail_search():
     post_id = int(request.form.get('target_id'))
     DB.update_one(Collection.POSTS, {'post_id': int(post_id)}, {'$inc': {'post_view': 1}})
 
-    user = DB.find_one(Collection.POSTS, {'post_id': int(post_id)}, {})
-    user.pop('_id')
+    user = DB.find_one(Collection.POSTS, {'post_id': int(post_id)}, {'_id': False})
+
     return jsonify({'result': 'success', 'user': user, 'user_id': user_id})
 
 
