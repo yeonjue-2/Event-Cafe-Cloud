@@ -23,7 +23,7 @@ def home():
 
 @bp.route('/cafe/manage/<cafe_idx>')
 def cafe_manage(cafe_idx):
-    user = ECTOKEN.get_token(object)
+    user = ECTOKEN.get_token()
     if user is None:
         return render_template('index.html')
     else:
@@ -32,7 +32,7 @@ def cafe_manage(cafe_idx):
 
 @bp.route('/cafe/register')
 def cafe_register_form():
-    user = ECTOKEN.get_token(object)
+    user = ECTOKEN.get_token()
     if user is None:
         return render_template('index.html')
     else:
@@ -49,7 +49,7 @@ def show_cafe_manage():
 
 @bp.route('/api/cafe/register', methods=["POST"])
 def cafe_register():
-    user_id = ECTOKEN.get_user_id(object)
+    user_id = ECTOKEN.get_user_id()
     cafe_name = request.form['cafe_name_give']
     cafe_short_info = request.form['cafe_short_info_give']
     cafe_detail_info = request.form['cafe_info_give']
