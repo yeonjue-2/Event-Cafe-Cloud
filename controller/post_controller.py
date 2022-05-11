@@ -4,7 +4,7 @@ from controller.auth_controller import SECRET_KEY
 from database import DB
 from datetime import datetime
 
-from ectoekn import ECTOKEN
+from ectoken import ECTOKEN
 
 bp = Blueprint('post', __name__)
 
