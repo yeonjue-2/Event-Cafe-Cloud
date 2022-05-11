@@ -14,10 +14,12 @@ def home():
     if user is not None:
         cafes = DB.list(Collection.CAFES, {}, {'_id': False})
         for cafe in cafes:
+
             cafe_idx = str(cafe['idx'])
             cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
             cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
             cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
+
         return render_template('index.html', user=user)
     else:
         return render_template('index.html', msg="로그인 정보가 없습니다")
@@ -29,6 +31,7 @@ def event_cafe(event_category):
 
     if user is not None:
         return render_template('eventCafe.html', user=user, event_category=event_category)
+
     else:
         return render_template('eventCafe.html', msg="로그인 정보가 없습니다")
 
@@ -48,6 +51,7 @@ def listing():
 @bp.route('/event_cafe/listing_event', methods=['GET'])
 def listing_event():
     user_id = ECTOKEN.get_user_id()
+
     event_category_receive = request.args.get("event_category_give")
     events = DB.list(Collection.EVENTS, {"event_category": event_category_receive}, {'_id': False})
     cafes = []

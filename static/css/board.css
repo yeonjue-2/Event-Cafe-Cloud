@@ -1,0 +1,122 @@
+
+.content-titlebox {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.content-inputbox {
+    height: 300px;
+    font-size: 18px;
+}
+
+.cancel-btn {
+    background: #5c636a;
+    color: white;
+}
+
+.posting-btn{
+    background: #FFAFAF;
+    color: red;
+}
+
+
+.text-secondary {
+    margin-right: 5px;
+}
+
+.post-button {
+    outline: 0px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #FFAFAF;
+    color: white;
+    padding: 5px 15px 5px 15px;
+    font-size: 17px;
+    margin-bottom: 100px;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.container {
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 20px;
+}
+
+.modal {
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.control-title {
+    margin: auto;
+}
+
+.control-content {
+    margin: auto;
+    width: 1000px;
+}
+
+.content-edit {
+    max-width: 100%;
+    width: auto;
+    display: table;
+}
+
+
+.post-textarea {
+    margin: auto;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 20px;
+    /*width: auto;*/
+}
+
+.textarea-content {
+    min-height: 5rem;
+    overflow-y: hidden;
+    resize: none;
+}
+
+.control-title {
+    width: 75%;
+}
+
+
+.post-edit {
+    background-color: #3567c8;
+
+}
+
+.post-delete {
+    background-color: #ce4488;
+    color: white;
+}
+
+.post-save {
+    background-color: #3567c8;
+
+}
+
+.modal-title{
+    margin-bottom: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    /*margin-left: 40px;*/
+}
+
+.box{
+    max-width: 100%;
+    width: auto;
+    display: table;
+}
+
+.modal-content{
+    width: 1400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+

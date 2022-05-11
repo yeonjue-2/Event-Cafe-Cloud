@@ -7,6 +7,7 @@ DB()
 
 from controller import auth_controller, main_controller, cafe_controller, user_controller, event_controller
 
+
 app.register_blueprint(auth_controller.bp)
 app.register_blueprint(main_controller.bp)
 app.register_blueprint(cafe_controller.bp)
