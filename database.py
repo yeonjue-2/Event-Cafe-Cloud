@@ -37,5 +37,8 @@ class DB(object):
         return DB.DATABASE[collection].estimated_document_count({})
 
     @staticmethod
-    def idx_plus(collection):
-        return DB.DATABASE[collection].find_one(sort=[("idx", -1)])['idx'] + 1
+    def allocate_pk(collection,pk):
+        try:
+            return DB.DATABASE[collection].find_one(sort=[(pk, -1)])[pk] + 1
+        except TypeError:
+            return 1
