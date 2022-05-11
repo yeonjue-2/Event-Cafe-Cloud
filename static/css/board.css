@@ -1,0 +1,64 @@
+
+.text-secondary {
+    margin-right: 5px;
+}
+
+.float-right {
+    margin-left: 1220px;
+}
+
+.post-button {
+    outline: 0px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #FFAFAF;
+    color: white;
+    padding: 5px 15px 5px 15px;
+    font-size: 17px;
+    margin-bottom: 100px;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.container {
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 20px;
+}
+
+.modal {
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.control-title {
+    margin: auto;
+
+}
+
+.control-content {
+    margin: auto;
+}
+
+.modal-content {
+    width: 70%;
+}
+
+.title-input {
+    width: 50%;
+}
+
+.post-delete {
+    width: 50%;
+}
+
+.post-edit{
+    width: 50%;
+}
+
+.post-textarea {
+    width: 100%;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 20px;
+}
+
+.control-title {
+    width: 75%;
+}

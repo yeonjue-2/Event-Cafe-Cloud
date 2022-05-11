@@ -33,7 +33,7 @@ class DB(object):
         return DB.DATABASE[collection].estimated_document_count({})
 
     @staticmethod
-    def idx_plus(collection, colName='idx'):
+    def sort_post(collection, colName):
         idx = DB.DATABASE[collection].find_one(sort=[(colName, -1)])
         if isinstance(idx, type(None)):
             idx = 1

@@ -10,11 +10,11 @@ def routeCafeDetail():
 
 @bp.route('/api/cafe/detail/<cafeId>')
 def getCafeDetail(cafeId):
-    cafes = DB.find_one('cafes', {'idx': int(cafeId)},{'_id':False})
-    events = DB.list('event', {'cafe_id': cafeId},{'_id':False})
+    cafes = DB.find_one('cafes', {'idx': int(cafeId)}, {'_id': False})
+    events = DB.list('event', {'cafe_id': cafeId}, {'_id': False})
     reviews = []
     for event in events:
-        review = DB.list('reviews', {'event_id': event['event_id']},{'_id':False})
+        review = DB.list('reviews', {'event_id': event['event_id']}, {'_id': False})
         reviews.append(review)
     response = {
         'cafes':cafes,
