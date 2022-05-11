@@ -9,7 +9,7 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def home():
-    user = ECTOKEN.get_token(object)
+    user = ECTOKEN.get_token()
     if user is not None:
         cafes = DB.list('cafes', {}, {'_id': False})
         for cafe in cafes:
@@ -24,7 +24,7 @@ def home():
 
 @bp.route('/event_cafe')
 def event_cafe():
-    user = ECTOKEN.get_token(object)
+    user = ECTOKEN.get_token()
     if user is None:
         return render_template('event_cafe.html')
     else:
@@ -32,7 +32,7 @@ def event_cafe():
 
 @bp.route('/listing', methods=['GET'])
 def listing():
-    user_id = ECTOKEN.get_user_id(object)
+    user_id = ECTOKEN.get_user_id()
     cafes = DB.list('cafes', {}, {'_id': False})
     event_category_receive = request.args.get("event_category_give")
     if event_category_receive == "":
@@ -50,7 +50,7 @@ def listing():
 
 @bp.route('/update_heart', methods=['POST'])
 def update_heart():
-    user_id = ECTOKEN.get_user_id(object)
+    user_id = ECTOKEN.get_user_id()
     cafe_idx_receive = request.form["cafe_idx_give"]
     type_receive = request.form["type_give"]
     action_receive = request.form["action_give"]

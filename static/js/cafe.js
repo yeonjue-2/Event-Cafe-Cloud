@@ -15,6 +15,8 @@ function showCafeDetail() {
             let x = response['cafes']['cafe_x'];
             let y = response['cafes']['cafe_y'];
             let cafe_notice = response['cafes']['cafe_notice'];
+            $('#address').text(address);
+            $('.cafe-img').html(`<img src="../static/cafe_pics/${cafe_image}">`);
             $('#cafe-name').text(cafe_name);
             $('#info').text(cafe_info);
             $('#notice').text(cafe_notice);

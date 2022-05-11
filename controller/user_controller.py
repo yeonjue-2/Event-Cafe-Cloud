@@ -10,7 +10,7 @@ bp = Blueprint('user', __name__, url_prefix='/user')
 
 @bp.route('/profile')
 def home():
-    user = ECTOKEN.get_token(object)
+    user = ECTOKEN.get_token()
     if user is not None:
         if user["cafe"] >= 1:
             my_cafe = DB.find_one("cafes", {'user_id': user["user_id"]}, {'_id': False})

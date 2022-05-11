@@ -93,6 +93,10 @@ right article h3 {
     width: 500px;
 }
 
+#address {
+    left: 20%;
+}
+
 #map {
     position: relative;
     left: 20%;
@@ -131,11 +135,11 @@ tbody tr {
     background-color: lavenderblush
 }
 
-.nicknameAndId{
+.nicknameAndId {
     font-weight: bold;
 }
 
-.create-time{
+.create-time {
     float: right;
     color: #999999;
 }
