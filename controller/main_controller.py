@@ -3,6 +3,7 @@ from flask import request, render_template, Blueprint, jsonify, url_for, redirec
 
 from database import DB
 from ectoken import ECTOKEN
+from type.collection import Collection
 
 bp = Blueprint('main', __name__)
 
@@ -11,42 +12,62 @@ bp = Blueprint('main', __name__)
 def home():
     user = ECTOKEN.get_token()
     if user is not None:
-        cafes = DB.list('cafes', {}, {'_id': False})
+        cafes = DB.list(Collection.CAFES, {}, {'_id': False})
         for cafe in cafes:
-            cafe_idx = str(cafe['cafe_id'])
-            cafe["count_heart"] = DB.count_documents('hearts', {"cafe_idx": cafe_idx, "type": "heart"})
-            cafe["heart_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
-            cafe["bookmark_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
+
+            cafe_idx = str(cafe['idx'])
+            cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
+            cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
+            cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
+
         return render_template('index.html', user=user)
     else:
         return render_template('index.html', msg="로그인 정보가 없습니다")
 
 
-@bp.route('/event_cafe')
-def event_cafe():
+@bp.route('/event_cafe/<event_category>')
+def event_cafe(event_category):
     user = ECTOKEN.get_token()
-    if user is None:
-        return render_template('event_cafe.html')
+
+    if user is not None:
+        return render_template('eventCafe.html', user=user, event_category=event_category)
+
     else:
-        return render_template('event_cafe.html', user=user)
+        return render_template('eventCafe.html', msg="로그인 정보가 없습니다")
 
 @bp.route('/listing', methods=['GET'])
 def listing():
     user_id = ECTOKEN.get_user_id()
-    cafes = DB.list('cafes', {}, {'_id': False})
-    event_category_receive = request.args.get("event_category_give")
-    if event_category_receive == "":
-        events = DB.list('events', {}, {'_id': False})
-    else:
-        events = DB.list('events', {'event_category': event_category_receive}, {'_id': False})
+    cafes = DB.list(Collection.CAFES, {}, {'_id': False})
 
     for cafe in cafes:
         cafe_idx = str(cafe['idx'])
-        cafe["count_heart"] = DB.count_documents('hearts', {"cafe_idx": cafe_idx, "type": "heart"})
-        cafe["heart_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "heart", "user_id": user_id}, {'_id': False}))
-        cafe["bookmark_by_me"] = bool(DB.find_one('hearts', {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user_id}, {'_id': False}))
-    return jsonify({"result": "success", 'cafes': cafes, 'events': events})
+        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
+        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user_id}, {'_id': False}))
+        cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user_id}, {'_id': False}))
 
+    return jsonify({"result": "success", "cafes": cafes})
+
+@bp.route('/event_cafe/listing_event', methods=['GET'])
+def listing_event():
+    user_id = ECTOKEN.get_user_id()
+
+    event_category_receive = request.args.get("event_category_give")
+    events = DB.list(Collection.EVENTS, {"event_category": event_category_receive}, {'_id': False})
+    cafes = []
+
+    for event in events:
+        cafe_id = int(event['cafe_id'])
+        cafe = DB.find_one(Collection.CAFES, {"idx": cafe_id}, {'_id': False})
+        cafes.append(cafe)
+
+    for cafe in cafes:
+        cafe_idx = str(cafe['idx'])
+        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
+        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user_id}, {'_id': False}))
+        cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user_id}, {'_id': False}))
+
+    return jsonify({"result": "success", "cafes": cafes, "events": events})
 
 @bp.route('/update_heart', methods=['POST'])
 def update_heart():
@@ -62,9 +83,9 @@ def update_heart():
     }
 
     if action_receive == "heart":
-        DB.insert('hearts', doc)
+        DB.insert(Collection.HEARTS, doc)
     else:
-        DB.delete('hearts', doc)
+        DB.delete(Collection.HEARTS, doc)
 
-    count = DB.count_documents("hearts", {"cafe_idx": cafe_idx_receive, "type": type_receive})
+    count = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx_receive, "type": type_receive})
     return jsonify({"result": "success", "count": count})

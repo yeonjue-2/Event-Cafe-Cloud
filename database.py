@@ -25,16 +25,38 @@ class DB(object):
         return DB.DATABASE[collection].update_one(find_query, update_query)
 
     @staticmethod
+    def count_documents(collection, query1, query2):
+        return DB.DATABASE[collection].find(query1, query2)
+
+    @staticmethod
+    def count(collection):
+        return DB.DATABASE[collection].estimated_document_count({})
+
+    @staticmethod
+    def sort_post(collection, colName):
+        idx = DB.DATABASE[collection].find_one(sort=[(colName, -1)])
+        if isinstance(idx, type(None)):
+            idx = 1
+        else:
+            idx = idx[colName] + 1
+        return idx
+
     def list(collection, included_query, excluded_query):
         return list(DB.DATABASE[collection].find(included_query, excluded_query))
+
 
     @staticmethod
     def count_documents(collection, query):
         return DB.DATABASE[collection].count_documents(query)
 
     @staticmethod
+
+    def find_all_sort(collection):
+        return list(DB.DATABASE[collection].find({}, {'_id': False}).sort("create_date", -1))
+
     def count_collection(collection):
         return DB.DATABASE[collection].estimated_document_count({})
+
 
     @staticmethod
     def allocate_pk(collection, pk):

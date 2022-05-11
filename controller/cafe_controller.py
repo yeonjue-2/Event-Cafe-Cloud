@@ -20,8 +20,10 @@ def get_event_info(cafe_id):
 
 @bp.route('/api/cafe/detail/<cafeId>')
 def getCafeDetail(cafeId):
+
     cafes = DB.find_one(Collection.CAFES, {Collection.CAFES_PK: int(cafeId)}, {'_id': False})
     reviews = DB.list(Collection.REVIEWS, {Collection.CAFES_PK: cafeId}, {'_id': False})
+
     response = {
         'cafes': cafes,
         'reviews': reviews
