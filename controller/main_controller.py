@@ -2,7 +2,7 @@ import jwt
 from flask import request, render_template, Blueprint, jsonify, url_for, redirect
 
 from database import DB
-from ectoekn import ECTOKEN
+from ectoken import ECTOKEN
 
 bp = Blueprint('main', __name__)
 

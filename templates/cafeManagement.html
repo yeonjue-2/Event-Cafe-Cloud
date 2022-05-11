@@ -6,40 +6,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>Event Cafe Cloude | EC2</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
     <!-- Bootstrap CSS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/fe92d18f9e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dongle&family=Jua&family=Poor+Story&display=swap"
-          rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
-
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <meta charset="UTF-8">
     <!-- CSS 링크 -->
-    <link href="../../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../../static/css/profilestyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../../static/css/calendar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/cafeprofilestyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/calendar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/datepicker.css" rel="stylesheet" type="text/css"/>
 
     <!-- JS 링크 -->
-    <script src="../../static/js/login_out.js"></script>
-    <script src="../../static/js/calendar.js"></script>
+    <script src="../../../static/js/login_out.js"></script>
+    <script src="../../../static/js/calendar.js"></script>
+    <script src="../../../static/js/cafeManage.js"></script>
+
 
     <title>Event Cafe Cloude | EC2</title>
 
@@ -71,38 +73,12 @@
             width: 50px;
             height: 50px;
         }
-    </style>
 
-    <script>
-        function updProfile() {
-            let user_nickname = $('#input-nickname').val()
-            let user_info = $('#input-userinfo').val()
-            let user_img = $('#file')[0].files[0]
-
-            console.log(user_nickname, user_info, user_img)
-
-            let form_data = new FormData()
-
-            form_data.append("user_nickname_give", user_nickname)
-            form_data.append("user_userinfo_give", user_info)
-            form_data.append("user_profile_give", user_img)
-
-            console.log(form_data)
-
-            $.ajax({
-                type: "POST",
-                url: "/user/api/update",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    alert("수정 완료!")
-                    window.location.replace("/user/profile")
-                }
-            });
+        .buttons {
+            margin-top: 30px;
+            text-align: center;
         }
-    </script>
+    </style>
 
 </head>
 <body>
@@ -119,10 +95,10 @@
         </div>
     {% endif %}
     <div class="banner-logo">
-        <img src="../../static/ec2_logo.png" onclick="location.href='/'">
+        <img src="../../../static/ec2_logo.png" onclick="location.href='/'">
     </div>
 </section>
-<div class="profile-text"><i class="fa-solid fa-calendar-check"></i>&nbsp Reservation</div>
+<div class="profile-text"><i class="fa-solid fa-calendar-days"></i>&nbsp Schedule</div>
 <div class="profileBox">
     <table class="scriptCalendar">
         <thead>
@@ -146,11 +122,73 @@
         </thead>
         <tbody></tbody>
     </table>
+    <div class="buttons">
+        <button type="button" class="btn btn-primary regScheduleBtn" data-toggle="modal" data-target="#exampleModal">
+            카페 일정 등록
+        </button>
+    </div>
 </div>
-<div class="profile-text"><i class="fa-solid fa-cloud"></i>&nbsp Reviews</div>
+<div class="profile-text"><i class="fa-solid fa-calendar-check"></i>&nbsp List</div>
 <div class="profileBox">
+    <div class="card border-success mb-3" style="max-width: 20rem;">
+        <div class="card-header">카테고리 / 예약자이름</div>
+        <div class="card-body">
+            <h4 class="card-title">startDate ~ endDate (n일)</h4>
+            <p class="card-text">cost</p>
+        </div>
+    </div>
 </div>
-<div class="profile-text"><i class="fa-solid fa-mug-saucer"></i>&nbsp etc</div>
-<div class="profileBox"></div>
+<div class="profile-text"><i class="fa-solid fa-calendar-plus"></i>&nbsp Watining</div>
+<div class="profileBox">
+    <div class="card border-warning mb-3" style="max-width: 20rem;">
+        <div class="card-header">카테고리 / 예약자이름</div>
+        <div class="card-body">
+            <h4 class="card-title">startDate ~ endDate (n일)</h4>
+            <p class="card-text">cost</p>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 800px">
+            <div class="register-form">
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="inputDefault">일정</label>
+                    <input type="text" class="form-control" id="input_custom_date_name"
+                           placeholder="휴무일 / 성수기 등 목적을 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="inputDefault">날짜</label>
+                    <div>
+                        <input type="text" id="datepicker1">
+                        <input type="text" id="datepicker2">
+                    </div>
+                    <div class="date_status">
+                        <div class="closed">
+                            <input type="radio" id="5-stars" name="custom_sales_flag" value="closed"/>
+                            <label for="5-stars" class="star">Closed</label>
+                            <p style="color: #999999">휴일 인 경우 선택해주세요</p>
+                        </div>
+                        <div class="special_day">
+                            <input type="radio" id="4-stars" name="custom_sales_flag" value="special"/>
+                            <label for="4-stars" class="star">Special</label>
+                            <p style="color: #999999">특수한 기간을 지정하고 싶은 경우 선택하세요</p>
+                        </div>
+                    </div>
+                    <div class="form-group" style="width: 300px">
+                        <label class="col-form-label mt-4" for="inputDefault">가격 설정</label>
+                        <input type="text" class="form-control" id="input_custom_cost"
+                               placeholder="특수한 기간에 대한 가격을 설정해주세요">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary regScheduleBtn" onclick="regCustomDay({{ cafe_idx }})">등록</button>
+                <button type="button" class="btn btn-secondary regBtn" data-dismiss="modal">X</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -114,7 +114,7 @@ function listing_event(event_category) {
                 let class_heart = cafes[i]['heart_by_me'] ? "fa-heart" : "fa-heart-o"
                 let count_heart = cafes[i]['count_heart']
                 let class_bookmark = cafes[i]['bookmark_by_me'] ? "fa-bookmark" : "fa-bookmark-o"
-
+                
                 let temp_html = `<div class="card" id="${cafe_idx}" style="width: 18rem; border-radius: 10px;">
                                         <img class="card-img-top" src="../static/cafe_pics/${cafe_image}" alt="Card image cap">
                                         <div class="card-body">
@@ -127,7 +127,7 @@ function listing_event(event_category) {
                                                         <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe_idx}', 'heart')">
                                                             <span class="icon is-small"><i class="fa ${class_heart}" aria-hidden="true"></i>
                                                             </span>&nbsp;<span class="heart-num">${num2str(count_heart)}</span>
-                                                        </a>                                                                                                                                                                                                                                                                  
+                                                        </a>
                                                 </div>
                                             </nav>
                                             <div class="btn-style">

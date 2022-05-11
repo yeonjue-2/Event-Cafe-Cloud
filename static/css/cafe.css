@@ -7,21 +7,24 @@
 
 main {
     margin-top: 10px;
-    position:relative;
-    left:20%;
+    position: absolute;
+    left: 20%;
     right: 20%;
 }
 
 left, right {
     float: left;
 }
+
 left {
     margin-top: 3%;
 }
-right{
+
+right {
     margin-left: 7%;
-    width:60%;
+    width: 30%;
 }
+
 .cafe-img {
     width: 400px;
     height: 400px;
@@ -42,6 +45,7 @@ right{
 
 .number-rating {
     font-size: 50px;
+    margin-left: 330px;
 }
 
 .star-rating, .star-rating span {
@@ -62,21 +66,31 @@ right article h3 {
     margin-bottom: 10px;
 }
 
-.box{
-    width:60%;
-    margin-bottom:7%;
+.box {
+    width: 60%;
+    margin-bottom: 7%;
 }
 
-#cafe-name{
+#cafe-name {
     position: relative;
-    left:30%;
+    left: 30%;
 }
-#info,#review,#notice {
-    margin-left : 20%;
-    margin-right:30%;
+
+#info, #notice {
+    margin-left: 20%;
+    margin-right: 30%;
     padding-left: 10%;
     background-color: #F5C0BE;
     border-radius: 3px;
+}
+
+.review {
+    margin-left: 10%;
+    margin-right: 30%;
+    padding-left: 5%;
+    background-color: lavender;
+    border-radius: 3px;
+    width: 500px;
 }
 
 #map {
@@ -85,3 +99,44 @@ right article h3 {
     width: 400px;
     height: 400px;
 }
+
+.scriptCalendar {
+    width: 100%;
+    height: 300px;
+}
+
+.day {
+    text-align: center;
+}
+
+.day-bar {
+    text-align: center;
+}
+
+#reservation-button {
+    background-color: mediumpurple;
+    width: 100%;
+    margin-top: 10px;
+}
+
+tbody tr {
+    text-align: center;
+}
+
+.kind {
+    float: left;
+}
+
+.reviewContent {
+    background-color: lavenderblush
+}
+
+.nicknameAndId{
+    font-weight: bold;
+}
+
+.create-time{
+    float: right;
+    color: #999999;
+}
+
