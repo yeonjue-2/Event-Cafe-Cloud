@@ -12,18 +12,14 @@ function showCafeManagement() {
             let end_date = response['end_date'];
             let event_category = response['event_category'];
 
-            $('#cafe-name').text(cafe_name);
-            $('#info').text(cafe_info);
-            kakaoMapAPI(x, y);
+            // todo eventsDB가 들어오면 추가로 완성할 예정
         }
     });
 }
 
 function regCustomDay(idx) {
     let cafe_idx = idx
-    console.log(idx)
     let custom_name = $('#input_custom_date_name').val()
-    console.log(custom_name)
     let custom_start_date = $('#datepicker1').val()
     let custom_end_date = $('#datepicker2').val()
     let custom_sales_flag = $('input[name=custom_sales_flag]:checked').val()
@@ -32,8 +28,6 @@ function regCustomDay(idx) {
     if (cost !== "") {
         custom_cost = parseInt(cost)
     }
-
-    console.log(cafe_idx, custom_name, custom_start_date, custom_end_date, custom_sales_flag, custom_cost)
 
     $.ajax({
         type: "POST",
