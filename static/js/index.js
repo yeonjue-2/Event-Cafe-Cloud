@@ -98,7 +98,7 @@ function listing() {
                                                 </nav>
                                                 <div class="btn-style">
                                                     <button type="button" class="btn btn-outline-secondary" style="float: right; margin-bottom: 10px;">
-                                                    <a href="#" style="color: dimgrey">둘러보기</a></button>
+                                                    <a href="http://localhost:5000/cafe/detail?id=${cafe_idx}" style="color: dimgrey">둘러보기</a></button>
                                                 </div>
                                              </div>
                                           </div>`
