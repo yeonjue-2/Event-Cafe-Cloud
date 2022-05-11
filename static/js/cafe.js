@@ -16,18 +16,18 @@ function showCafeDetail() {
             let y = response['cafes']['cafe_y'];
             let cafe_notice = response['cafes']['cafe_notice'];
             $('#address').text(address);
-            $('.cafe-img').html(`<img src="../static/cafe_pics/${cafe_image}">`);
+            $('.cafe-img').html(`<img src="../static/${cafe_image}">`);
             $('#cafe-name').text(cafe_name);
             $('#info').text(cafe_info);
             $('#notice').text(cafe_notice);
             kakaoMapAPI(x, y);
-
+            let scoreSum = 0;
             for (let i = 0; i < reviews.length; i++) {
                 let user_id = reviews[i]['user_id']
                 let cafe_rating = reviews[i]['cafe_rating']
                 let cafe_review = reviews[i]['cafe_review']
                 let create_date = reviews[i]['create_date']
-
+                scoreSum += parseInt(cafe_rating);
                 let temp_html = `<div class="card" >
                                     <div class="card-body">
                                          <div class="nicknameAndId">${user_id} ${cafe_rating}<div class="create-time">${create_date}</div></div>
@@ -36,6 +36,17 @@ function showCafeDetail() {
                                  </div>`
                 $('#review').append(temp_html)
             }
+            let rating = 0;
+            if (reviews.length != 0) {
+                rating = (scoreSum / reviews.length).toFixed(1);
+                if(rating%1<0.5) {
+                    rating = Math.floor(rating);
+                }else{
+                    rating = Math.ceil(rating);
+                }
+            }
+            $('.number-rating').text(rating.toFixed(1));
+            $('#star').css('width', `${rating * 20}%`);
         }
     });
 }
@@ -43,10 +54,15 @@ function showCafeDetail() {
 function kakaoMapAPI(x, y) {
     let container = document.getElementById('map');
     let options = { //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(y, x), //지도의 중심좌표.
+        center: new kakao.maps.LatLng(x, y), //지도의 중심좌표.
         level: 3 //지도의 레벨(확대, 축소 정도)
     };
+
     let map = new kakao.maps.Map(container, options);
+    new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(x, y), // 마커의 좌표
+        map: map // 마커를 표시할 지도 객체
+    })
 }
 
 function regReview() {

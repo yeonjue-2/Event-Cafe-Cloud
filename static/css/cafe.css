@@ -67,7 +67,7 @@ right article h3 {
 }
 
 .box {
-    width: 60%;
+    width: 80%;
     margin-bottom: 7%;
 }
 
@@ -94,6 +94,7 @@ right article h3 {
 }
 
 #address {
+    position:relative;
     left: 20%;
 }
 
