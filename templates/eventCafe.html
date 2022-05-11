@@ -57,7 +57,7 @@
 
     @media (min-width:1200px) {
       .card-columns {
-          column-count: 3
+          column-count: 3;
       }
     }
 
@@ -68,9 +68,10 @@
     }
 
 </style>
+
 <script>
     $(document).ready(function () {
-        listing()
+        listing_event('{{ event_category }}')
     })
 </script>
 
@@ -94,7 +95,7 @@
 
 <div id="menu" class="menu_bar">
     <ul>
-         <li><a href="/">CAFE</a>
+        <li><a href="/">CAFE</a>
             <ul class="ul-bars">
                 <li><a href="/event_cafe/kpop">K-POP</a></li>
                 <li><a href="/event_cafe/influencer">Influencer</a></li>
@@ -112,26 +113,9 @@
 
 <div class="wrap">
     <div class="container">
-            <div class="card-columns" id="cards-box">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">카페이름</h5>
-                        <p class="card-text">카페 동네</p>
-                        <nav class="level is-mobile">
-                            <div class="level-left">
-                                <a class="level-item is-sparta" aria-label="heart" onclick="toggle_heart('', 'heart')">
-                                    <span class="icon is-small"><i class="fa ${class_heart}"
-                                    aria-hidden="true"></i></span>&nbsp;<span class="like-num"></span>
-                               </a>
-                            </div>
-                        </nav>
-                        <button type="button" class="btn btn-outline-secondary">
-                        <a href="#" style="color: dimgrey">둘러보기</a></button>
-                    </div>
-                  </div>
-                </div>
+        <div class="card-columns" id="cards-box">
         </div>
+    </div>
 </div>
 </body>
 

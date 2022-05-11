@@ -4,6 +4,7 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
 from datetime import datetime, timedelta
 from database import DB
+from type.collection import Collection
 
 SECRET_KEY = 'MYCC'
 
@@ -12,6 +13,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+
 
 @bp.route('/join')
 def join_form():
@@ -44,15 +46,16 @@ def join():
         "user_email": user_email,
         "user_nickname": user_nickname,
         "user_profile": f"{user_id}.{extension}",
+        "cafe": 0,
     }
-    DB.insert(collection="users", data=doc)
+    DB.insert(Collection.USERS, data=doc)
     return jsonify({'result': 'success'})
 
 
 @bp.route("/api/join/double_check", methods=["POST"])
 def double_check():
     user_id = request.form['user_id_give']
-    checkResult = bool(DB.find_one("users", {"user_id": user_id}, {"_id": False}))
+    checkResult = bool(DB.find_one(Collection.USERS, {"user_id": user_id}, {"_id": False}))
     return jsonify({'result': 'success', 'checkResult': checkResult})
 
 
@@ -62,18 +65,17 @@ def login():
     pw = request.form["user_pw_give"]
     user_pw = hashlib.sha256(pw.encode('utf-8')).hexdigest()
 
-    result = DB.find_one("users", {'user_id': user_id, 'user_pw': user_pw}, {"_id": False})
+    result = DB.find_one(Collection.USERS, {'user_id': user_id, 'user_pw': user_pw}, {"_id": False})
     user_nickname = result['user_nickname']
 
     if result is not None:
         payload = {
             'user_id': user_id,
             'user_nickname': user_nickname,
-            'exp': datetime.utcnow() + timedelta(seconds=60*60*24)
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
         return jsonify({'result': 'success', 'token': token})
     else:
         return jsonify({'result': 'fail', 'msg': '로그인 정보를 다시 확인해주세요'})
-
