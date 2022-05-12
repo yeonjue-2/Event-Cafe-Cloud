@@ -65,7 +65,7 @@ def listing_event():
         cafe_id = int(cafe[Collection.CAFES_PK])
         cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart"})
         cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart", Collection.USERS_PK: user_id}, {'_id': False}))
-        cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "bookmark", "user_id": user_id}, {'_id': False}))
+        cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "bookmark", Collection.USERS_PK: user_id}, {'_id': False}))
 
     return jsonify({"result": "success", "cafes": cafes, "events": events})
 

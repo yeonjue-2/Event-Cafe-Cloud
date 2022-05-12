@@ -34,6 +34,7 @@
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/starRivew.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/cafe.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/index.css" rel="stylesheet" type="text/css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
@@ -63,11 +64,28 @@
         <img src="../static/ec2_logo.png" onclick="location.href='/'">
     </div>
 </section>
+<div id="menu" class="menu_bar">
+    <ul>
+         <li><a href="/">CAFE</a>
+            <ul class="ul-bars">
+                <li><a href="/event_cafe/kpop">K-POP</a></li>
+                <li><a href="/event_cafe/influencer">Influencer</a></li>
+                <li><a href="/event_cafe/animation">Animation</a></li>
+                <li><a href="/event_cafe/webtoon">Webtoon</a></li>
+                <li><a href="/event_cafe/novel">Novel</a></li>
+            </ul>
+        </li>
+        <li><a href="/post">COMMUNITY</a>
+        </li>
+        <li><a href="#">공지사항</a>
+        </li>
+    </ul>
+</div>
 <main>
     <left>
         <div class="cafe-info">
             <div class="wrap-rating">
-                <div class='star-rating'>
+                <div class='big-star-rating'>
                     <span id="star"></span>
                 </div>
                 <div class="number-rating">
@@ -178,7 +196,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <article>예약 내역</article>
+                <article id="reservation-flag">예약 내역</article>
             </div>
             <div class="modal-body">
             </div>

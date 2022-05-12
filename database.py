@@ -45,19 +45,17 @@ class DB(object):
     def list(collection, included_query, excluded_query):
         return list(DB.DATABASE[collection].find(included_query, excluded_query))
 
-
     @staticmethod
     def count_documents(collection, query):
         return DB.DATABASE[collection].count_documents(query)
 
     @staticmethod
-
     def find_all_sort(collection):
         return list(DB.DATABASE[collection].find({}, {'_id': False}).sort("create_date", -1))
 
+    @staticmethod
     def count_collection(collection):
         return DB.DATABASE[collection].estimated_document_count({})
-
 
     @staticmethod
     def allocate_pk(collection, pk):
