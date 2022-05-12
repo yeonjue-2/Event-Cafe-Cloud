@@ -2,7 +2,7 @@ import pymongo
 
 
 class DB(object):
-    URI = "mongodb://localhost:27017"
+    URI = "mongodb://test:test@localhost:27017"
 
     def __init__(self):
         client = pymongo.MongoClient(DB.URI)
