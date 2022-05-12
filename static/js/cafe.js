@@ -83,12 +83,12 @@ function regReview() {
         success: function (response) {
             console.log(response);
             alert("리뷰를 등록했습니다.")
-            window.location.replace("/cafe/detail?id=" + cafe_idx)
+            window.location.replace("/cafe/detail?id=" + id)
         },
         error: (request, status, error) => {
             if (error == 'CONFLICT') {
                 alert('이미 리뷰를 작성하였습니다.')
-                window.location.replace("/cafe/detail?id=" + cafe_idx)
+                window.location.replace("/cafe/detail?id=" + id)
             }
         }
     });
