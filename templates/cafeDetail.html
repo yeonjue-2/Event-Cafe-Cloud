@@ -40,25 +40,25 @@
     <!-- JS 링크 -->
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f608fc0e1d5bbe181d014e18b991016"></script>
+    <script src="../static/js/login_out.js"></script>
     <script src="../static/js/cafe.js"></script>
-
     <script src="../static/js/calendar.js"></script>
     <title>Event Cafe Cloud | EC2</title>
 
 </head>
 <body>
 <section class="ec2-banner">
-    {#    {% if msg %}#}
-    {#        <div class="welcome-message">#}
-    {#            guest님 환영합니다 &nbsp;&nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>#}
-    {#        </div>#}
-    {#    {% else %}#}
-    {#        <div class="welcome-message">#}
-    {#            {{ user["user_nickname"] }}님 환영합니다 &nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick=logout()>로그아웃</button>#}
-    {#        </div>#}
-    {#    {% endif %}#}
+        {% if msg %}
+            <div class="welcome-message">
+                guest님 환영합니다 &nbsp;&nbsp;&nbsp;
+                <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>
+            </div>
+        {% else %}
+            <div class="welcome-message">
+                <a href="/user/profile">{{ user["user_nickname"] }}님</a> 환영합니다 &nbsp;&nbsp;
+                <button class="banner-button" onclick=logout()>로그아웃</button>
+            </div>
+        {% endif %}
     <div class="banner-logo">
         <img src="../static/ec2_logo.png" onclick="location.href='/'">
     </div>
@@ -68,7 +68,7 @@
         <div class="cafe-info">
             <div class="wrap-rating">
                 <div class='star-rating'>
-                    <span></span>
+                    <span id="star"></span>
                 </div>
                 <div class="number-rating">
                     3.5
@@ -76,7 +76,6 @@
             </div>
         </div>
         <div class="cafe-img">
-            <img src="../static/cafe1.png">
         </div>
         <table class="scriptCalendar">
             <thead>
@@ -106,15 +105,16 @@
         <h1 id="cafe-name"></h1>
         <article class="cafe-info box">
             <h3>카페 소개</h3>
-            <p id="info">좋은 카페에용</p>
+            <p id="info"></p>
         </article>
         <article class="cafe-location box">
             <h3>카페 위치</h3>
+            <div id = "address"></div>
             <div id="map"></div>
         </article>
         <article class="cafe-notice box">
             <h3>이용 안내</h3>
-            <p id="notice">787878787</p>
+            <p id="notice"></p>
         </article>
         <article>
             <div class="register-review">

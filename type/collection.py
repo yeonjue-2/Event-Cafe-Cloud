@@ -3,6 +3,7 @@ from enum import Enum
 
 class Collection(str, Enum):
     USERS = 'users'
+    USERS_PK = 'user_id'
 
     EVENTS = 'events'
     EVENTS_PK = 'event_id'
