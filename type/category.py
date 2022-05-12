@@ -2,14 +2,14 @@ from enum import Enum
 
 
 class Category(str, Enum):
-    KPOP = "K-POP"
-    ANIMATION = "Animation"
-    INFLUENCER = "Influencer"
-    WEBTOON = "Webtoon"
-    NOVEL = "Novel"
+    KPOP = "kpop"
+    ANIMATION = "animation"
+    INFLUENCER = "influencer"
+    WEBTOON = "webtoon"
+    NOVEL = "novel"
 
     def __repr__(self):
-        return self.name
+        return self.value
 
     def __str__(self):
-        return self.name
+        return self.value
