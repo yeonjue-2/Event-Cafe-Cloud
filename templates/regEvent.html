@@ -37,7 +37,6 @@
     <link href="../../../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/cafeprofilestyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../static/css/calendar.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/datepicker.css" rel="stylesheet" type="text/css"/>
 
     <!-- JS 링크 -->
@@ -131,7 +130,7 @@
                 },
                 success: function (response) {
                     let cost = response['all_cost']
-                    $('input[name=input_cost]').attr('value',cost)
+                    $('input[name=input_cost]').attr('value', cost)
                     $('#help-id').text("총 결제 금액을 확인해보세요 : ").removeClass("is-danger").addClass("is-safe")
                 }
             })
@@ -141,23 +140,30 @@
             let id = new URLSearchParams(location.search).get('id');
             let event_category = $("#category option:selected").val()
             let event_name = $('#input-event-name').val()
+            let event_info = $('#input_event_info').val()
             let start_date = $('#datepicker1').val()
             let end_date = $('#datepicker2').val()
             let event_cost = document.getElementById('input_event_cost').value
+            let event_img = $('#file')[0].files[0]
 
-            console.log(id, event_category, event_cost)
+            let form_data = new FormData()
+
+            form_data.append('cafe_id', id)
+            form_data.append('event_category', event_category)
+            form_data.append('event_name', event_name)
+            form_data.append('event_info', event_info)
+            form_data.append('start_date', start_date)
+            form_data.append('end_date', end_date)
+            form_data.append('event_cost', event_cost)
+            form_data.append('event_img', event_img)
 
             $.ajax({
                 type: "POST",
                 url: "/api/cafe/registerEvent",
-                data: {
-                    'cafe_id': id,
-                    'event_category': event_category,
-                    'event_name': event_name,
-                    'start_date': start_date,
-                    'end_date': end_date,
-                    'event_cost': event_cost
-                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     alert("예약되었습니다! 호스트의 승인을 기다려주세요!")
                     window.location.replace("/cafe/detail?id=" + id)
@@ -212,7 +218,11 @@
     </div>
     <div class="form-group custom-form">
         <label for="exampleFormControlTextarea1">상세 설명</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea class="form-control" id="input_event_info" rows="3"></textarea>
+    </div>
+    <div class="form-group custom-form">
+        <label for="exampleFormControlFile1">포스터</label>
+        <input type="file" class="form-control-file" id="file">
     </div>
     <div class="form-group has-success custom-form custom-cost-box">
         <label class="form-label mt-4 custom-cost-label" for="inputValid"><i class="fa-solid fa-coins"></i> 총 결제
