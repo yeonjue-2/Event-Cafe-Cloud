@@ -33,7 +33,6 @@ function post_listing() {
 }
 
 // 게시글 상세 조회 및 조회수 ++
-
 function readPost(target_id) {
     $.ajax({
         type: "POST",
@@ -66,14 +65,13 @@ function readPost(target_id) {
             }
 
             $('#articleModal').attr('post_id', target_id);
-
+            comment_listing()
             post_listing()
-
         }
     })
 }
 
-// 게시글 작성
+// 게시글 포스팅
 function posting() {
     let post_title = $("#textarea-title").val()
     let post_content = $("#textarea-content").val()
@@ -102,7 +100,7 @@ function posting() {
     })
 }
 
-// 글 작성자 수정 이후 저장 기능
+// 글 작성자 수정 이후 저장
 function post_edit_save() {
     let edit_content = $("#modal-content-edit").val();
     let post_id = $('#articleModal').attr('post_id')
@@ -121,7 +119,6 @@ function post_edit_save() {
         }
     })
 }
-
 
 // 게시글 수정
 function post_edit() {
@@ -152,6 +149,64 @@ function post_delete() {
         }
     })
 }
+
+// 게시글 댓글 포스팅
+function comment_posting() {
+    let comment = $("#modal-comment").val()
+    let post_id = $('#articleModal').attr('post_id')
+
+    if (comment == '') {
+        (alert("내용을 입력해주세요"))
+        return
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/api/post/comment",
+        data: {"comment":comment,"post_id":post_id},
+        success: function (response) {
+            if (response["result"] == "success") {
+                alert("댓글이 작성되었습니다");
+                window.location.reload();
+            } else {
+                alert("로그인 후 이용해주세요!")
+            }
+        }
+    })
+}
+
+function comment_listing() {
+    $.ajax({
+        type: "GET",
+        url: "/api/post/comment",
+        data: {},
+        success: function (response) {
+            $("#comment-box").empty();
+            let target_id = $('#articleModal').attr('post_id')
+
+            for (let i = 0; i < response.length; i++) {
+                    let parents_post = response[i]['parents_post']
+                    let post_content = response[i]['post_content']
+                    let user_nickname = response[i]['user_nickname']
+                    let create_date = response[i]['create_date']
+                    let post_id = response[i]['post_id']
+
+                if (target_id == parents_post) {
+                    let temp_html = `<div class="flex-shrink-0"><img class="rounded-circle"
+                                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."/>
+                                    </div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">${user_nickname}</div>
+                                        ${post_content}
+                                    </div>`
+                    $('#comment-box').append(temp_html)
+                }
+
+            }
+        }
+    })
+}
+
 
 // 게시판 글 크기 자동조절
 function resize(object) {

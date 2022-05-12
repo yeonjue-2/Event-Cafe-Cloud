@@ -50,8 +50,13 @@ class DB(object):
         return DB.DATABASE[collection].count_documents(query)
 
     @staticmethod
-    def find_all_sort(collection):
-        return list(DB.DATABASE[collection].find({}, {'_id': False}).sort("create_date", -1))
+    def find_all_sort(collection ,query=None ):
+        if query != None:
+            return list(DB.DATABASE[collection].find(query, {'_id': False}).sort("create_date", -1))
+
+        else :
+            return list(DB.DATABASE[collection].find({}, {'_id': False}).sort("create_date", -1))
+
 
     @staticmethod
     def count_collection(collection):

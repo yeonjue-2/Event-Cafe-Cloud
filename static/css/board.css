@@ -120,4 +120,14 @@
     transform: translate(-50%, -50%);
 }
 
+.content-box{
+    font-size: 18px !important;
+}
 
+.ms-3 {
+    display: block !important;
+}
+
+.commentWrap {
+    display: block;
+}
