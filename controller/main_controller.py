@@ -4,6 +4,7 @@ from flask import request, render_template, Blueprint, jsonify, url_for, redirec
 from database import DB
 from ectoken import ECTOKEN
 from type.collection import Collection
+from enum import Enum
 
 bp = Blueprint('main', __name__)
 
@@ -13,12 +14,12 @@ def home():
     user = ECTOKEN.get_token()
     if user is not None:
         cafes = DB.list(Collection.CAFES, {}, {'_id': False})
-        for cafe in cafes:
 
-            cafe_idx = str(cafe['idx'])
-            cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
-            cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
-            cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
+        for cafe in cafes:
+            cafe_id = int(cafe[Collection.CAFES_PK])
+            cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart"})
+            cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
+            cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
 
         return render_template('index.html', user=user)
     else:
@@ -40,10 +41,10 @@ def listing():
     cafes = DB.list(Collection.CAFES, {}, {'_id': False})
 
     for cafe in cafes:
-        cafe_idx = str(cafe['idx'])
-        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
-        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user_id}, {'_id': False}))
-        cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user_id}, {'_id': False}))
+        cafe_id = int(cafe[Collection.CAFES_PK])
+        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart"})
+        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart", "user_id": user_id}, {'_id': False}))
+        cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "bookmark", "user_id": user_id}, {'_id': False}))
 
     return jsonify({"result": "success", "cafes": cafes})
 
@@ -57,15 +58,15 @@ def listing_event():
 
     for event in events:
         cafe_id = int(event['cafe_id'])
-        cafe = DB.find_one(Collection.CAFES, {"idx": cafe_id}, {'_id': False})
+        cafe = DB.find_one(Collection.CAFES, {Collection.CAFES_PK: cafe_id}, {'_id': False})
         cafe_name = cafe['cafe_name']
         event['cafe_name'] = cafe_name
         cafes.append(cafe)
 
     for cafe in cafes:
-        cafe_idx = str(cafe['idx'])
-        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
-        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user_id}, {'_id': False}))
+        cafe_id = int(cafe[Collection.CAFES_PK])
+        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart"})
+        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart", "user_id": user_id}, {'_id': False}))
 
     return jsonify({"result": "success", "cafes": cafes, "events": events})
 
