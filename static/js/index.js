@@ -63,7 +63,7 @@ function listing() {
         success: function (response) {
             let cafes = response['cafes']
             for (let i = 0; i < cafes.length; i++) {
-                let cafe_idx = cafes[i]['idx']
+                let cafe_idx = cafes[i]['cafe_id']
                 let cafe_image = cafes[i]['cafe_image']
                 let cafe_name = cafes[i]['cafe_name']
                 let cafe_short_info = cafes[i]['cafe_short_info']
