@@ -48,7 +48,7 @@ function regCustomDay(id) {
         },
         success: function (response) {
             alert("리뷰를 등록했습니다.")
-            window.location.replace("/user/cafe/manage/" + cafe_idx)
+            window.location.replace("/user/cafe/manage?id=" + cafe_idx)
         }
     });
 }
