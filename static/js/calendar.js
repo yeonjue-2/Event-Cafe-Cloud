@@ -2,7 +2,7 @@ $(document).ready(buildCalendar);
 
 var today = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
 var date = new Date();  // @param 전역 변수, today의 Date를 세어주는 역할
-var monthEventMap;
+var monthEventMap, monthCustomMap;
 
 function prevCalendar() {
     today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
@@ -118,22 +118,36 @@ function calendarChoiceDay(column) {
         $('.modal-body').text('등록된 일정이 없습니다.')
         return;
     }
+
+    let custom = monthCustomMap.get(key);
+    if (custom['custom_sales_flag'] == 'closed') {
+        let custom_name = custom['custom_name']
+        $('#reservation-flag').text('금일은 휴무 입니다.')
+        let tempHtml = `<div class="wrap-modal">
+                            <div class="kind">휴무 사유 :</div>
+                            <div id="modal-category">${custom_name}</div>
+                        </div>
+                        `;
+        $('.modal-body').append(tempHtml);
+        return;
+    }
+
     let event = monthEventMap.get(key);
     let event_category = event['event_category']
     let event_name = event['event_name']
     let event_info = event['event_info']
     let tempHtml = `<div class="wrap-modal">
-                                <div class="kind">카테고리 :</div>
-                                <div id="modal-category">${event_category}</div>
-                            </div>
-                            <div class="wrap-modal">
-                                <div class="kind">이벤트명 :</div>
-                                <div id="modal-event-name">${event_name}</div>
-                            </div>
-                            <div class="wrap-modal">
-                                <div class="kind">행사 :</div>
-                                <div id="modal-event-info">${event_info}</div>
-                            </div>`;
+                        <div class="kind">카테고리 :</div>
+                        <div id="modal-category">${event_category}</div>
+                    </div>
+                    <div class="wrap-modal">
+                        <div class="kind">이벤트명 :</div>
+                        <div id="modal-event-name">${event_name}</div>
+                    </div>
+                    <div class="wrap-modal">
+                        <div class="kind">행사 :</div>
+                        <div id="modal-event-info">${event_info}</div>
+                    </div>`;
     $('.modal-body').append(tempHtml)
 }
 
@@ -158,11 +172,20 @@ function makeMonthMap() {
         },
         success: (response) => {
             monthEventMap = new Map();
+            monthCustomMap = new Map();
             let events = response['month_event_list'];
-            for (let idx = 0; idx < events.length; idx++) {
-                let date = new Date(events[idx]['date']).toISOString().substring(0, 10)
-                monthEventMap.set(date, events[idx]);
-            }
+            if (events !== undefined)
+                events.forEach((event) => {
+                    let date = new Date(event['date']).toISOString().substring(0, 10)
+                    monthEventMap.set(date, event)
+                })
+            let customs = response['month_custom_list'];
+            console.log(customs)
+            if (customs !== undefined)
+                customs.forEach((custom) => {
+                    let date = new Date(custom['date']).toISOString().substring(0, 10)
+                    monthCustomMap.set(date, custom)
+                })
         }
     })
 }
@@ -175,7 +198,8 @@ function makeMonthMapKey(column) {
 }
 
 function isImpossibleDay(column) {
-    return monthEventMap.has(makeMonthMapKey(column));
+    let key = makeMonthMapKey(column);
+    return monthEventMap.has(key) || (monthCustomMap.has(key) && monthCustomMap.get(key)['custom_sales_flag']=='closed');
 }
 
 function setPossibleDay(column) {

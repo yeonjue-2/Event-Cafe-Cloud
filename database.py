@@ -41,6 +41,7 @@ class DB(object):
             idx = idx[colName] + 1
         return idx
 
+    @staticmethod
     def list(collection, included_query, excluded_query):
         return list(DB.DATABASE[collection].find(included_query, excluded_query))
 
@@ -49,7 +50,6 @@ class DB(object):
         return DB.DATABASE[collection].count_documents(query)
 
     @staticmethod
-
     def find_all_sort(collection ,query=None ):
         if query != None:
             return list(DB.DATABASE[collection].find(query, {'_id': False}).sort("create_date", -1))
@@ -57,6 +57,8 @@ class DB(object):
         else :
             return list(DB.DATABASE[collection].find({}, {'_id': False}).sort("create_date", -1))
 
+
+    @staticmethod
     def count_collection(collection):
         return DB.DATABASE[collection].estimated_document_count({})
 
