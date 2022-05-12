@@ -54,12 +54,12 @@
 
             if (start_date == "") {
                 $('#help-id').text("시작일을 입력하세요.").removeClass("is-safe").addClass("is-danger-s")
-                $('#datepicker1').focus()
+                $('#startDate').focus()
                 return;
             }
             if (end_date == "") {
                 $('#help-id').text("종료일을 입력하세요.").removeClass("is-safe").addClass("is-danger-e")
-                $('#datepicker2').focus()
+                $('#endDate').focus()
                 return;
             }
 
@@ -85,8 +85,8 @@
             let event_category = $("#category option:selected").val()
             let event_name = $('#input-event-name').val()
             let event_info = $('#input_event_info').val()
-            let start_date = $('#datepicker1').val()
-            let end_date = $('#datepicker2').val()
+            let start_date = $('#startDate').val()
+            let end_date = $('#endDate').val()
             let event_cost = document.getElementById('input_event_cost').value
             let event_img = $('#file')[0].files[0]
 

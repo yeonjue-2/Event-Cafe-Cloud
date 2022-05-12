@@ -141,3 +141,6 @@
     width: 40px;
     height: 40px;
 }
+.d-flex {
+    display: block !important;
+}

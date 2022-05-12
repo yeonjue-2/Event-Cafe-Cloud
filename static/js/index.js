@@ -109,14 +109,14 @@ function listing_event(event_category) {
             let events = response['events']
             for (let i = 0; i < events.length; i++) {
                 let event_id = events[i]['event_id']
-                let event_image = events[i]['event_image']
+                let event_image = events[i]['event_img']
                 let event_category = events[i]['event_category']
                 let event_name = events[i]['event_name']
                 let cafe_name = events[i]['cafe_name']
                 let cafe_id = events[i]['cafe_id']
 
                 let temp_html = `<div class="card" id="${event_id}" style="width: 30%; border-radius: 10px; margin: 15px">
-                                        <img class="card-img-top" src="../static/event_pics/${event_image}" alt="Card image cap">
+                                        <img class="card-img-top" src="../static/event_img/${event_image}" alt="Card image cap">
                                         <div class="card-body">
                                             <span class="badge badge-primary" style="background-color: dodgerblue; margin-bottom: 10px">${event_category}</span>
                                             <h3 class="card-title">${event_name}
