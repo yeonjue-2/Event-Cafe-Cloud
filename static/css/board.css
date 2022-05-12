@@ -131,3 +131,8 @@
 .commentWrap {
     display: block;
 }
+
+.rounded-circle{
+    width: 40px;
+    height: 40px;
+}
