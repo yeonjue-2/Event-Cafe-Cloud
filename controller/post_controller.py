@@ -14,8 +14,11 @@ bp = Blueprint('post', __name__)
 @bp.route('/post', methods=["GET"])
 def board():
     user = ECTOKEN.get_token()
+    if user is not None:
+        return render_template('userBoard.html', user=user)
+    else:
+        return render_template('userBoard.html', msg="로그인 정보가 없습니다")
 
-    return render_template('userBoard.html', user=user)
 
 # 게시글 전체 조회
 @bp.route('/api/post', methods=["GET"])
