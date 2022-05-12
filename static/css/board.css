@@ -131,3 +131,7 @@
 .commentWrap {
     display: block;
 }
+
+.d-flex {
+    display: block!important;
+}
