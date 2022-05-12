@@ -134,7 +134,8 @@
 
 
 .d-flex {
-    display: block!important;
+    display: block !important;
+}
 
 .rounded-circle{
     width: 40px;
