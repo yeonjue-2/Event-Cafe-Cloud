@@ -133,7 +133,7 @@ html .ui-button.ui-state-disabled:active {
 }
 
 .ui-widget-header .ui-icon {
-    background-image: url('./btns.png');
+    background-image: url('../btns.png');
 }
 
 .ui-icon-circle-triangle-e {
