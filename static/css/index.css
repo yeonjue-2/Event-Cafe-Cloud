@@ -1,4 +1,4 @@
-.menu_bar {
+    .menu_bar {
         margin: 0;
         padding: 0;
     }
@@ -47,4 +47,24 @@
         margin-left: -40px;
         background: #F5C0BE;
         transition: ease 0.5s;
+    }
+
+    .wrap {
+        margin: auto;
+        padding: 80px;
+        width: 100%;
+    }
+
+    @media (min-width:1200px) {
+      .card-columns {
+          display: inline;
+          column-count: 3;
+      }
+    }
+
+    @media (min-width:1440px) {
+      .card-columns {
+          display: inline;
+          column-count: 3;
+      }
     }
