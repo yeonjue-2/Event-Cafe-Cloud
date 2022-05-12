@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import jwt
 import requests as requests
 from flask import Flask, render_template, jsonify, request, redirect, url_for, Blueprint
@@ -7,7 +9,6 @@ from ectoken import ECTOKEN
 from type.collection import Collection
 
 bp = Blueprint('user', __name__, url_prefix='/user')
-
 
 
 @bp.route('/profile')
@@ -130,12 +131,14 @@ def cafeRegCustomDay():
     user_id = ECTOKEN.get_user_id()
     cafe_id = request.form['cafe_idx_give']
     custom_name = request.form['custom_name']
-    custom_start_date = request.form['custom_start_date']
-    custom_end_date = request.form['custom_end_date']
+    start_date = request.form['custom_start_date']
+    end_date = request.form['custom_end_date']
     custom_sales_flag = request.form['custom_sales_flag']
     custom_cost = request.form['custom_cost']
 
     custom_id = DB.allocate_pk(Collection.CUSTOMS, Collection.CUSTOMS_PK)
+    custom_start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    custom_end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
     doc = {
         "custom_id": custom_id,

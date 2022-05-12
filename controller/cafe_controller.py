@@ -81,6 +81,8 @@ def regEvent():
     event_cost = request.form['event_cost']
 
     event_id = DB.allocate_pk(Collection.EVENTS, Collection.EVENTS_PK)
+    event_start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    event_end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
     doc = {
         Collection.EVENTS_PK: event_id,
@@ -88,8 +90,8 @@ def regEvent():
         Collection.CAFES_PK: cafe_id,
         'event_category': event_category,
         'event_name': event_name,
-        'event_start_date': start_date,
-        'event_end_date': start_date,
+        'event_start_date': event_start_date,
+        'event_end_date': event_end_date,
         'event_option': event_option,
         'event_cost': event_cost,
     }
