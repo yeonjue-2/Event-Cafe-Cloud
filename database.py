@@ -41,6 +41,7 @@ class DB(object):
             idx = idx[colName] + 1
         return idx
 
+    @staticmethod
     def list(collection, included_query, excluded_query):
         return list(DB.DATABASE[collection].find(included_query, excluded_query))
 
