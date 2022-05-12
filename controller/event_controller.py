@@ -31,8 +31,8 @@ def get_schedule_info(cafe_id):
 
     monthCustomList = []
     for custom in customs:
-        start_date = custom['custom_start_date']
-        end_date = custom['custom_end_date']
+        start_date = datetime.datetime.strptime(custom['custom_start_date'],'%Y-%m-%d')
+        end_date = datetime.datetime.strptime(custom['custom_end_date'],'%Y-%m-%d')
         while start_date <= end_date:
             if start_date.month != month or start_date.year != year:
                 break
