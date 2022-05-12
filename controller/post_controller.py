@@ -23,11 +23,13 @@ def board():
 # 게시글 전체 조회
 @bp.route('/api/post', methods=["GET"])
 def board_listing():
-    posts = DB.find_all_sort(Collection.POSTS)
+    query = {'property': 'post'}
+    posts = DB.find_all_sort(Collection.POSTS,query)
 
     for a in posts:
         a['create_date'] = a['create_date'].strftime('%Y.%m.%d')
     return jsonify(posts)
+
 
 # 게시글 detail 조회
 @bp.route('/api/post/detail', methods=["POST"])
@@ -41,8 +43,7 @@ def board_detail_search():
     return jsonify({'result': 'success', 'user': user, 'user_id': user_id})
 
 
-
-#게시글 등록
+# 게시글 등록
 @bp.route('/api/post', methods=["POST"])
 def board_posting():
     user = ECTOKEN.get_token()
@@ -61,13 +62,14 @@ def board_posting():
             'user_nickname': user_nickname,
             'post_view': 0,
             'create_date': datetime.now(),
+            'property' : 'post',
+            'parents_post' : last_post
         }
         DB.insert(Collection.POSTS, doc)
         return jsonify({'result': 'success'})
 
     else:
         return jsonify({'result': 'fail'})
-
 
 
 #게시글 수정
@@ -99,3 +101,39 @@ def delete_post():
         return {"result": "notlogined"}
 
 
+#게시글 댓글 작성
+@bp.route('/api/post/comment', methods=["POST"])
+def comment_post():
+    user = ECTOKEN.get_token()
+    if user is not None:
+        user_id = user['user_id']
+        user_nickname = user['user_nickname']
+        comment = request.form.get('comment')
+        post_id = request.form.get('post_id')
+        comment_id = DB.sort_post(Collection.POSTS, "post_id")
+
+        doc = {
+            'parents_post': post_id,
+            'post_content': comment,
+            'user_id': user_id,
+            'user_nickname': user_nickname,
+            'create_date': datetime.now(),
+            'property': "comment",
+            'post_id': int(comment_id)
+        }
+
+        DB.insert(Collection.POSTS, doc)
+        return jsonify({'result': 'success'})
+
+    else:
+        return jsonify({'result': 'fail'})
+
+# 댓글 전체 조회
+@bp.route('/api/post/comment', methods=["GET"])
+def comment_listing():
+    query = {'property': 'comment'}
+    comments = DB.find_all_sort(Collection.POSTS, query)
+
+    for a in comments:
+        a['create_date'] = a['create_date'].strftime('%Y.%m.%d %H:%M')
+    return jsonify(comments)
