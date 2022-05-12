@@ -34,7 +34,7 @@ def event_cafe(event_category):
     if user is not None:
         return render_template('eventCafe.html', user=user, event_category=event_category)
     else:
-        return render_template('eventCafe.html', msg="로그인 정보가 없습니다")
+        return render_template('eventCafe.html', msg="로그인 정보가 없습니다",event_category=event_category)
 
 @bp.route('/listing', methods=['GET'])
 def listing():

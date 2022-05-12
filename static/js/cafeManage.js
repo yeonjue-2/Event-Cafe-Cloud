@@ -26,8 +26,8 @@ function regCustomDay(id) {
     let custom_start_date = $('#startDate').val()
     let custom_end_date = $('#endDate').val()
     let custom_sales_flag = $('input[name=custom_sales_flag]:checked').val()
-        if (custom_sales_flag = "closed") {
-            $("input[name=input_cost]").attr("readonly".true);
+        if (custom_sales_flag == "closed") {
+            // $("input[name=input_cost]").attr("readonly".true);
         }
     let cost = $('#input_custom_cost').val()
     let custom_cost = 0
