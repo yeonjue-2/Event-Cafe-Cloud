@@ -12,12 +12,20 @@ bp = Blueprint('cafe', __name__)
 def routeCafeDetail():
     cafe_id = int(request.args.get('id'));
     user = ECTOKEN.get_token();
-    if DB.find_one(Collection.CAFES,{Collection.CAFES_PK:cafe_id},{'_id':False}) is None:
-        return Response(status = 404)
+    if DB.find_one(Collection.CAFES, {Collection.CAFES_PK: cafe_id}, {'_id': False}) is None:
+        return Response(status=404)
     if user is None:
-
         return render_template('cafeDetail.html', msg="로그인 정보가 없습니다")
-    return render_template('cafeDetail.html',user=user)
+    return render_template('cafeDetail.html', user=user)
+
+
+@bp.route('/cafe/eventRegister')
+def routeEventRegister():
+    user = ECTOKEN.get_token()
+    if user is None:
+        return render_template('cafeDetail.html', msg="로그인 정보가 없습니다")
+    return render_template('regEvent.html', user=user)
+
 
 @bp.route('/cafe/reservation/<cafe_id>', methods=['get'])
 def get_event_info(cafe_id):
@@ -46,7 +54,8 @@ def regCafeReview():
     cafe_rating = request.form['cafe_rating_give']
     cafe_review = request.form['cafe_review_give']
 
-    reviewFlag = DB.find_one(Collection.REVIEWS,{Collection.USERS_PK:user_id,Collection.CAFES_PK:cafe_idx},{'_id':False})
+    reviewFlag = DB.find_one(Collection.REVIEWS, {Collection.USERS_PK: user_id, Collection.CAFES_PK: cafe_idx},
+                             {'_id': False})
     if reviewFlag is not None:
         return Response(status=409)
 
