@@ -65,3 +65,6 @@
     font-family: 'Gowun Dodum', sans-serif;
     border: lavender;
 }
+.kind {
+    float: left;
+}
