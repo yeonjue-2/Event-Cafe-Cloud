@@ -154,7 +154,6 @@ function post_delete() {
 function comment_posting() {
     let comment = $("#modal-comment").val()
     let post_id = $('#articleModal').attr('post_id')
-    console.log(post_id)
 
     if (comment == '') {
         (alert("내용을 입력해주세요"))
