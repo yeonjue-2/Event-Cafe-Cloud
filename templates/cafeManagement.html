@@ -9,9 +9,15 @@
     <title>Event Cafe Cloude | EC2</title>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+            integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+          integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
@@ -158,8 +164,8 @@
                 <div class="form-group">
                     <label class="col-form-label mt-4" for="inputDefault">날짜</label>
                     <div>
-                        <input type="text" id="datepicker1">
-                        <input type="text" id="datepicker2">
+                        <input type="text" id="startDate">
+                        <input type="text" id="endDate">
                     </div>
                     <div class="date_status">
                         <div class="closed">
@@ -170,18 +176,19 @@
                         <div class="special_day">
                             <input type="radio" id="4-stars" name="custom_sales_flag" value="special"/>
                             <label for="4-stars" class="star">Special</label>
-                            <p style="color: #999999">특수한 기간을 지정하고 싶은 경우 선택하세요</p>
+                            <p style="color: #999999">특수한 기간을 지정하고 싶은 경우 선택하세요(ex.성수기)</p>
                         </div>
                     </div>
                     <div class="form-group" style="width: 300px">
                         <label class="col-form-label mt-4" for="inputDefault">가격 설정</label>
-                        <input type="text" class="form-control" id="input_custom_cost"
-                               placeholder="특수한 기간에 대한 가격을 설정해주세요">
+                        <input type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" class="form-control" id="input_custom_cost"
+                               name="input_cost" placeholder="설정하실 금액을 숫자로만 입력해주세요">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary regScheduleBtn" onclick="regCustomDay({{ cafe_idx }})">등록</button>
+                <button type="button" class="btn btn-primary regScheduleBtn" onclick="regCustomDay({{ cafe_idx }})">등록
+                </button>
                 <button type="button" class="btn btn-secondary regBtn" data-dismiss="modal">X</button>
             </div>
         </div>

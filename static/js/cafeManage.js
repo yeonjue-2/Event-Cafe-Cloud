@@ -20,12 +20,15 @@ function showCafeManagement() {
     });
 }
 
-function regCustomDay(idx) {
-    let cafe_idx = idx
+function regCustomDay(id) {
+    let cafe_idx = id
     let custom_name = $('#input_custom_date_name').val()
-    let custom_start_date = $('#datepicker1').val()
-    let custom_end_date = $('#datepicker2').val()
+    let custom_start_date = $('#startDate').val()
+    let custom_end_date = $('#endDate').val()
     let custom_sales_flag = $('input[name=custom_sales_flag]:checked').val()
+        if (custom_sales_flag = "closed") {
+            $("input[name=input_cost]").attr("readonly".true);
+        }
     let cost = $('#input_custom_cost').val()
     let custom_cost = 0
     if (cost !== "") {
