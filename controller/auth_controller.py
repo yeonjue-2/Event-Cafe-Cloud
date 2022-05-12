@@ -66,12 +66,10 @@ def login():
     user_pw = hashlib.sha256(pw.encode('utf-8')).hexdigest()
 
     result = DB.find_one(Collection.USERS, {'user_id': user_id, 'user_pw': user_pw}, {"_id": False})
-    user_nickname = result['user_nickname']
 
     if result is not None:
         payload = {
             'user_id': user_id,
-            'user_nickname': user_nickname,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
