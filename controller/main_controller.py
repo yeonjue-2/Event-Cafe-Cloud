@@ -31,7 +31,6 @@ def event_cafe(event_category):
 
     if user is not None:
         return render_template('eventCafe.html', user=user, event_category=event_category)
-
     else:
         return render_template('eventCafe.html', msg="로그인 정보가 없습니다")
 
@@ -59,13 +58,14 @@ def listing_event():
     for event in events:
         cafe_id = int(event['cafe_id'])
         cafe = DB.find_one(Collection.CAFES, {"idx": cafe_id}, {'_id': False})
+        cafe_name = cafe['cafe_name']
+        event['cafe_name'] = cafe_name
         cafes.append(cafe)
 
     for cafe in cafes:
         cafe_idx = str(cafe['idx'])
         cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart"})
         cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "heart", "user_id": user_id}, {'_id': False}))
-        cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_idx": cafe_idx, "type": "bookmark", "user_id": user_id}, {'_id': False}))
 
     return jsonify({"result": "success", "cafes": cafes, "events": events})
 

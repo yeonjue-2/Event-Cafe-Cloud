@@ -71,7 +71,7 @@ function listing() {
                 let count_heart = cafes[i]['count_heart']
                 let class_bookmark = cafes[i]['bookmark_by_me'] ? "fa-bookmark" : "fa-bookmark-o"
 
-                let temp_html = `<div class="card" id="${cafe_idx}" style="width: 18rem; border-radius: 10px;">
+                let temp_html = `<div class="card" id="${cafe_idx}" style="width: 30%; border-radius: 10px; margin: 15px">
                                         <img class="card-img-top" src="../static/cafe_pics/${cafe_image}" alt="Card image cap">
                                         <div class="card-body">
                                             <h3 class="card-title">${cafe_name}&nbsp;&nbsp;<a class="level-item is-sparta" aria-label="bookmark" onclick="toggle_heart('${cafe_idx}', 'bookmark')" style="color: dodgerblue">
@@ -106,25 +106,26 @@ function listing_event(event_category) {
         data: {},
         success: function (response) {
             let cafes = response['cafes']
-            for (let i = 0; i < cafes.length; i++) {
-                let cafe_idx = cafes[i]['idx']
-                let cafe_image = cafes[i]['cafe_image']
-                let cafe_name = cafes[i]['cafe_name']
-                let cafe_short_info = cafes[i]['cafe_short_info']
+            let events = response['events']
+            for (let i = 0; i < events.length; i++) {
+                let event_idx = events[i]['cafe_id']
+                let event_image = events[i]['event_image']
+                let event_category = events[i]['event_category']
+                let event_name = events[i]['event_name']
+                let cafe_name = events[i]['cafe_name']
                 let class_heart = cafes[i]['heart_by_me'] ? "fa-heart" : "fa-heart-o"
                 let count_heart = cafes[i]['count_heart']
-                let class_bookmark = cafes[i]['bookmark_by_me'] ? "fa-bookmark" : "fa-bookmark-o"
 
-                let temp_html = `<div class="card" id="${cafe_idx}" style="width: 18rem; border-radius: 10px;">
-                                        <img class="card-img-top" src="../static/cafe_pics/${cafe_image}" alt="Card image cap">
+                let temp_html = `<div class="card" id="${event_idx}" style="width: 30%; border-radius: 10px; margin: 15px">
+                                        <img class="card-img-top" src="../static/event_pics/${event_image}" alt="Card image cap">
                                         <div class="card-body">
-                                            <h3 class="card-title">${cafe_name}&nbsp;&nbsp;<a class="level-item is-sparta" aria-label="bookmark" onclick="toggle_heart('${cafe_idx}', 'bookmark')" style="color: dodgerblue">
-                                                <span class="icon is-small"><i class="fa ${class_bookmark}" aria-hidden="true"></i></span></a>
+                                            <span class="badge badge-primary" style="background-color: dodgerblue; margin-bottom: 10px">${event_category}</span>
+                                            <h3 class="card-title">${event_name}
                                             </h3>
-                                            <p class="card-text">${cafe_short_info}</p>
+                                            <p class="card-text">${cafe_name}</p>
                                             <nav class="level is-mobile">
                                                 <div class="level-left">
-                                                        <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${cafe_idx}', 'heart')">
+                                                        <a class="level-item is-sparta" aria-label="heart" style="color:#F5C0BE" onclick="toggle_heart('${event_idx}', 'heart')">
                                                             <span class="icon is-small"><i class="fa ${class_heart}" aria-hidden="true"></i>
                                                             </span>&nbsp;<span class="heart-num">${num2str(count_heart)}</span>
                                                         </a>
@@ -140,5 +141,3 @@ function listing_event(event_category) {
         }
     })
 }
-
-
