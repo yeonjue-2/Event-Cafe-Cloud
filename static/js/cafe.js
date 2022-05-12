@@ -6,7 +6,6 @@ function showCafeDetail() {
         type: 'GET',
         url: '/api/cafe/detail/' + id,
         success: (response) => {
-            let cafe_id = response['cafes']['cafe_id'];
             let cafe_name = response['cafes']['cafe_name'];
             let cafe_info = response['cafes']['cafe_detail_info'];
             let address = response['cafes']['address'];
@@ -39,9 +38,9 @@ function showCafeDetail() {
             let rating = 0;
             if (reviews.length != 0) {
                 rating = (scoreSum / reviews.length).toFixed(1);
-                if(rating%1<0.5) {
+                if (rating % 1 < 0.5) {
                     rating = Math.floor(rating);
-                }else{
+                } else {
                     rating = Math.ceil(rating);
                 }
             }
@@ -79,8 +78,15 @@ function regReview() {
             "cafe_review_give": cafe_review,
         },
         success: function (response) {
+            console.log(response);
             alert("리뷰를 등록했습니다.")
             window.location.replace("/cafe/detail?id=" + cafe_idx)
+        },
+        error: (request, status, error) =>{
+            if(error=='CONFLICT'){
+                alert('이미 리뷰를 작성하였습니다.')
+                window.location.replace("/cafe/detail?id=" + cafe_idx)
+            }
         }
     });
 }
