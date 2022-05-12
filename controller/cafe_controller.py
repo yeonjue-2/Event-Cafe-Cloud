@@ -6,7 +6,6 @@ from database import DB
 from ectoken import ECTOKEN
 from type.collection import Collection
 
-
 bp = Blueprint('cafe', __name__)
 
 
@@ -15,7 +14,16 @@ def routeCafeDetail():
     user = ECTOKEN.get_token();
     if user is None:
         return render_template('index.html', msg="로그인 정보가 없습니다")
-    return render_template('cafeDetail.html',user=user)
+    return render_template('cafeDetail.html', user=user)
+
+
+@bp.route('/cafe/eventRegister')
+def routeEventResister():
+    user = ECTOKEN.get_token();
+    if user is None:
+        return render_template('index.html', msg="로그인 정보가 없습니다")
+    return render_template('regEvent.html', user=user)
+
 
 @bp.route('/cafe/reservation/<cafe_id>', methods=['get'])
 def get_event_info(cafe_id):
@@ -24,9 +32,9 @@ def get_event_info(cafe_id):
         return render_template('index.html', msg="로그인 정보가 없습니다")
     return render_template('cafeReservation.html')
 
+
 @bp.route('/api/cafe/detail/<cafeId>')
 def getCafeDetail(cafeId):
-
     cafes = DB.find_one(Collection.CAFES, {Collection.CAFES_PK: int(cafeId)}, {'_id': False})
     reviews = DB.list(Collection.REVIEWS, {Collection.CAFES_PK: cafeId}, {'_id': False})
 
@@ -60,3 +68,31 @@ def regCafeReview():
     DB.insert(Collection.REVIEWS, data=doc)
     return jsonify({'result': 'success'})
 
+
+@bp.route('/api/cafe/registerEvent', methods=["POST"])
+def regEvent():
+    user_id = ECTOKEN.get_user_id()
+    cafe_id = request.form['cafe_id']
+    event_category = request.form['event_category']
+    event_name = request.form['event_name']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    event_option = request.form['event_option']
+    event_cost = request.form['event_cost']
+
+    event_id = DB.allocate_pk(Collection.EVENTS, Collection.EVENTS_PK)
+
+    doc = {
+        Collection.EVENTS_PK: event_id,
+        Collection.USERS_PK: user_id,
+        Collection.CAFES_PK: cafe_id,
+        'event_category': event_category,
+        'event_name': event_name,
+        'event_start_date': start_date,
+        'event_end_date': start_date,
+        'event_option': event_option,
+        'event_cost': event_cost,
+    }
+
+    DB.insert(Collection.EVENTS, data=doc)
+    return jsonify({'result': 'success'})
