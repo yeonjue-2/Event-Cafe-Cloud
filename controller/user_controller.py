@@ -24,8 +24,9 @@ def home():
         return render_template('userProfile.html', msg="로그인 정보가 없습니다")
 
 
-@bp.route('/cafe/manage/<cafe_idx>')
-def cafe_manage(cafe_idx):
+@bp.route('/cafe/manage')
+def cafe_manage():
+    cafe_idx = request.args.get('id');
     user = ECTOKEN.get_token()
     if user is None:
         return render_template('index.html')

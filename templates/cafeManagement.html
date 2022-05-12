@@ -37,7 +37,6 @@
     <link href="../../../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/cafeprofilestyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../static/css/calendar.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/datepicker.css" rel="stylesheet" type="text/css"/>
 
     <!-- JS 링크 -->
@@ -104,27 +103,27 @@
 <div class="profile-text"><i class="fa-solid fa-calendar-days"></i>&nbsp Schedule</div>
 <div class="profileBox">
     <table class="scriptCalendar">
-        <thead>
-        <tr>
-            <td onClick="prevCalendar();" style="cursor:pointer;"><i class="fa-solid fa-circle-chevron-left"></i></td>
-            <td colspan="5">
-                <span id="calYear">YYYY</span>년
-                <span id="calMonth">MM</span>월
-            </td>
-            <td onClick="nextCalendar();" style="cursor:pointer;"><i class="fa-solid fa-circle-chevron-right"></i></td>
-        </tr>
-        <tr>
-            <td>일</td>
-            <td>월</td>
-            <td>화</td>
-            <td>수</td>
-            <td>목</td>
-            <td>금</td>
-            <td>토</td>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+            <thead>
+            <tr class="day-bar">
+                <td onClick="prevCalendar();" style="cursor:pointer;">&#60;&#60;</td>
+                <td colspan="5">
+                    <span id="calYear">YYYY</span>년
+                    <span id="calMonth">MM</span>월
+                </td>
+                <td onClick="nextCalendar();" style="cursor:pointer;">&#62;&#62;</td>
+            </tr>
+            <tr>
+                <td class="day">일</td>
+                <td class="day">월</td>
+                <td class="day">화</td>
+                <td class="day">수</td>
+                <td class="day">목</td>
+                <td class="day">금</td>
+                <td class="day">토</td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     <div class="buttons">
         <button type="button" class="btn btn-primary regScheduleBtn" data-toggle="modal" data-target="#exampleModal">
             카페 일정 등록
@@ -190,6 +189,21 @@
                 <button type="button" class="btn btn-primary regScheduleBtn" onclick="regCustomDay({{ cafe_idx }})">등록
                 </button>
                 <button type="button" class="btn btn-secondary regBtn" data-dismiss="modal">X</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <article id="reservation-flag">예약 내역</article>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

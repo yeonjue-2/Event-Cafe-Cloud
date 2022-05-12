@@ -116,7 +116,6 @@ function calendarChoiceDay(column) {
     let key = makeMonthMapKey(column);
 
     let custom = monthCustomMap.get(key);
-    console.log(custom);
     if (monthCustomMap.has(key) && custom['custom_sales_flag'] == 'closed') {
         let custom_name = custom['custom_name']
         $('#reservation-flag').text('금일은 휴무 입니다.')
@@ -139,15 +138,15 @@ function calendarChoiceDay(column) {
     let event_name = event['event_name']
     let event_info = event['event_info']
     let tempHtml = `<div class="wrap-modal">
-                        <div class="kind">카테고리 :</div>
+                        <div class="kind">카테고리 : </div>
                         <div id="modal-category">${event_category}</div>
                     </div>
                     <div class="wrap-modal">
-                        <div class="kind">이벤트명 :</div>
+                        <div class="kind">이벤트명 : </div>
                         <div id="modal-event-name">${event_name}</div>
                     </div>
                     <div class="wrap-modal">
-                        <div class="kind">행사 :</div>
+                        <div class="kind">이벤트 설명 : </div>
                         <div id="modal-event-info">${event_info}</div>
                     </div>`;
     $('.modal-body').append(tempHtml)
@@ -198,35 +197,29 @@ function makeMonthMapKey(column) {
     return year + '-' + month + '-' + day;
 }
 
-function isImpossibleDay(column) {
+function getAreaColor(column) {
     let key = makeMonthMapKey(column);
-    return monthEventMap.has(key) || (monthCustomMap.has(key) && monthCustomMap.get(key)['custom_sales_flag']=='closed');
+    let color;
+    if(monthEventMap.has(key)){
+        color = 'skyblue'
+    }else if(monthCustomMap.has(key) && monthCustomMap.get(key)['custom_sales_flag']=='closed'){
+        color = '#FF9999'
+    }else{
+        color = '#E6E6FA'
+    }
+    return color;
 }
 
 function setPossibleDay(column) {
-    if (isImpossibleDay(column)) {
-        column.style.backgroundColor = '#FF9999'
-        column.style.cursor = "pointer";
-        column.addEventListener('mouseover', () => {
-            column.style.backgroundColor = "mediumpurple";
-        });
-        column.addEventListener('mouseout', () => {
-            column.style.backgroundColor = "#FF9999";
-        });
-        column.onclick = function () {
-            calendarChoiceDay(this);
-        }
-        return;
-    }
-
-    column.style.backgroundColor = "#E6E6FA"; //skyblue
+    let color = getAreaColor(column)
+    column.style.backgroundColor = color;
     column.style.cursor = "pointer";
 
     column.addEventListener('mouseover', () => {
         column.style.backgroundColor = "mediumpurple";
     });
     column.addEventListener('mouseout', () => {
-        column.style.backgroundColor = "#E6E6FA";
+        column.style.backgroundColor = color;
     });
 
     column.onclick = function () {
