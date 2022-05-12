@@ -114,13 +114,10 @@ function calendarChoiceDay(column) {
 
     $('.modal-body').empty()
     let key = makeMonthMapKey(column);
-    if (!monthEventMap.has(key)) {
-        $('.modal-body').text('등록된 일정이 없습니다.')
-        return;
-    }
 
     let custom = monthCustomMap.get(key);
-    if (custom['custom_sales_flag'] == 'closed') {
+    console.log(custom);
+    if (monthCustomMap.has(key) && custom['custom_sales_flag'] == 'closed') {
         let custom_name = custom['custom_name']
         $('#reservation-flag').text('금일은 휴무 입니다.')
         let tempHtml = `<div class="wrap-modal">
@@ -129,6 +126,11 @@ function calendarChoiceDay(column) {
                         </div>
                         `;
         $('.modal-body').append(tempHtml);
+        return;
+    }
+
+    if (!monthEventMap.has(key)) {
+        $('.modal-body').text('등록된 일정이 없습니다.')
         return;
     }
 
@@ -180,7 +182,6 @@ function makeMonthMap() {
                     monthEventMap.set(date, event)
                 })
             let customs = response['month_custom_list'];
-            console.log(customs)
             if (customs !== undefined)
                 customs.forEach((custom) => {
                     let date = new Date(custom['date']).toISOString().substring(0, 10)
