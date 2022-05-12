@@ -96,7 +96,12 @@
         </ul>
     </div>
 
+    {% if msg %}
+    <button class="post-button btn btn-outline-info float-right" onclick='alert("로그인 후 이용해주세요!")'>글쓰기</button>
+    {% else %}
     <button class="post-button btn btn-outline-info float-right" onclick='$("#modal-post").addClass("is-active")'>글쓰기</button>
+    {% endif %}
+
 </div>
 
 <div class="modal" id="modal-post">
@@ -113,7 +118,7 @@
                     </div>
                     <div class="field">
                         <p class="control-title">
-                                        <textarea id="textarea-title" class="textarea title-input content-inputbox" onkeydown="resize(this)" onkeyup="resize(this)"
+                                        <textarea id="textarea-content" class="textarea title-input content-inputbox" onkeydown="resize(this)" onkeyup="resize(this)"
                                                   placeholder="내용"></textarea>
                         </p>
 

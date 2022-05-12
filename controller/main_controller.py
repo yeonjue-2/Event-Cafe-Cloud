@@ -15,11 +15,12 @@ def home():
     if user is not None:
         cafes = DB.list(Collection.CAFES, {}, {'_id': False})
 
+
         for cafe in cafes:
-            cafe_id = int(cafe[Collection.CAFES_PK])
-            cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_id": cafe_id, "type": "heart"})
-            cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_id": cafe_id, "type": "heart", "user_id": user["user_id"]},{'_id': False}))
-            cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_id": cafe_id, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
+            cafe_id = str(cafe[Collection.CAFES_PK])
+            cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart"})
+            cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart", Collection.USERS_PK: user["user_id"]},{'_id': False}))
+            cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "bookmark", "user_id": user["user_id"]},{'_id': False}))
 
         return render_template('index.html', user=user)
     else:
@@ -41,10 +42,11 @@ def listing():
     cafes = DB.list(Collection.CAFES, {}, {'_id': False})
 
     for cafe in cafes:
-        cafe_id = int(cafe[Collection.CAFES_PK])
+        cafe_id = str(cafe[Collection.CAFES_PK])
         cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_id": cafe_id, "type": "heart"})
         cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_id": cafe_id, "type": "heart", "user_id": user_id}, {'_id': False}))
         cafe["bookmark_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_id": cafe_id, "type": "bookmark", "user_id": user_id}, {'_id': False}))
+
 
     return jsonify({"result": "success", "cafes": cafes})
 
@@ -64,9 +66,10 @@ def listing_event():
         cafes.append(cafe)
 
     for cafe in cafes:
-        cafe_id = int(cafe[Collection.CAFES_PK])
-        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {"cafe_id": cafe_id, "type": "heart"})
-        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {"cafe_id": cafe_id, "type": "heart", "user_id": user_id}, {'_id': False}))
+        cafe_id = str(cafe[Collection.CAFES_PK])
+        cafe["count_heart"] = DB.count_documents(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart"})
+        cafe["heart_by_me"] = bool(DB.find_one(Collection.HEARTS, {Collection.CAFES_PK: cafe_id, "type": "heart", Collection.USERS_PK: user_id}, {'_id': False}))
+
 
     return jsonify({"result": "success", "cafes": cafes, "events": events})
 
@@ -78,8 +81,9 @@ def update_heart():
     action_receive = request.form["action_give"]
 
     doc = {
-        "user_id": user_id,
-        "cafe_id": cafe_idx_receive,
+
+        Collection.USERS_PK: user_id,
+        Collection.CAFES_PK: cafe_idx_receive,
         "type": type_receive
     }
 
@@ -88,5 +92,5 @@ def update_heart():
     else:
         DB.delete(Collection.HEARTS, doc)
 
-    count = DB.count_documents(Collection.HEARTS, {"cafe_id": cafe_idx_receive, "type": type_receive})
+    count = DB.count_documents(Collection.HEARTS, {Collection.CAFES_PK: cafe_idx_receive, "type": type_receive})
     return jsonify({"result": "success", "count": count})

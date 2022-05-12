@@ -34,41 +34,59 @@
     <link href="../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/starRivew.css" rel="stylesheet" type="text/css"/>
     <link href="../static/css/cafe.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/index.css" rel="stylesheet" type="text/css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <!-- JS 링크 -->
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f608fc0e1d5bbe181d014e18b991016"></script>
+    <script src="../static/js/login_out.js"></script>
     <script src="../static/js/cafe.js"></script>
-
     <script src="../static/js/calendar.js"></script>
     <title>Event Cafe Cloud | EC2</title>
 
 </head>
 <body>
 <section class="ec2-banner">
-    {#    {% if msg %}#}
-    {#        <div class="welcome-message">#}
-    {#            guest님 환영합니다 &nbsp;&nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>#}
-    {#        </div>#}
-    {#    {% else %}#}
-    {#        <div class="welcome-message">#}
-    {#            {{ user["user_nickname"] }}님 환영합니다 &nbsp;&nbsp;#}
-    {#            <button class="banner-button" onclick=logout()>로그아웃</button>#}
-    {#        </div>#}
-    {#    {% endif %}#}
+        {% if msg %}
+            <div class="welcome-message">
+                guest님 환영합니다 &nbsp;&nbsp;&nbsp;
+                <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>
+            </div>
+        {% else %}
+            <div class="welcome-message">
+                <a href="/user/profile">{{ user["user_nickname"] }}님</a> 환영합니다 &nbsp;&nbsp;
+                <button class="banner-button" onclick=logout()>로그아웃</button>
+            </div>
+        {% endif %}
     <div class="banner-logo">
         <img src="../static/ec2_logo.png" onclick="location.href='/'">
     </div>
 </section>
+<div id="menu" class="menu_bar">
+    <ul>
+         <li><a href="/">CAFE</a>
+            <ul class="ul-bars">
+                <li><a href="/event_cafe/kpop">K-POP</a></li>
+                <li><a href="/event_cafe/influencer">Influencer</a></li>
+                <li><a href="/event_cafe/animation">Animation</a></li>
+                <li><a href="/event_cafe/webtoon">Webtoon</a></li>
+                <li><a href="/event_cafe/novel">Novel</a></li>
+            </ul>
+        </li>
+        <li><a href="/post">COMMUNITY</a>
+        </li>
+        <li><a href="#">공지사항</a>
+        </li>
+    </ul>
+</div>
 <main>
     <left>
         <div class="cafe-info">
             <div class="wrap-rating">
-                <div class='star-rating'>
-                    <span></span>
+                <div class='big-star-rating'>
+                    <span id="star"></span>
                 </div>
                 <div class="number-rating">
                     3.5
@@ -76,7 +94,6 @@
             </div>
         </div>
         <div class="cafe-img">
-            <img src="../static/cafe1.png">
         </div>
         <table class="scriptCalendar">
             <thead>
@@ -100,21 +117,22 @@
             </thead>
             <tbody></tbody>
         </table>
-        <button class="banner-button" id="reservation-button">예약하기</button>
+        <button class="banner-button" id="reservation-button" onclick='goEventReg(id)''>예약하기</button>
     </left>
     <right>
         <h1 id="cafe-name"></h1>
         <article class="cafe-info box">
             <h3>카페 소개</h3>
-            <p id="info">좋은 카페에용</p>
+            <p id="info"></p>
         </article>
         <article class="cafe-location box">
             <h3>카페 위치</h3>
+            <div id = "address"></div>
             <div id="map"></div>
         </article>
         <article class="cafe-notice box">
             <h3>이용 안내</h3>
-            <p id="notice">787878787</p>
+            <p id="notice"></p>
         </article>
         <article>
             <div class="register-review">
@@ -178,7 +196,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <article>예약 내역</article>
+                <article id="reservation-flag">예약 내역</article>
             </div>
             <div class="modal-body">
             </div>
