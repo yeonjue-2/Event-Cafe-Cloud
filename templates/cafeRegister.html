@@ -59,6 +59,8 @@
             let cafe_info = $('#input_cafe_detail_info').val()
             let cafe_notice = $('#input_cafe_notice').val()
             let cafe_image = $('#file')[0].files[0]
+            let week_cost = $('#input_default_cost_weekday').val()
+            let holiday_cost = $('#input_default_cost_holiday').val()
             let zipcode = $('#input_address_zipcode').val()
             let cafe_address = $('#input_address').val()
             let cafe_address_detail = $('#input_address_detail').val()
@@ -69,6 +71,8 @@
             form_data.append("cafe_info_give", cafe_info)
             form_data.append("cafe_notice_give", cafe_notice)
             form_data.append("cafe_image_give", cafe_image)
+            form_data.append("week_cost", week_cost)
+            form_data.append("holiday_cost", holiday_cost)
             form_data.append("cafe_zipcode_give", zipcode)
             form_data.append("cafe_address_give", cafe_address)
             form_data.append("cafe_address_detail", cafe_address_detail)
@@ -141,15 +145,23 @@
             <label for="formFile" class="form-label mt-4">카페 대표 이미지</label>
             <input class="form-control" type="file" id="file">
         </div>
-        <label class="col-form-label mt-4" for="inputDefault">카페 주소</label>
-        <div class="address_form">
-            <input id="input_address_zipcode" type="text" placeholder="Zip Code" readonly
-                   onclick="findAddr()">
-            <hr>
-            <input id="input_address" type="text" class="address" placeholder="Address" readonly>
-            <input id="input_address_detail" type="text" class="address_detail" placeholder="Detailed Address">
-        </div>
-        <button type="button" class="btn regBtn" onclick="regCafe()">저장하기</button>
+        <div class="form-group">
+            <label class="col-form-label mt-4" for="inputDefault">가격 설정</label>
+            <div class="form-group">
+                <input type="text" class="form-control cost-box" id="input_default_cost_weekday">
+                <p class="cost-label">평일</p>
+                <input type="text" class="form-control cost-box" id="input_default_cost_holiday">
+                <p class="cost-label">주말 / 공휴일</p>
+            </div>
+            <label class="col-form-label mt-4" for="inputDefault">카페 주소</label>
+            <div class="address_form">
+                <input id="input_address_zipcode" type="text" placeholder="Zip Code" readonly
+                       onclick="findAddr()">
+                <hr>
+                <input id="input_address" type="text" class="address" placeholder="Address" readonly>
+                <input id="input_address_detail" type="text" class="address_detail" placeholder="Detailed Address">
+            </div>
+            <button type="button" class="btn regBtn" onclick="regCafe()">저장하기</button>
     </fieldset>
 </div>
 </body>

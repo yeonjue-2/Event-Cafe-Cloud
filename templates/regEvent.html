@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Event Cafe Cloude | EC2</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+            integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+          integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/fe92d18f9e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- CSS 링크 -->
+    <link href="../../../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/cafeprofilestyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/calendar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/datepicker.css" rel="stylesheet" type="text/css"/>
+
+    <!-- JS 링크 -->
+    <script src="../../../static/js/login_out.js"></script>
+    <script src="../../../static/js/calendar.js"></script>
+    <script src="../../../static/js/cafeManage.js"></script>
+
+    <title>Event Cafe Cloude | EC2</title>
+
+    <style>
+        .wrap {
+            width: 750px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .custom-form {
+            width: 400px;
+            text-align: center;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 40px;
+        }
+
+        .custom-form-button {
+            width: 400px;
+            text-align: center;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        label {
+            float: left;
+            color: #FFAFAF;
+            width: 140px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .custom-cost-box {
+            background-color: white;
+            font-weight: bold;
+        }
+
+        .custom-cost-label {
+            color: #2b2b2b;
+            background-color: white;
+            border-bottom: 2px solid green;
+        }
+
+        .regEventBtn {
+            background-color: #FFAFAF;
+            color: white;
+            font-weight: bold;
+            width: 150px;
+        }
+
+        .start-box, .end-box {
+            width: 120px;
+            text-align: center;
+            color: green;
+        }
+
+    </style>
+    <script>
+        function check_date() {
+            let id = new URLSearchParams(location.search).get('id');
+            let start_date = $('#datepicker1').val()
+            let end_date = $('#datepicker2').val()
+
+            if (start_date == "") {
+                $('#help-id').text("시작일을 입력하세요.").removeClass("is-safe").addClass("is-danger-s")
+                $('#datepicker1').focus()
+                return;
+            }
+            if (end_date == "") {
+                $('#help-id').text("종료일을 입력하세요.").removeClass("is-safe").addClass("is-danger-e")
+                $('#datepicker2').focus()
+                return;
+            }
+
+            $('#help-id').addClass("is-loading")
+            $.ajax({
+                type: "GET",
+                url: "/api/cafe/costByDate",
+                data: {
+                    'cafe_id': id,
+                    'start_date': start_date,
+                    'end_date': end_date,
+                },
+                success: function (response) {
+                    let cost = response['all_cost']
+                    $('input[name=input_cost]').attr('value',cost)
+                    $('#help-id').text("총 결제 금액을 확인해보세요 : ").removeClass("is-danger").addClass("is-safe")
+                }
+            })
+        }
+
+        function regEvent() {
+            let id = new URLSearchParams(location.search).get('id');
+            let event_category = $("#category option:selected").val()
+            let event_name = $('#input-event-name').val()
+            let start_date = $('#datepicker1').val()
+            let end_date = $('#datepicker2').val()
+            let event_cost = document.getElementById('input_event_cost').value
+
+            console.log(id, event_category, event_cost)
+
+            $.ajax({
+                type: "POST",
+                url: "/api/cafe/registerEvent",
+                data: {
+                    'cafe_id': id,
+                    'event_category': event_category,
+                    'event_name': event_name,
+                    'start_date': start_date,
+                    'end_date': end_date,
+                    'event_cost': event_cost
+                },
+                success: function (response) {
+                    alert("예약되었습니다! 호스트의 승인을 기다려주세요!")
+                    window.location.replace("/cafe/detail?id=" + id)
+                }
+            });
+        }
+    </script>
+
+</head>
+<body>
+<section class="ec2-banner">
+    {% if msg %}
+        <div class="welcome-message">
+            guest님 환영합니다 &nbsp;&nbsp;&nbsp;
+            <button class="banner-button" onclick="location.href='/auth/login'">로그인</button>
+        </div>
+    {% else %}
+        <div class="welcome-message">
+            <a href="/user/profile">{{ user["user_nickname"] }}님</a> 환영합니다 &nbsp;&nbsp;
+            <butWton class="banner-button" onclick=logout()>로그아웃</butWton>
+        </div>
+    {% endif %}
+    <div class="banner-logo">
+        <img src="../../../static/ec2_logo.png" onclick="location.href='/'">
+    </div>
+</section>
+<div class="wrap">
+    <div class="form-group custom-form">
+        <label for="exampleFormControlSelect1"> 카테고리</label>
+        <select class="form-control" id="category">
+            <option>kpop</option>
+            <option>influencer</option>
+            <option>animation</option>
+            <option>webtoon</option>
+            <option>novel</option>
+        </select>
+    </div>
+    <div class="form-group custom-form">
+        <label for="exampleFormControlInput1">이벤트명</label>
+        <input type="email" class="form-control" id="input-event-name" placeholder="이벤트 이름을 입력해주세요">
+    </div>
+    <div class="form-group custom-form datepicker-box">
+        <label for="exampleFormControlInput1">이벤트기간</label>
+        <input type="text" class="start-box" id="datepicker1">
+        <input type="text" class="end-box" id="datepicker2">
+    </div>
+    <div class="custom-form-button" style="display: table">
+        <button type="button" class="btn btn-secondary btn-sm" style="display: table-cell" onclick="check_date()">
+            check
+        </button>
+        <p id="help-id" style="display: table-cell">버튼을 눌러 가격을 확인하세요</p>
+    </div>
+    <div class="form-group custom-form">
+        <label for="exampleFormControlTextarea1">상세 설명</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <div class="form-group has-success custom-form custom-cost-box">
+        <label class="form-label mt-4 custom-cost-label" for="inputValid"><i class="fa-solid fa-coins"></i> 총 결제
+            금액</label>
+        <input type="text" value="" class="form-control is-valid" name="input_cost" id="input_event_cost" readonly>
+        <div class="valid-feedback">결제 금액을 확인하세요!</div>
+    </div>
+    <div class="custom-form">
+        <button type="button" class="btn regEventBtn" onclick="regEvent()">예약신청하기</button>
+    </div>
+</div>
+</div>
+</body>

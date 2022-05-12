@@ -1,5 +1,8 @@
 $(document).ready(showCafeDetail);
 
+let id = new URLSearchParams(location.search).get('id');
+
+
 function showCafeDetail() {
     let id = new URLSearchParams(location.search).get('id');
     $.ajax({
@@ -65,7 +68,7 @@ function kakaoMapAPI(x, y) {
 }
 
 function regReview() {
-    let cafe_idx = new URLSearchParams(location.search).get('id');
+    let id = new URLSearchParams(location.search).get('id');
     let cafe_rating = $('input[name=rating]:checked').val();
     let cafe_review = $('#input-cafe-review').val();
 
@@ -73,7 +76,7 @@ function regReview() {
         type: "POST",
         url: "/api/cafe/regReview",
         data: {
-            "cafe_idx_give": cafe_idx,
+            "cafe_idx_give": id,
             "cafe_rating_give": cafe_rating,
             "cafe_review_give": cafe_review,
         },
@@ -82,13 +85,18 @@ function regReview() {
             alert("리뷰를 등록했습니다.")
             window.location.replace("/cafe/detail?id=" + cafe_idx)
         },
-        error: (request, status, error) =>{
-            if(error=='CONFLICT'){
+        error: (request, status, error) => {
+            if (error == 'CONFLICT') {
                 alert('이미 리뷰를 작성하였습니다.')
                 window.location.replace("/cafe/detail?id=" + cafe_idx)
             }
         }
     });
+}
+
+function goEventReg() {
+    let id = new URLSearchParams(location.search).get('id');
+    window.location.replace("/cafe/eventRegister?id=" + id)
 }
 
 
