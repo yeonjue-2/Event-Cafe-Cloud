@@ -37,77 +37,20 @@
     <link href="../../../static/css/bannerstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/loginstyle.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/cafeprofilestyle.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../static/css/calendar.css" rel="stylesheet" type="text/css"/>
     <link href="../../../static/css/datepicker.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../static/css/regEvent.css" rel="stylesheet" type="text/css"/>
 
     <!-- JS 링크 -->
     <script src="../../../static/js/login_out.js"></script>
-    <script src="../../../static/js/calendar.js"></script>
     <script src="../../../static/js/cafeManage.js"></script>
 
     <title>Event Cafe Cloude | EC2</title>
 
-    <style>
-        .wrap {
-            width: 750px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .custom-form {
-            width: 400px;
-            text-align: center;
-            margin-right: auto;
-            margin-left: auto;
-            margin-top: 40px;
-        }
-
-        .custom-form-button {
-            width: 400px;
-            text-align: center;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        label {
-            float: left;
-            color: #FFAFAF;
-            width: 140px;
-            font-weight: bold;
-            font-size: 20px;
-            text-align: left;
-        }
-
-        .custom-cost-box {
-            background-color: white;
-            font-weight: bold;
-        }
-
-        .custom-cost-label {
-            color: #2b2b2b;
-            background-color: white;
-            border-bottom: 2px solid green;
-        }
-
-        .regEventBtn {
-            background-color: #FFAFAF;
-            color: white;
-            font-weight: bold;
-            width: 150px;
-        }
-
-        .start-box, .end-box {
-            width: 120px;
-            text-align: center;
-            color: green;
-        }
-
-    </style>
     <script>
         function check_date() {
             let id = new URLSearchParams(location.search).get('id');
-            let start_date = $('#datepicker1').val()
-            let end_date = $('#datepicker2').val()
+            let start_date = $('#startDate').val()
+            let end_date = $('#endDate').val()
 
             if (start_date == "") {
                 $('#help-id').text("시작일을 입력하세요.").removeClass("is-safe").addClass("is-danger-s")
@@ -131,7 +74,7 @@
                 },
                 success: function (response) {
                     let cost = response['all_cost']
-                    $('input[name=input_cost]').attr('value',cost)
+                    $('input[name=input_cost]').attr('value', cost)
                     $('#help-id').text("총 결제 금액을 확인해보세요 : ").removeClass("is-danger").addClass("is-safe")
                 }
             })
@@ -141,23 +84,54 @@
             let id = new URLSearchParams(location.search).get('id');
             let event_category = $("#category option:selected").val()
             let event_name = $('#input-event-name').val()
+            let event_info = $('#input_event_info').val()
             let start_date = $('#datepicker1').val()
             let end_date = $('#datepicker2').val()
             let event_cost = document.getElementById('input_event_cost').value
+            let event_img = $('#file')[0].files[0]
 
-            console.log(id, event_category, event_cost)
+            if (event_name == "") {
+                $('#help-name').text("이벤트 이름을 입력하세요").removeClass("is-safe").addClass("is-danger")
+                $('#input-event-name').focus()
+                return;
+            } else {
+                $('#help-name').text("").removeClass("is-danger").addClass("is-safe")
+            }
+
+            if (event_info == "") {
+                $('#help-info').text("이벤트 내용을 입력하세요").removeClass("is-safe").addClass("is-danger")
+                $('#input-event-info').focus()
+                return;
+            } else {
+                $('#help-name').text("").removeClass("is-danger").addClass("is-safe")
+            }
+
+             if (event_img == undefined) {
+                $('#help-image').text("파일을 올려주세요").removeClass("is-safe").addClass("is-danger")
+                $('#file').focus()
+                return;
+            } else {
+                $('#help-img').text("").removeClass("is-danger").addClass("is-safe")
+            }
+
+            let form_data = new FormData()
+
+            form_data.append('cafe_id', id)
+            form_data.append('event_category', event_category)
+            form_data.append('event_name', event_name)
+            form_data.append('event_info', event_info)
+            form_data.append('start_date', start_date)
+            form_data.append('end_date', end_date)
+            form_data.append('event_cost', event_cost)
+            form_data.append('event_img', event_img)
 
             $.ajax({
                 type: "POST",
                 url: "/api/cafe/registerEvent",
-                data: {
-                    'cafe_id': id,
-                    'event_category': event_category,
-                    'event_name': event_name,
-                    'start_date': start_date,
-                    'end_date': end_date,
-                    'event_cost': event_cost
-                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     alert("예약되었습니다! 호스트의 승인을 기다려주세요!")
                     window.location.replace("/cafe/detail?id=" + id)
@@ -198,11 +172,13 @@
     <div class="form-group custom-form">
         <label for="exampleFormControlInput1">이벤트명</label>
         <input type="email" class="form-control" id="input-event-name" placeholder="이벤트 이름을 입력해주세요">
+        <p id="help-name" style="display: table-cell"></p>
+
     </div>
     <div class="form-group custom-form datepicker-box">
         <label for="exampleFormControlInput1">이벤트기간</label>
-        <input type="text" class="start-box" id="datepicker1">
-        <input type="text" class="end-box" id="datepicker2">
+        <input type="text" class="start-box" id="startDate">
+        <input type="text" class="end-box" id="endDate">
     </div>
     <div class="custom-form-button" style="display: table">
         <button type="button" class="btn btn-secondary btn-sm" style="display: table-cell" onclick="check_date()">
@@ -212,7 +188,13 @@
     </div>
     <div class="form-group custom-form">
         <label for="exampleFormControlTextarea1">상세 설명</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea class="form-control" id="input_event_info" rows="3"></textarea>
+        <p id="help-info" style="display: table-cell"></p>
+    </div>
+    <div class="form-group custom-form">
+        <label for="exampleFormControlFile1">포스터</label>
+        <input type="file" class="form-control-file" id="file">
+        <p id="help-image" style="display: table-cell"></p>
     </div>
     <div class="form-group has-success custom-form custom-cost-box">
         <label class="form-label mt-4 custom-cost-label" for="inputValid"><i class="fa-solid fa-coins"></i> 총 결제

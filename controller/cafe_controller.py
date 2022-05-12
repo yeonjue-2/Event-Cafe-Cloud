@@ -137,13 +137,19 @@ def regEvent():
     cafe_id = request.form['cafe_id']
     event_category = request.form['event_category']
     event_name = request.form['event_name']
+    event_info = request.form['event_info']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
     event_cost = request.form['event_cost']
+    event_img = request.files['event_img']
 
     event_id = DB.allocate_pk(Collection.EVENTS, Collection.EVENTS_PK)
     event_start_date = datetime.strptime(start_date, '%Y-%m-%d')
     event_end_date = datetime.strptime(end_date, '%Y-%m-%d')
+
+    extension = event_img.filename.split('.')[-1]
+    save_to = f'static/event_img/{event_id}.{extension}'
+    event_img.save(save_to)
 
     doc = {
         Collection.EVENTS_PK: event_id,
@@ -151,9 +157,11 @@ def regEvent():
         Collection.CAFES_PK: cafe_id,
         'event_category': event_category,
         'event_name': event_name,
+        'event_info': event_info,
         'event_start_date': event_start_date,
         'event_end_date': event_end_date,
         'event_cost': event_cost,
+        'event_img': f"{event_id}.{extension}"
     }
 
     DB.insert(Collection.EVENTS, data=doc)
