@@ -37,3 +37,11 @@
     width: 30%;
     border: #999999;
 }
+
+.cost-box{
+    width: 200px;
+}
+.cost-label{
+    font-size: 15px;
+    color: #FFAFAF;
+}
