@@ -163,7 +163,7 @@ function comment_posting() {
     $.ajax({
         type: "POST",
         url: "/api/post/comment",
-        data: {"comment":comment,"post_id":post_id},
+        data: {"comment": comment, "post_id": post_id},
         success: function (response) {
             if (response["result"] == "success") {
                 alert("댓글이 작성되었습니다");
@@ -185,20 +185,21 @@ function comment_listing() {
             let target_id = $('#articleModal').attr('post_id')
 
             for (let i = 0; i < response.length; i++) {
-                    let parents_post = response[i]['parents_post']
-                    let post_content = response[i]['post_content']
-                    let user_nickname = response[i]['user_nickname']
-                    let create_date = response[i]['create_date']
-                    let post_id = response[i]['post_id']
+                let parents_post = response[i]['parents_post']
+                let post_content = response[i]['post_content']
+                let user_nickname = response[i]['user_nickname']
+                let user_id = response[i]['user_id']
+                let create_date = response[i]['create_date']
+                let post_id = response[i]['post_id']
 
                 if (target_id == parents_post) {
-                    let temp_html = `<div class="flex-shrink-0"><img class="rounded-circle"
-                                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."/>
-                                    </div>
-                                    <div class="ms-3">
+                    let temp_html = `<div class="flex-shrink-0">
+                                        <img class="rounded-circle" src="../../static/profile_pics/${user_id}.jpg" alt="..."/>
+                                     </div>
+                                     <div class="ms-3">
                                         <div class="fw-bold">${user_nickname}</div>
                                         ${post_content}
-                                    </div>`
+                                     </div>`
                     $('#comment-box').append(temp_html)
                 }
 
