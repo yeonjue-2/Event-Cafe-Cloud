@@ -17,6 +17,7 @@
 [이곳](https://docs.google.com/presentation/d/1NcL2LhkpxiT_hn48Jt0d9rn4YK1FcUbjKchWoCLxBN8/edit#slide=id.g126f5bc7b55_1_7)을 눌러주세요
 
 ---
+### ✅개발 기간 : 2022.05.06 - 2022.05.12
 
 ### ✅프로젝트 소개
 
